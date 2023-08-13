@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,20 @@
   to {
     transform: rotate(360deg);
   }
+}
+ */
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* overriding ant classes */
+.ant-form-item-explain {
+  margin-top: 4px;
+}
+
+.ant-form-item-label, .ant-col.ant-col-24.ant-form-item-label {
+  padding: 0px;
+  font-weight: 400 !important;
+  font-size: 14px;
 }

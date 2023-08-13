@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './Global.css';
+// import { RecoilRoot } from 'recoil';
+import { FC, Suspense } from 'react';
+import { RouterProvider } from 'react-router-dom';
 
-function App() {
+import './Global.css';
+import MainRoutes from './routes/base-routes';
+// import { FullPageLoading } from './components/full-page-loading';
+
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={MainRoutes} />
+    </Suspense>
   );
-}
+};
 
 export default App;

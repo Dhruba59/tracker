@@ -1,0 +1,88 @@
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.signup-checkbox {
+  width: fit-content;
+  margin-right: 10px;
+}
+
+.signup-checkbox-group span {
+  font-weight: 500;
+}
+
+.signup-checkbox-group {
+  width: 100%;
+  display: flex;  
+  font-size: 14px;
+}
+
+.signup-checkbox-group .signup-terms-condition {
+  font-size: 14px;
+  color: rgba(52, 64, 84, 1);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.signup-checkbox-group .ant-form.item {
+  margin-bottom: 0px;
+}
+
+.signup-text {
+  width: 100%;
+  text-align: center;
+  color: #475467;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;;
+}
+
+.signup-text {
+  color: #475467;
+  font-size: 14px;
+}
+
+.signup-text a {
+  color: #6941C6;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+
+}
+
+.signup-title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  color: #101828;
+  text-align: center;
+} 
+
+.signup-subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #475467;
+  text-align: center;
+}
+
+.signup-form-item {
+  margin: 0px;
+}
+
+.signup-title-group {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.signup-btn-group{
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  font-family: 'Inter', sans-serif;
+}
