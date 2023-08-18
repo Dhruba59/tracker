@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 
 import './style.css';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/Button';
+import Button from '@components/common/button';
 import { ConfirmationCardProps } from '@models/reset-password';
 
 const { Text } = Typography;

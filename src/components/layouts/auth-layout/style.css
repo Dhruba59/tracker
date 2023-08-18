@@ -8,13 +8,38 @@
 
 .col-1 {
   width: 33%;
-  height: 100vh;
+  height: calc(100vh - 96px);
   grid-column-end: 1;
   margin: auto;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+.auth-layout-col1-header {
+  margin-top: 0px;
+}
+
+.auth-layout-col1-center {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  height: 100%;
+  margin-left: -20px;
+}
+
+.auth-layout-col1-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  color: #475467;
+}
+.auth-layout-col1-footer span{
   display: flex;
   align-items: center;
-  justify-content: center;
-  border: none;
+  justify-content: space-between;
+  column-gap: 10px;
 }
 
 img {

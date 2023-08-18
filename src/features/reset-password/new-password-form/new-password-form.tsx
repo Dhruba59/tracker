@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { Form, Typography } from 'antd';
 
 import './style.css';
-import PasswordInput from '@components/common/InputFields/PasswordInput';
+import PasswordInput from '@components/common/inputfields/password-input';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/Button';
+import Button from '@components/common/button';
 
 const { Text } = Typography;
 

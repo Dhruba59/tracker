@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Input, Typography, message, Checkbox } from 'antd';
 
 import './style.css';
-import TextInput from '@components/common/InputFields/TextInput';
+import TextInput from '@components/common/inputfields/text-input';
 import { routes } from '@constants/route-constants';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/Button';
+import Button from '@components/common/button';
 import { ResetPasswordProps } from '@models/reset-password';
 
 const { Text } = Typography;

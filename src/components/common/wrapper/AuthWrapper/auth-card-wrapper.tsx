@@ -1,5 +1,4 @@
 import{ FC } from 'react';
-import { Outlet } from 'react-router-dom';
 
 import './style.css';
 import { AuthWrapperProps } from '@models/wrapper';

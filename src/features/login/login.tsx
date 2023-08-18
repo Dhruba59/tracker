@@ -3,30 +3,32 @@ import { Form, Input, Typography, message, Checkbox } from 'antd';
 
 import './login.css';
 import { Credentials } from '@models/auth-models';
-import CheckboxInput from '@components/common/InputFields/Checkbox';
-import PasswordInput from '@components/common/InputFields/PasswordInput';
-import TextInput from '@components/common/InputFields/TextInput';
+import CheckboxInput from '@components/common/inputfields/checkbox';
+import PasswordInput from '@components/common/inputfields/password-input';
+import TextInput from '@components/common/inputfields/text-input';
 import { GoogleIcon } from '@icons';
 import { userLogin } from '@services/auth-services';
 import { routes } from '@constants/route-constants';
-import { useNavigate } from 'react-router-dom';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/Button';
+import Button from '@components/common/button';
+import { ResponseType } from '@models/global-models';
 
 const { Text } = Typography;
 
 const Login: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
-  const handleLogin = (values: Credentials) => {
-    userLogin({ ...values })
-      .then(() => {
-        message.success('Successfully logged in');
-      })
-      .catch((err: any) => {
-        console.log(err);
-        message.error(err?.data?.message);
-      });
+  const [form] = Form.useForm();
+
+  const handleLogin = async (values: Credentials) => {
+    try {
+      const res: ResponseType = await userLogin(values);
+      form.resetFields();
+       message.success(res?.message);
+    } catch (error: any) {
+      message.error(error?.message ?? 'Something went wrong!');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -64,7 +66,14 @@ const Login: FC = () => {
           <a className='login-forget-pass' href={routes.reset_password.path}>Forgot Password</a>
         </div>
         <div className="login-btn-group">
-          <Button size='large' type='primary' htmlType='submit'>Sign In</Button>
+          <Button 
+            size='large' 
+            type='primary' 
+            htmlType='submit' 
+            loading={isLoading}
+          >
+            Sign In
+          </Button>
           <Button size='large' icon={<GoogleIcon />}>
             Sign In with Google
           </Button>

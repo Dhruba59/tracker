@@ -1,3 +1,3 @@
-import AuthCardWrapper from './AuthCardWrapper';
+import AuthCardWrapper from './auth-card-wrapper';
 
 export default AuthCardWrapper;

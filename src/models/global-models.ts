@@ -11,6 +11,15 @@ export interface AppErrorType {
   time: string;
 }
 
+export interface ResponseType {
+  statusCode: number;
+  error: boolean;
+  message: string;
+  payload?: any;
+  timestamp?: string;
+  path?: string;
+}
+
 export interface PaginationResponseType {
   total: number;
   page: number;
@@ -25,10 +34,6 @@ export interface OptionType {
 export interface GenericOptionType<T> {
   value: T;
   label: ReactNode;
-}
-
-export interface CustomBreadCrumbProps {
-  breadcrumbItems: ReactNode[];
 }
 
 export type MessageType = 'info' | 'success' | 'error' | 'warning' | 'loading';
