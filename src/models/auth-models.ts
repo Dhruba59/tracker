@@ -10,3 +10,17 @@ export interface LoginResponse {
 export interface LogoutResponse {
   message: string;
 }
+
+export interface RequestResetPasswordCredentials {
+  email: string;
+}
+
+export interface ResetPasswordCredentials {
+  token: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+
+export interface EmailVerificationPayload {
+  token: string;
+}

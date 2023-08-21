@@ -16,7 +16,6 @@ const AuthLayout = () => {
     navigate(routes.dashboard.path);
   }
   
-
   return (
     <div className="parent-container">
       <div className='col-1'>

@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { Form, Input, Typography, message, Checkbox } from 'antd';
 
-import './login.css';
+import './style.css';
 import { Credentials } from '@models/auth-models';
 import CheckboxInput from '@components/common/inputfields/checkbox';
 import PasswordInput from '@components/common/inputfields/password-input';

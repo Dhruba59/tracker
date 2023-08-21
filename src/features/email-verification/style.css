@@ -1,0 +1,17 @@
+.email-veriifcation-main-container {
+  justify-content: center;
+  align-items: center;
+  row-gap: 12px;
+  padding:  54px 40px 54px 40px;
+}
+
+.email-verification-text {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #27a15c;
+}
+
+.email-verification-icon {
+  margin-bottom: 12px;
+}

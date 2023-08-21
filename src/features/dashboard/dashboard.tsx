@@ -1,8 +1,12 @@
 import React from 'react';
+import TrackerCard from '../../components/common/tracker-card';
+import './style.css';
 
 const Dashboard = () => {
   return (
-    <div>dashboard</div>
+    <div className='dashboard-main-container'>
+      <TrackerCard />
+    </div>
   );
 };
 

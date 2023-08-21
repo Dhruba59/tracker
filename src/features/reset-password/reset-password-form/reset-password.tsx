@@ -8,17 +8,23 @@ import { routes } from '@constants/route-constants';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
 import Button from '@components/common/button';
 import { ResetPasswordProps } from '@models/reset-password';
+import { requestResetPassword, resetPassword } from '@services/auth-services';
 
 const { Text } = Typography;
 
 const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
 
-  const handleResetPass = ({ email }: any) => {
-    console.log('reset password');
-    setValues({
-      step: 2,
-      email
-    });
+  const handleResetPass = async ({ email }: any) => {
+    try {
+      await requestResetPassword({ email });
+      setValues({
+        step: 2,
+        email
+      });
+      message.success('A link has been sent to your email!');
+    } catch(error: any) {
+      message.error(error?.message ?? 'Something went wrong!');
+    };
   };
 
   return (

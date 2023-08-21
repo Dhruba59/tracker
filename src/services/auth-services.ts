@@ -3,8 +3,11 @@ import HttpClientInstance from './base-services';
 
 import {
   Credentials,
+  EmailVerificationPayload,
   LoginResponse,
   LogoutResponse,
+  RequestResetPasswordCredentials,
+  ResetPasswordCredentials,
 } from '@models/auth-models';
 import { getAccessToken, ensureTrailingSlash } from '@helpers/auth-helpers';
 import { API_END_POINTS } from '@constants/global-constants';
@@ -33,27 +36,8 @@ export function userLogin(
           refresh_token: resp.payload.refresh_token ?? '' 
          })
       );
-      // localStorage.setItem(
-      //   LOCAL_STORAGE_KEYS.ACCESS_TOKEN,
-      //   JSON.stringify({
-      //     access_token: resp.payload.access_token ?? '', 
-      //     refresh_token: resp.payload.refresh_token ?? '' 
-      //   })
-      // );
-      // localStorage.setItem(
-      //   LOCAL_STORAGE_KEYS.REFRESH_TOKEN ,
-      //   JSON.stringify({ refresh_token: resp.payload.refresh_token ?? '' })
-      // );
       location.href = routes.dashboard.path;
-      // useNavigate();
-
-      //? Storing global settings into localStorage after successful login
-      // let settings = await getGlobalSettings().catch((err: AppErrorType) =>
-      //   message.error(err.message)
-      // );
-
       return resp;
-      // return settings ?? resp;
     })
     .catch((err) => {
       console.log(err);
@@ -64,6 +48,21 @@ export function userLogin(
 export const userSignUp = (credentials : any) => {
   const url = API_END_POINTS.SIGN_UP;
   return httpClient.post(url, {data: credentials});
+};
+
+export const requestResetPassword = (data : RequestResetPasswordCredentials) => {
+  const url = API_END_POINTS.REQUEST_RESET_PASSWORD;
+  return httpClient.post(url, { data });
+};
+
+export const resetPassword = (credentials : ResetPasswordCredentials) => {
+  const url = API_END_POINTS.RESET_PASSWORD;
+  return httpClient.post(url, {data: credentials});
+};
+
+export const verifyEmail = (data : EmailVerificationPayload) => {
+  const url = API_END_POINTS.VERIFY_EMAIL;
+  return httpClient.get(url, { params: data });
 };
 
 // Logout Service

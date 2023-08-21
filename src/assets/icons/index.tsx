@@ -247,3 +247,28 @@ export const EmailIcon2 = (props: SVGAttributes<SVGElement>) => {
   );
 };
 
+export const ThreeDotIcon = (props: SVGAttributes<SVGElement>) => {
+  const { width = 24, height = 24, fill = 'none' } = props;
+  return (
+    <svg width={width} height={height} viewBox="0 0 24 24" fill={fill} xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="5.5" r="1.5" fill="#65676D"/>
+      <circle cx="12" cy="18.5" r="1.5" fill="#65676D"/>
+      <circle cx="12" cy="12" r="1.5" fill="#65676D"/>
+    </svg>
+  );
+};
+
+export const CorrectSignIcon = (props: SVGAttributes<SVGElement>) => {
+  const { width = 11, height = 11, fill = 'none' } = props;
+  return (
+    <svg width={width} height={height} viewBox="0 0 11 12" fill={fill} xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5.5" cy="6" r="5.5" fill="#494C57"/>
+      <path d="M2.75 5.7251L4.4 7.3751L6.05 5.8626L7.7 4.3501" stroke="white" stroke-width="0.825" stroke-linecap="round"/>
+    </svg>
+  );
+};
+
+
+
+
+

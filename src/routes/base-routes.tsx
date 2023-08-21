@@ -8,6 +8,7 @@ import SignUp from '@features/sign-up';
 import Dashboard from '@features/dashboard';
 import ResetPassword from '@features/reset-password';
 import NewPasswordForm from '@features/reset-password/new-password-form';
+import EmailVerification from '@features/email-verification';
 
 const MainRoutes = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const MainRoutes = createBrowserRouter([
       {
         path: routes.set_new_password.path,
         element: <NewPasswordForm />,
+      },
+      {
+        path: routes.email_verification.path,
+        element: <EmailVerification />,
       }
     ],
   },
