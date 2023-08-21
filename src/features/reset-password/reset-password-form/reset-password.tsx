@@ -1,14 +1,13 @@
-import { FC, useEffect, SetStateAction, Dispatch } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Form, Input, Typography, message, Checkbox } from 'antd';
+import { FC } from 'react';
+import { Form, Typography, message } from 'antd';
 
 import './style.css';
-import TextInput from '@components/common/inputfields/text-input';
+import TextInput from '@components/common/input-fields/text-input';
 import { routes } from '@constants/route-constants';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/button';
+import Button from '@components/common/button-component';
 import { ResetPasswordProps } from '@models/reset-password';
-import { requestResetPassword, resetPassword } from '@services/auth-services';
+import { requestResetPassword } from '@services/auth-services';
 
 const { Text } = Typography;
 

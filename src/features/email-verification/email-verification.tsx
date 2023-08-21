@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Typography, message } from 'antd';
 
-import Button from '@components/common/button';
+import Button from '@components/common/button-component';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
 import { FullPageBlurLoading } from '@components/full-page-loading';
 import { EmailIcon } from '@icons';

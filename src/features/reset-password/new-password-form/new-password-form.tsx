@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Form, Typography, message } from 'antd';
 
 import './style.css';
-import PasswordInput from '@components/common/inputfields/password-input';
+import PasswordInput from '@components/common/input-fields/password-input';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/button';
+import Button from '@components/common/button-component';
 import { resetPassword } from '@services/auth-services';
 import { routes } from '@constants/route-constants';
 

@@ -1,16 +1,16 @@
-import { FC, useState, useEffect } from 'react';
-import { Form, Input, Typography, message, Checkbox } from 'antd';
+import { FC, useState } from 'react';
+import { Form, Typography, message } from 'antd';
 
 import './style.css';
 import { Credentials } from '@models/auth-models';
-import CheckboxInput from '@components/common/inputfields/checkbox';
-import PasswordInput from '@components/common/inputfields/password-input';
-import TextInput from '@components/common/inputfields/text-input';
+import CheckboxInput from '@components/common/input-fields/checkbox';
+import PasswordInput from '@components/common/input-fields/password-input';
+import TextInput from '@components/common/input-fields/text-input';
 import { GoogleIcon } from '@icons';
 import { userLogin } from '@services/auth-services';
 import { routes } from '@constants/route-constants';
 import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/button';
+import Button from '@components/common/button-component';
 import { ResponseType } from '@models/global-models';
 
 const { Text } = Typography;
