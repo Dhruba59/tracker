@@ -1,7 +1,7 @@
 import { CorrectSignIcon, ThreeDotIcon } from '@icons';
 import { Avatar, Typography } from 'antd';
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons';
-import './style.css';
+import './tracker-card.css';
 
 const TrackerCard = () => {
   const { Text } = Typography;

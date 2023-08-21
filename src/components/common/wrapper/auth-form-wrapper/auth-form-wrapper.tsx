@@ -1,9 +1,9 @@
 import{ FC } from 'react';
 
-import './style.css';
 import { AuthWrapperProps } from '@models/wrapper';
+import './auth-form-wrapper.css';
 
-const AuthWrapper: FC<AuthWrapperProps>= ({ className, children }) => {
+const AuthFormWrapper: FC<AuthWrapperProps>= ({ className, children }) => {
   return (
     <div className={`auth-wrapper ${className}`}>
       {children}
@@ -11,4 +11,4 @@ const AuthWrapper: FC<AuthWrapperProps>= ({ className, children }) => {
   );
 };
 
-export default AuthWrapper;
+export default AuthFormWrapper;

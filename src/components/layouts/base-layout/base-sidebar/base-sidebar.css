@@ -24,7 +24,7 @@
   height: calc(100vh - 64px);;
 }
 
-.workspace-item-label {
+.sidebar-workspace-item-label {
   font-weight: 600;
   color: #334488;
 }

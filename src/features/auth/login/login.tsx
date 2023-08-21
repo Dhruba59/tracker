@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { Form, Typography, message } from 'antd';
 
-import './style.css';
 import { Credentials } from '@models/auth-models';
 import CheckboxInput from '@components/common/input-fields/checkbox';
 import PasswordInput from '@components/common/input-fields/password-input';
@@ -9,9 +8,10 @@ import TextInput from '@components/common/input-fields/text-input';
 import { GoogleIcon } from '@icons';
 import { userLogin } from '@services/auth-services';
 import { routes } from '@constants/route-constants';
-import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/button-component';
+import AuthFormWrapper from '@components/common/wrapper/auth-form-wrapper';
+import Button from '@components/common/button';
 import { ResponseType } from '@models/global-models';
+import './login.css';
 
 const { Text } = Typography;
 
@@ -23,7 +23,7 @@ const Login: FC = () => {
     try {
       const res: ResponseType = await userLogin(values);
       form.resetFields();
-       message.success(res?.message);
+      message.success(res?.message);
     } catch (error: any) {
       message.error(error?.message ?? 'Something went wrong!');
     } finally {
@@ -32,7 +32,7 @@ const Login: FC = () => {
   };
 
   return (
-    <AuthCardWrapper>
+    <AuthFormWrapper>
       <div className="login-title-group">
         <Text className="login-title">Welcome back</Text>
         <Text className="login-subtitle">Micro management for progressive teams</Text>
@@ -82,7 +82,7 @@ const Login: FC = () => {
       <Text className="login-sign-up-text">
         Don't have any account? <a href={routes.sign_up.path}>Sign Up</a>
       </Text>
-    </AuthCardWrapper>
+    </AuthFormWrapper>
   );
 };
 

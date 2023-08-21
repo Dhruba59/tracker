@@ -1,3 +1,3 @@
-import PasswordInput from './input';
+import PasswordInput from './password-input';
 
 export default PasswordInput;

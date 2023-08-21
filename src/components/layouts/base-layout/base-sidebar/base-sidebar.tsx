@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout, MenuProps, Menu, theme } from 'antd';
 
-import './style.css';
 import { DashboardIcon, ExpandIcon, PlusIcon, SettingsIcon, WorkspaceIcon } from '@icons';
+import './base-sidebar.css';
 
 const { Sider } = Layout;
 
@@ -28,21 +28,11 @@ const items: MenuProps['items'] = [
         </span>
       </div>
     ),
-    // children: [
-    //   {
-    //     key: '9',
-    //     label: 'workspace 1',
-    //   },
-    //   {
-    //     key: '93',
-    //     label: 'workspace 2',
-    //   }
-    // ]
   },
   {
     key: '212',
     label: (
-      <span className='workspace-item-label'>
+      <span className='sidebar-workspace-item-label'>
         Workspace 2
       </span>
     ),
@@ -61,7 +51,7 @@ const items: MenuProps['items'] = [
   {
     key: '22',
     label: (
-      <span className='workspace-item-label'>
+      <span className='sidebar-workspace-item-label'>
         Workspace 2
       </span>
     ),
@@ -80,21 +70,17 @@ const items: MenuProps['items'] = [
 ];
 
 const BaseSidebar: React.FC = () => {
-  // const {
-  //   token: { colorBgContainer },
-  // } = theme.useToken();
-
   return (
-        <Sider className='sidebar-sider'>
-          <Menu
-            className='sidebar-menu'
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-            items={items}
-          />
-        </Sider>
+    <Sider className='sidebar-sider'>
+      <Menu
+        className='sidebar-menu'
+        mode="inline"
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        style={{ height: '100%', borderRight: 0 }}
+        items={items}
+      />
+    </Sider>
   );
 };
 

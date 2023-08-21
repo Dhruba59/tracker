@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Typography, message } from 'antd';
 
-import Button from '@components/common/button-component';
-import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
+import Button from '@components/common/button';
+import AuthFormWrapper from '@components/common/wrapper/auth-form-wrapper';
 import { FullPageBlurLoading } from '@components/full-page-loading';
 import { EmailIcon } from '@icons';
 import { routes } from '@constants/route-constants';
 import { verifyEmail } from '@services/auth-services';
-import './style.css';
+import './email-verification.css';
 
 const { Text } = Typography;
 
@@ -40,7 +40,7 @@ const EmailVerification = () => {
   }
 
   return (
-    <AuthCardWrapper className='email-veriifcation-main-container'>
+    <AuthFormWrapper className='email-veriifcation-main-container'>
       <div className='email-verification-icon'><EmailIcon/></div>
       <Text className='email-verification-text'> 
         { verificationStatus === EMAIL_VERIFICATION_STATUS.VERIFIED ? 
@@ -48,7 +48,7 @@ const EmailVerification = () => {
         }
       </Text>
       <Button type='link' href={routes.login.path}>Go to login</Button>
-    </AuthCardWrapper>
+    </AuthFormWrapper>
   );
 };
 
