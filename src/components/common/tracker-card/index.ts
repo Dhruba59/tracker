@@ -1,3 +1,3 @@
-import TrackerCard from './tracker';
+import TrackerCard from './tracker-card';
 
 export default TrackerCard;

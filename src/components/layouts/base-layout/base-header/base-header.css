@@ -5,7 +5,7 @@
   background-color: white;
 }
 
-.menu {
+.header-menu {
   display: flex;
   column-gap: 15px;
   justify-content: flex-end;
@@ -13,7 +13,7 @@
   width: 80%;
 }
 
-.ant-menu-item.menu-item {
+.ant-menu-item.header-menu-item {
   display: flex;
   align-items: center;
   padding: 0px;

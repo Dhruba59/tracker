@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Form, Typography, message } from 'antd';
 
-import './style.css';
 import PasswordInput from '@components/common/input-fields/password-input';
-import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/button-component';
+import AuthCardWrapper from '@components/common/wrapper/auth-form-wrapper';
+import Button from '@components/common/button';
 import { resetPassword } from '@services/auth-services';
 import { routes } from '@constants/route-constants';
+import './new-password-form.css';
 
 const { Text } = Typography;
 

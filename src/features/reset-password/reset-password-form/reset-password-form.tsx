@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { Form, Typography, message } from 'antd';
 
-import './style.css';
 import TextInput from '@components/common/input-fields/text-input';
 import { routes } from '@constants/route-constants';
-import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/button-component';
+import AuthCardWrapper from '@components/common/wrapper/auth-form-wrapper';
+import Button from '@components/common/button';
 import { ResetPasswordProps } from '@models/reset-password';
 import { requestResetPassword } from '@services/auth-services';
+import './reset-password-form.css';
 
 const { Text } = Typography;
 

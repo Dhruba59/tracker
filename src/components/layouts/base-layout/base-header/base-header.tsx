@@ -1,10 +1,9 @@
 import { Avatar, Badge, Layout, Menu, MenuProps } from 'antd';
-import React from 'react';
 
-import './style.css';
 import { LogoIcon, NotificationIcon, QuestionCircle, SettingsIcon, WorkspaceIcon } from '@icons';
+import './base-header.css';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header } = Layout;
 
 const BaseHeader = () => {
 
@@ -12,7 +11,7 @@ const BaseHeader = () => {
     {
       key: 'questionCircle',
       icon: <QuestionCircle />,
-      className: 'menu-item'
+      className: 'header-menu-item'
     },
     {
       key: 'app',
@@ -21,20 +20,20 @@ const BaseHeader = () => {
           <NotificationIcon />
         </Badge>
       ),
-      className: 'menu-item'
+      className: 'header-menu-item'
     },
     {
       key: 'avatar',
       icon: <Avatar />,
       label: 'John doe',
-      className: 'menu-item'
+      className: 'header-menu-item'
     },
   ];
 
   return (
     <Header className='header'>
       <LogoIcon />
-      <Menu className='menu' mode="horizontal" items={items} />
+      <Menu className='header-menu' mode="horizontal" items={items} />
     </Header>
   );
 };

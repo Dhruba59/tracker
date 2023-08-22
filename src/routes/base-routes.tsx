@@ -3,12 +3,12 @@ import { createBrowserRouter } from 'react-router-dom';
 import { routes } from '@constants/route-constants';
 import BaseLayout from '@components/layouts/base-layout';
 import AuthLayout from '@components/layouts/auth-layout';
-import Login from '@features/login';
-import SignUp from '@features/sign-up';
+import Login from '@features/auth/login';
+import SignUp from '@features/auth/sign-up';
 import Dashboard from '@features/dashboard';
 import ResetPassword from '@features/reset-password';
 import NewPasswordForm from '@features/reset-password/new-password-form';
-import EmailVerification from '@features/email-verification';
+import EmailVerification from '@features/auth/email-verification';
 
 const MainRoutes = createBrowserRouter([
   {

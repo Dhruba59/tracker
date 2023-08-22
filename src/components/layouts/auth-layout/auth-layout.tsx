@@ -1,10 +1,11 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import './style.css';
+
 import authImage from 'assets/images/auth-image.png';
 import { useSession } from '@hooks/session-hooks';
 import { routes } from '@constants/route-constants';
 import { EmailIcon2, LogoIcon } from '@icons';
 import { Typography } from 'antd';
+import './auth-layout.css';
 
 const { Text } = Typography;
 

@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import { Form, Typography, message } from 'antd';
 
-import './style.css';
 import { Credentials } from '@models/auth-models';
 import CheckboxInput from '@components/common/input-fields/checkbox';
 import PasswordInput from '@components/common/input-fields/password-input';
@@ -9,9 +8,10 @@ import TextInput from '@components/common/input-fields/text-input';
 import { GoogleIcon } from '@icons';
 import { userSignUp } from '@services/auth-services';
 import { routes } from '@constants/route-constants';
-import AuthCardWrapper from '@components/common/wrapper/AuthWrapper/auth-card-wrapper';
-import Button from '@components/common/button-component';
+import AuthFormWrapper from '@components/common/wrapper/auth-form-wrapper';
+import Button from '@components/common/button';
 import { ResponseType } from '@models/global-models';
+import './sign-up.css';
 
 const { Text } = Typography;
 
@@ -33,7 +33,7 @@ const SignUp: FC = () => {
   };
 
   return (
-    <AuthCardWrapper>
+    <AuthFormWrapper>
        <div className="signup-title-group">
         <Text className="signup-title">Welcome back</Text>
         <Text className="signup-subtitle">Micro management for progressive teams</Text>
@@ -101,7 +101,7 @@ const SignUp: FC = () => {
       <Text className="signup-text">
         Already have an account? <a href={routes.login.path}>Sign In</a>
       </Text>
-    </AuthCardWrapper>
+    </AuthFormWrapper>
   );
 };
 
