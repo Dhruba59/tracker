@@ -1,19 +1,33 @@
 import { FC } from 'react';
-import { useParams } from 'react-router-dom';
-import { Form, Typography } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Form, Typography, message } from 'antd';
 
-import './style.css';
-import PasswordInput from '@components/common/InputFields/PasswordInput';
-import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/Button';
+import PasswordInput from '@components/common/input-fields/password-input';
+import AuthCardWrapper from '@components/common/wrapper/auth-form-wrapper';
+import Button from '@components/common/button';
+import { resetPassword } from '@services/auth-services';
+import { routes } from '@constants/route-constants';
+import './new-password-form.css';
 
 const { Text } = Typography;
 
 const NewPasswordForm: FC = () => {
   const { token } = useParams();
+  const navigate = useNavigate();
 
-  const setNewPassword = ({ password, confirmed_password }: any) => {
-    console.log('set new password with token, pass, confirm pass');
+  const setNewPassword = async ({ password, confirmed_password }: any) => {
+    try {
+      const payload = {
+        newPassword: password,
+        confirmNewPassword: confirmed_password,
+        token: token ?? ''
+      };
+      await resetPassword(payload);
+      navigate(routes.login.path);
+      message.success('Successfully reset password!');
+    } catch(error: any) {
+      message.error(error?.message ?? 'Something went wrong!');
+    }
   };
 
   return (

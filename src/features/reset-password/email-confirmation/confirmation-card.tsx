@@ -1,10 +1,10 @@
 import { EmailIcon } from '@icons';
 import { Typography } from 'antd';
 
-import './style.css';
-import AuthCardWrapper from '@components/common/wrapper/AuthWrapper';
-import Button from '@components/common/Button';
+import AuthCardWrapper from '@components/common/wrapper/auth-form-wrapper';
+import Button from '@components/common/button';
 import { ConfirmationCardProps } from '@models/reset-password';
+import './confirmation-card.css';
 
 const { Text } = Typography;
 

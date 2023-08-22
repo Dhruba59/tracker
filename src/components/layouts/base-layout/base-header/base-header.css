@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.header-menu {
+  display: flex;
+  column-gap: 15px;
+  justify-content: flex-end;
+  align-items: center;
+  width: 80%;
+}
+
+.ant-menu-item.header-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+}
+
+.ant-layout-header.header {
+  padding-inline: 16px;
+}

@@ -1,0 +1,51 @@
+.tracker-main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 30px;
+  border-radius: 16px;
+  background-color: antiquewhite;
+  row-gap: 20px;
+}
+
+.tracker-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tracker-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 23px;
+}
+
+.tracker-target {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  border-radius: 12px;
+  background-color: #E6E7EC;
+  padding: 8px 10px 8px 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #494C57;
+}
+
+.tracker-date-card {
+  border-radius: 14px;
+  background-color: #EBF0FF;
+  padding: 6px 12px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.tracker-progress-text {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #020D3D; 
+}

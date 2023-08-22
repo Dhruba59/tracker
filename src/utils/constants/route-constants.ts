@@ -24,6 +24,11 @@ export const routes = {
     key: 'new_password',
     path: '/auth/reset-password/:token',
   },
+  email_verification: {
+    title: 'Email Verification',
+    key: 'email_verification',
+    path: '/auth/verify-email/:token',
+  },
   dashboard: {
     title: 'Dashboard',
     key: 'dashboard',
