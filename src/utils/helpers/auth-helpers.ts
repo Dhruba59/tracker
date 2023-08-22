@@ -6,8 +6,8 @@ export function ensureTrailingSlash(str: string = '/') {
 }
 
 export const getAccessToken = () => {
-  const accessToken = localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
-  // const accessToken = tokenData ? JSON.parse(tokenData)?.access_token : '';
+  const tokenData = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
+  const accessToken = tokenData ? JSON.parse(tokenData)?.access_token : '';
   return accessToken ?? '';
 };
 

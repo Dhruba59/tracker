@@ -9,6 +9,8 @@ import Dashboard from '@features/dashboard';
 import ResetPassword from '@features/reset-password';
 import NewPasswordForm from '@features/reset-password/new-password-form';
 import EmailVerification from '@features/auth/email-verification';
+import WorkspaceLayout from '@components/layouts/create-workspace-layout';
+import CreateFirstWorkspace from '@features/workspace/create-first-workspace';
 
 const MainRoutes = createBrowserRouter([
   {
@@ -35,6 +37,16 @@ const MainRoutes = createBrowserRouter([
         path: routes.email_verification.path,
         element: <EmailVerification />,
       }
+    ],
+  },
+  {
+    element: <WorkspaceLayout />,
+    // errorElement: <BaseLayout errorBoundary={true} />,
+    children: [
+      {
+        path: routes.create_first_workspace.path,
+        element: <CreateFirstWorkspace />,
+      },
     ],
   },
   {
