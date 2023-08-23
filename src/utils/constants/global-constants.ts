@@ -58,6 +58,7 @@ export const API_END_POINTS = {
   VERIFY_EMAIL: 'auth/verify-email',
   LOGOUT: 'auth/logout',
   RE_TOKEN: 'auth/re-token',
+  WORKSPACE: 'workspace',
   CAMPAIGNS: 'campaigns',
   LINE_ITEMS: 'campaigns/line-item',
   BUSINESS_UNITS: 'campaigns/business-unit',

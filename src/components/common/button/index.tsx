@@ -1,3 +1,3 @@
-import CustomButton from './button';
+import AppButton from './button';
 
-export default CustomButton;
+export default AppButton;

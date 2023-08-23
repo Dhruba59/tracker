@@ -57,37 +57,37 @@ class AxiosConfigService {
     });
   }
 
-  // private getAuthHeader(config: RequestConfig) {
-  //   return {
-  //     ...config.headers,
-  //     Authorization: `Bearer ${getAccessToken()}`,
-  //   };
-  // }
+  private getAuthHeader(config: RequestConfig) {
+    return {
+      ...config.headers,
+      Authorization: `Bearer ${getAccessToken()}`,
+    };
+  }
 
   get(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'get', url, ...config }).catch((err) => err);
   }
 
   post(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'post', url, ...config }).catch((err) => err);
   }
 
   put(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'put', url, ...config }).catch((err) => err);
   }
 
   patch(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'patch', url, ...config }).catch(
       (err) => err
     );
   }
 
   delete(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'delete', url, ...config }).catch(
       (err) => err
     );

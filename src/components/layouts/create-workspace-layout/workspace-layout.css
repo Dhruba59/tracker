@@ -1,0 +1,39 @@
+.workspace-layout-parent-container {
+  display: flex;
+}
+
+.workspace-layout-col-1 {
+  width: 33%;
+  height: calc(100vh - 96px);
+  grid-column-end: 1;
+  margin: auto;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+.workspace-layout-col-1-header {
+  margin-top: 0px;
+}
+
+.workspace-layout-col-2 {
+  height: 100vh;
+  width: 67%;
+  border: none;
+  background-color: #d9cfd5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../../assets//images//bg-auth.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+}
+
+.workspace-layout-stars-image {
+  position: absolute;
+  top: 48px;
+  right: 48px;
+}

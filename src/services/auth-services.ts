@@ -36,7 +36,7 @@ export function userLogin(
           refresh_token: resp.payload.refresh_token ?? '' 
          })
       );
-      location.href = routes.dashboard.path;
+      location.pathname = routes.create_first_workspace.path;
       return resp;
     })
     .catch((err) => {
@@ -72,7 +72,6 @@ export function userLogout(): Promise<LogoutResponse> {
   return httpClient.delete(url);
 }
 
-// Logout Service
 export function getRetoken(): Promise<LoginResponse> {
   return new Promise((resolve, reject) => {
     axios

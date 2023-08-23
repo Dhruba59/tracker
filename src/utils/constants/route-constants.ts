@@ -34,6 +34,11 @@ export const routes = {
     key: 'dashboard',
     path: '/dashboard',
   },
+  create_first_workspace: {
+    title: 'Create First Workspace',
+    key: 'create-first-workspace',
+    path: 'workspace/first-workspace',
+  },
   notFound: {
     title: 'Page Not Found',
     key: 'page-not-found',
