@@ -1,0 +1,31 @@
+.progress-container {
+  position: relative;
+}
+
+.progress-container .ant-progress-inner {
+  height: 16px; 
+}
+
+.progress-container .ant-progress-bg {
+  height: 16px !important;
+}
+
+.progress-container .ant-progress-bg {
+  background-color: #d4ba10; 
+}
+
+.progress-stop-point {
+  position: absolute;
+  top: 10px;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+}
+
+.tracker-modal .ant-modal-content {
+  width: 220px;
+}
+
+.tracker-modal-input {
+  border: 1px solid #DBE1F4;
+}

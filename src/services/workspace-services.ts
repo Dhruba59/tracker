@@ -13,3 +13,8 @@ export const getWorkspaceList = () => {
   const url = API_END_POINTS.WORKSPACE;
   return httpClient.get(url);
 };
+
+export const getWorkspaceById= (id: string) => {
+  const url = `${API_END_POINTS.WORKSPACE}/${id}`;
+  return httpClient.get(url);
+};

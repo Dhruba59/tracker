@@ -268,7 +268,12 @@ export const CorrectSignIcon = (props: SVGAttributes<SVGElement>) => {
   );
 };
 
-
-
-
-
+export const MilestoneBarIcon = (props: SVGAttributes<SVGElement>) => {
+  const { width = 16, height = 16, fill = 'none' } = props;
+  return (
+  <svg width={width} height={height} viewBox="0 0 16 16" fill={fill} xmlns="http://www.w3.org/2000/svg">
+    <rect x="0.400391" y="8" width="10.748" height="10.748" rx="1.2" transform="rotate(-45 0.400391 8)" fill="#3866FF"/>
+    <path d="M5.7676 7.93631L6.87502 8.21151L6.23743 10.7888C6.08977 11.3928 6.38507 11.5942 6.89516 11.2385L10.3718 8.82897C10.7947 8.53366 10.7342 8.19135 10.2309 8.06383L9.12344 7.78867L9.76106 5.21136C9.90872 4.60731 9.6134 4.40597 9.10331 4.76169L5.62666 7.1712C5.20382 7.46652 5.26422 7.80878 5.7676 7.93631Z" fill="#FCFCFF"/>
+  </svg>
+  );
+};

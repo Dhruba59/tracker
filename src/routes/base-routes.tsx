@@ -11,6 +11,7 @@ import NewPasswordForm from '@features/reset-password/new-password-form';
 import EmailVerification from '@features/auth/email-verification';
 import WorkspaceLayout from '@components/layouts/create-workspace-layout';
 import CreateFirstWorkspace from '@features/workspace/create-first-workspace';
+import WorkspaceDetails from '@features/workspace/workspace-details/workspace-details';
 
 const MainRoutes = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const MainRoutes = createBrowserRouter([
       {
         path: routes.dashboard.path,
         element: <Dashboard />,
+      },
+      {
+        path: `${routes.workspace.path}/:id`,
+        element: <WorkspaceDetails />,
       },
     ],
   }

@@ -1,11 +1,18 @@
 import { CorrectSignIcon, ThreeDotIcon } from '@icons';
-import { Avatar, Typography } from 'antd';
+import { Avatar, Form, Modal, Progress, Typography } from 'antd';
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons';
+
+import TrackerProgressbar from '../tracker-progressbar';
 import './tracker-card.css';
+import { TrackerCardInfo } from '@models/tracker';
 
-const TrackerCard = () => {
+export interface TrackerCardProps {
+  tracker: TrackerCardInfo;
+}
+
+const TrackerCard = ({ tracker }: TrackerCardProps) => {
   const { Text } = Typography;
-
+  const { title, target, progressPercent, startDate, endDate } = tracker;
   return (
     <div className='tracker-main-container'>
       <div className='tracker-row'>
@@ -15,7 +22,7 @@ const TrackerCard = () => {
       <div className='tracker-row'>
         <div className='tracker-target'>
           <CorrectSignIcon width={12} height={12}/>
-          <Text>Target: 1222/5000</Text>
+          <Text>Target: {target}</Text>
         </div>
         <Avatar.Group>
           <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel&key=1' />
@@ -28,15 +35,12 @@ const TrackerCard = () => {
           <Avatar style={{ backgroundColor: '#1677ff' }} icon={<AntDesignOutlined />} />
         </Avatar.Group>
       </div>
-      <div>
-        
-      </div>
+      <TrackerProgressbar progressPercent={progressPercent} breakPoints={[23,44,90]} />   
       <div className='tracker-row'>
-        <div className='tracker-date-card'>2023-11-08</div>
-        <Text className='tracker-progress-text'>Work Progress: 0%</Text>
-        <div className='tracker-date-card'>2023-11-08</div>
+        <div className='tracker-date-card'>{startDate}</div>
+        <Text className='tracker-progress-text'>Work Progress: <span>{progressPercent}%</span></Text>
+        <div className='tracker-date-card'>{endDate}</div>
       </div>
-      <div></div>
     </div>
   );
 };
