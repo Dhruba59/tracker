@@ -22,3 +22,28 @@
 .ant-layout-header.header {
   padding-inline: 16px;
 }
+
+/* .ant-menu-item-selected::after, .ant-menu-item-selected::before, .ant-menu-item-selected:hover {
+  border-bottom-width: 0px !important;
+  border-style: none !important;
+  border-bottom: 0px !important;
+} */
+
+.header-popover-item {
+  width: 100% !important;
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+  padding: 4px 0px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.header-popover-item-icon {
+  width: 30px;
+}
+
+.header-popover {
+  width: 236px;
+}

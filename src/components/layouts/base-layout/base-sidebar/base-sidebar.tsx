@@ -12,7 +12,16 @@ const { Sider } = Layout;
 const BaseSidebar: React.FC = () => {
   const [workspaces, setWorkspaces] = useState(); 
   const [isWorkspaceInputOpen, setIsWorkspaceInputOpen] = useState<boolean>(false); 
-  const [ form ] = Form.useForm();
+  const [form] = Form.useForm();
+
+  const fetchWorkspacesData = async () => {
+    try{
+      const workspaceData: ResponseType = await getWorkspaceList();
+      setWorkspaces(workspaceData?.payload);
+    } catch(error: any) {
+      console.log('error');
+    }
+  };
 
   const createNewWorkspace = async () => {
     const title = form.getFieldValue('title');
@@ -23,6 +32,8 @@ const BaseSidebar: React.FC = () => {
       setIsWorkspaceInputOpen(false);
     } catch(error: any) {
       message.error(error?.message ?? 'Unable to create workspace!');
+    } finally {
+      await fetchWorkspacesData();
     }
   };
 
@@ -40,7 +51,6 @@ const BaseSidebar: React.FC = () => {
       },
       {
         key: '3',
-        // icon: <WorkspaceIcon />,
         label: (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -91,14 +101,7 @@ const BaseSidebar: React.FC = () => {
   };
   
   useEffect(() => {
-    (async () => {
-      try{
-        const workspaceData: ResponseType = await getWorkspaceList();
-        setWorkspaces(workspaceData?.payload);
-      } catch(error: any) {
-        console.log('error');
-      }
-    })();
+    fetchWorkspacesData();
   }, []);
 
   return (

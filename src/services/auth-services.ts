@@ -66,10 +66,13 @@ export const verifyEmail = (data : EmailVerificationPayload) => {
 };
 
 // Logout Service
-export function userLogout(): Promise<LogoutResponse> {
-  const url = API_END_POINTS.LOGOUT;
-
-  return httpClient.delete(url);
+// export function userLogout(): Promise<LogoutResponse> {
+//   const url = API_END_POINTS.LOGOUT;
+//   return httpClient.delete(url);
+// }
+export function userLogout() {
+  localStorage.clear();
+  window.location.pathname = routes.login.path;
 }
 
 export function getRetoken(): Promise<LoginResponse> {
