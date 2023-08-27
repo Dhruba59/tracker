@@ -1,0 +1,46 @@
+.ant-modal.modal-container .ant-modal-content{
+  padding: 0px;
+  display: flex;
+  width: 1000px;
+  min-height: 400px;
+}
+
+.modal-container .ant-modal-body{
+  display: flex;
+  width: 100%;
+  /* justify-content: space-between; */
+}
+
+.modal-col-1 {
+  width: 30%;
+  background-image: url('../../../assets//images//bg-auth.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.modal-col-2 {
+  width: 70%;
+  /* background-image: url('../../../assets/images/bg-auth.png'); */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 24px;
+}
+
+.modal-header-title{
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #020D3D;
+}
+
+.modal-header-close-btn {
+  cursor: pointer;
+}
+
+.modal-col-2 .ant-divider-horizontal { 
+  margin: 0px;
+}

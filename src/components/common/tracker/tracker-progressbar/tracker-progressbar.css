@@ -22,10 +22,10 @@
   transform: translate(-50%, -50%);
 }
 
-.tracker-modal .ant-modal-content {
+.progress-tracker-tasks-popup .ant-modal-content {
   width: 220px;
 }
 
-.tracker-modal-input {
+.progress-tracker-input {
   border: 1px solid #DBE1F4;
 }

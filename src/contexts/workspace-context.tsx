@@ -1,14 +1,10 @@
+import { WorkspaceContextInitialValue } from '@models/workspace';
 import { Dispatch, FC, ReactNode, SetStateAction, createContext, useContext, useState } from 'react';
 
-interface InitialValue {
-  workspaceId: string;
-  setWorkspaceId: Dispatch<SetStateAction<string>>;
-}
-
-const WorkspaceContext = createContext<InitialValue>(null!);
+const WorkspaceContext = createContext<WorkspaceContextInitialValue>(null!);
 
 export const WorkspaceContextProvider: FC<{ children: ReactNode }> = ({children}) => {
-  const [workspaceId, setWorkspaceId] = useState<string>('');
+  const [workspaceId, setWorkspaceId] = useState<string>('') ;
   return (
     <WorkspaceContext.Provider value={{workspaceId, setWorkspaceId}} >
       {children}

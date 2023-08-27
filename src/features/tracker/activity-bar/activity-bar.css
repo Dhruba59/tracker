@@ -1,0 +1,10 @@
+.activity-card-container {
+  height: 100%;
+}
+
+.activity-card-container .ant-card-body{
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  margin-top: -24px;
+}

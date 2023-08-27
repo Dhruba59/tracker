@@ -40,7 +40,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:ital,wght@0,700;0,900;1,400&display=swap');
 
-html, body, h1, h2, h3, h4, h5, h6, div, p, span, strong, a, ul, li, .ant-typography {
+html, body, h1, h2, h3, h4, h5, h6, div, p, span, strong, a, ul, li, label, .ant-typography, .ant-form, .ant-form-item {
   font-family: 'Roboto', sans-serif
 }
 

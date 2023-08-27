@@ -1,9 +1,9 @@
-import { Avatar, Badge, Layout, Menu, MenuProps, Popover, Typography } from 'antd';
+import { useState } from 'react';
+import { Avatar, Badge, Dropdown, Layout, Menu, MenuProps, Popover, Typography } from 'antd';
 
 import { LogOutIcon, LogoIcon, NotificationIcon, QuestionCircle, SettingsIcon, WorkspaceIcon } from '@icons';
-import './base-header.css';
-import { useState } from 'react';
 import { userLogout } from '@services/auth-services';
+import './base-header.css';
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -18,24 +18,31 @@ const BaseHeader = () => {
     userLogout();
   };
 
-  const content = (
-    <div className='header-popover-content-container'>
-      <div className='header-popover-item'>
-        <span className='header-popover-item-icon' >
-          <Avatar size='small'/>
-        </span>
-        <Text>John doe</Text>
-      </div>
-      <div className="header-popover-item" onClick={handleLogout}>
-        <span className='header-popover-item-icon' >
-          <LogOutIcon />
-        </span>
-        <Text>Logout</Text>
-      </div>
-    </div>
-  );
+  const dropdownItems: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <div className='header-popover-item'>
+          <span className='header-popover-item-icon' >
+            <Avatar size='small'/>
+          </span>
+          <Text>John doe</Text>
+        </div>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <div className='header-popover-item'>
+          <span className='header-popover-item-icon'><LogOutIcon /></span>
+          <Text>Log out</Text>
+        </div>
+      ),
+      onClick: handleLogout
+    },
+  ];
 
-  const items: MenuProps['items'] = [
+  const headerMenuItems: MenuProps['items'] = [
     {
       key: 'questionCircle',
       icon: <QuestionCircle />,
@@ -54,14 +61,10 @@ const BaseHeader = () => {
       key: 'avatar',
       icon: <Avatar />,
       label: (
-        <div>
-          <span>John Doe</span>
-          <Popover 
-            rootClassName='header-popover' 
-            open={isPopupOpen} 
-            content={content} 
-            placement='bottomLeft'/>
-        </div> ),
+          <Dropdown menu={{ items: dropdownItems }} placement="bottomLeft" arrow>
+            <span>John Doe</span>
+          </Dropdown>
+        ),
       className: 'header-menu-item',
       onClick: handleClick
     },
@@ -70,7 +73,7 @@ const BaseHeader = () => {
   return (
     <Header className='header'>
       <LogoIcon />
-      <Menu className='header-menu' mode="horizontal" items={items} />   
+      <Menu className='header-menu' mode="horizontal" items={headerMenuItems} />   
     </Header>
   );
 };

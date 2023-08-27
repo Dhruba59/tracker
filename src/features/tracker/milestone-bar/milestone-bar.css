@@ -1,0 +1,11 @@
+.milestone-bar-container {
+  height: 100%;
+}
+
+.milestone-bar-container .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin-top: -10px;
+}
+

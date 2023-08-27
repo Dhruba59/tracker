@@ -1,0 +1,29 @@
+.task-bar-container {
+  height: 100%;
+}
+
+.taskbar-btn {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 0px;
+  margin-bottom: 10px;
+}
+
+.taskbar-input {
+  height: 24px;
+  padding: 1px 8px 1px 8px;
+  border-radius: 2px;
+  border: 1px solid #D9D9D9;
+}
+
+.tracker-input-info {
+   color: #00000073;
+}
+.tracker-input-info span {
+  color: #3866FF;
+}
+

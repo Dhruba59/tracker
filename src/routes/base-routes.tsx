@@ -11,7 +11,10 @@ import NewPasswordForm from '@features/reset-password/new-password-form';
 import EmailVerification from '@features/auth/email-verification';
 import WorkspaceLayout from '@components/layouts/create-workspace-layout';
 import CreateFirstWorkspace from '@features/workspace/create-first-workspace';
-import WorkspaceDetails from '@features/workspace/workspace-details/workspace-details';
+import WorkspaceDetails from '@features/workspace/workspace-details';
+import TrackerDetails from '@features/tracker';
+import Members from '@features/members';
+import Settings from '@features/settings';
 
 const MainRoutes = createBrowserRouter([
   {
@@ -61,6 +64,18 @@ const MainRoutes = createBrowserRouter([
       {
         path: `${routes.workspace.path}/:id`,
         element: <WorkspaceDetails />,
+      },
+      {
+        path: `${routes.tracker.path}/:id`,
+        element: <TrackerDetails />,
+      },
+      {
+        path: routes.members.path,
+        element: <Members />,
+      },
+      {
+        path: routes.settings.path,
+        element: <Settings />,
       },
     ],
   }

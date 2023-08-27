@@ -1,17 +1,22 @@
+import { Avatar } from 'antd';
+import { TrackerCardInfo } from '@models/tracker';
 import TrackerCard from '../../components/common/tracker/tracker-card';
 import './dashboard.css';
-const Dashboard =  () => {
-  const trackerDetails = {
-    title: 'Design tracker',
-    progressPercent: 33,
-    startDate: '12-08-2023',
-    endDate: '12-08-2023',
-    target: '22/333'
-  };
+import { tracker } from '@helpers/global-helpers';
 
+const Dashboard = () => {
   return (
     <div className='dashboard-main-container'>
-      <TrackerCard tracker={trackerDetails} />
+      <div className='dashboard-title'>
+        <Avatar />
+        <span>Vivasoft Workspace</span>
+      </div>
+      <div className='dashboard-tracker-container'>
+        <TrackerCard tracker={tracker}/>
+        <TrackerCard tracker={tracker}/>
+        <TrackerCard tracker={tracker}/>
+        <TrackerCard tracker={tracker}/>
+      </div>  
     </div>
   );
 };

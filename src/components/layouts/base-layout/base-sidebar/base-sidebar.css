@@ -21,7 +21,8 @@
 }
 
 .ant-layout-sider.sidebar-sider.ant-layout-sider-dark {
-  height: calc(100vh - 64px);;
+  height: calc(100vh - 64px);
+  border-right: 1px solid #F0F0F0;
 }
 
 .sidebar-workspace-item-label {
