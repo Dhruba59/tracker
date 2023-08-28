@@ -1,0 +1,12 @@
+.add-member-modal-container {
+  margin: 24px;
+  border: 1px solid #E6E7ECCC;
+}
+
+.member-card-name {
+  color: #000000D9;
+}
+
+.member-card-email {
+  color: #00000073;
+}

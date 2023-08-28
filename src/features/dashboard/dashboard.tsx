@@ -1,13 +1,22 @@
-import React from 'react';
-import TrackerCard from '../../components/common/tracker-card';
+import { Avatar } from 'antd';
+import { TrackerCardInfo } from '@models/tracker';
+import TrackerCard from '../../components/common/tracker/tracker-card';
 import './dashboard.css';
-import { getWorkspaceList } from '@services/workspace-services';
+import { tracker } from '@helpers/global-helpers';
 
-const Dashboard =  () => {
-
+const Dashboard = () => {
   return (
     <div className='dashboard-main-container'>
-      <TrackerCard />
+      <div className='dashboard-title'>
+        <Avatar />
+        <span>Vivasoft Workspace</span>
+      </div>
+      <div className='dashboard-tracker-container'>
+        <TrackerCard tracker={tracker}/>
+        <TrackerCard tracker={tracker}/>
+        <TrackerCard tracker={tracker}/>
+        <TrackerCard tracker={tracker}/>
+      </div>  
     </div>
   );
 };

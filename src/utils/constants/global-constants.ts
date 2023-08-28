@@ -59,6 +59,7 @@ export const API_END_POINTS = {
   LOGOUT: 'auth/logout',
   RE_TOKEN: 'auth/re-token',
   WORKSPACE: 'workspace',
+  TRACKER: 'tracker',
   CAMPAIGNS: 'campaigns',
   LINE_ITEMS: 'campaigns/line-item',
   BUSINESS_UNITS: 'campaigns/business-unit',

@@ -34,6 +34,26 @@ export const routes = {
     key: 'dashboard',
     path: '/dashboard',
   },
+  workspace: {
+    title: 'Workspace',
+    key: 'workspace',
+    path: '/workspace'
+  },
+  tracker: {
+    title: 'Tracker',
+    key: 'tracker',
+    path: '/tracker'
+  },
+  members: {
+    title: 'Members',
+    key: 'members',
+    path: '/members'
+  },
+  settings: {
+    title: 'Settings',
+    key: 'settins',
+    path: '/settings'
+  },
   create_first_workspace: {
     title: 'Create First Workspace',
     key: 'create-first-workspace',

@@ -6,13 +6,19 @@ import { createWorkspace, getWorkspaceList } from '@services/workspace-services'
 import { ResponseType } from '@models/global-models';
 import TextInput from '@components/common/input-fields/text-input';
 import './base-sidebar.css';
+import { routes } from '@constants/route-constants';
+import { useNavigate } from 'react-router-dom';
+import { useWorkspaceContext } from '@contexts/workspace-context';
 
 const { Sider } = Layout;
 
 const BaseSidebar: React.FC = () => {
   const [workspaces, setWorkspaces] = useState(); 
   const [isWorkspaceInputOpen, setIsWorkspaceInputOpen] = useState<boolean>(false); 
-  const [form] = Form.useForm();
+  const [ form ] = Form.useForm();
+  const navigate = useNavigate();
+  const {workspaceId, setWorkspaceId} = useWorkspaceContext();
+
 
   const fetchWorkspacesData = async () => {
     try{
@@ -35,6 +41,11 @@ const BaseSidebar: React.FC = () => {
     } finally {
       await fetchWorkspacesData();
     }
+  };
+
+  const handleWorkspaceClick = (id: string) => {
+    setWorkspaceId(id);
+    navigate(`${routes.workspace.path}/${id}`);
   };
 
   const getMenuItems = (data: any) => {
@@ -80,10 +91,13 @@ const BaseSidebar: React.FC = () => {
       items.push({
         key: workspace.id,
         label: (
-          <span className='sidebar-workspace-item-label'>
+          <span 
+            className='sidebar-workspace-item-label' 
+            onClick={() => handleWorkspaceClick(workspace.id)} >
             {workspace.title}
           </span>
         ),
+        
         expandIcon: <ExpandIcon/>,
         children: [
           {

@@ -1,0 +1,16 @@
+.member-card-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 25px;
+}
+
+.member-card-col-1 {
+  display: flex;
+  column-gap: 8px;
+}
+
+.member-card-col-1-row-2 {
+  display: flex;
+  flex-direction: column;
+}
+

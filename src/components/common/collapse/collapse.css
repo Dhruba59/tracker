@@ -1,0 +1,9 @@
+.app-collapse {
+  background-color: #F9FAFF;
+}
+
+.app-collapse .ant-collapse-header-text {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+}

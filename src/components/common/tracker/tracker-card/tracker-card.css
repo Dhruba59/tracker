@@ -4,7 +4,7 @@
   width: 100%;
   padding: 30px;
   border-radius: 16px;
-  background-color: antiquewhite;
+  background-color: white;
   row-gap: 20px;
 }
 
@@ -36,6 +36,7 @@
 .tracker-date-card {
   border-radius: 14px;
   background-color: #EBF0FF;
+  color: #2D52CC;
   padding: 6px 12px;
   font-family: Roboto;
   font-size: 14px;

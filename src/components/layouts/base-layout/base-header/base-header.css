@@ -3,6 +3,8 @@
   align-items: center;
   justify-content: space-between;
   background-color: white;
+  border-bottom: 1px solid #F0F0F0 !important;
+  
 }
 
 .header-menu {
@@ -11,6 +13,7 @@
   justify-content: flex-end;
   align-items: center;
   width: 80%;
+  border: none;
 }
 
 .ant-menu-item.header-menu-item {
@@ -31,19 +34,20 @@
 
 .header-popover-item {
   width: 100% !important;
+  min-width: 200px;
   display: flex;
   column-gap: 4px;
   align-items: center;
-  padding: 4px 0px;
-  font-size: 14px;
-  font-weight: 400;
-  cursor: pointer;
+  /* padding: 4px 0px; */
+  /* font-size: 14px;
+  font-weight: 400; */
+  /* cursor: pointer; */
 }
 
 .header-popover-item-icon {
   width: 30px;
 }
 
-.header-popover {
+.header-popover-content-container {
   width: 236px;
 }

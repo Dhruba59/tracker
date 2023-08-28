@@ -11,6 +11,10 @@
   display: flex;
   flex-direction: column;
   border: none;
+  background-image: url('../../../assets//images//bg-auth.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .workspace-layout-col-1-header {
@@ -21,14 +25,14 @@
   height: 100vh;
   width: 67%;
   border: none;
-  background-color: #d9cfd5;
+  /* background-color: #d9cfd5; */
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../../../assets//images//bg-auth.png');
+  /* background-image: url('../../../assets//images//bg-auth.png');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center center; */
   position: relative;
 }
 
