@@ -165,10 +165,10 @@ export const PlusIcon = (props: SVGAttributes<SVGElement>) => {
   );
 };
 
-export const ExpandIcon = (props: SVGAttributes<SVGElement>) => {
-  const { width = 15, height = 9, fill = 'none' } = props;
+export const ArrowDown = (props: SVGAttributes<SVGElement>) => {
+  const { width = 15, height = 9, fill = 'none', ...rest } = props;
   return (
-    <svg width={width} height={height} viewBox="0 0 15 9" fill={fill} xmlns="http://www.w3.org/2000/svg">
+    <svg width={width} height={height} viewBox="0 0 15 9" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"
@@ -178,6 +178,16 @@ export const ExpandIcon = (props: SVGAttributes<SVGElement>) => {
     </svg>
   );
 };
+
+export const ArrowUp = (props: SVGAttributes<SVGElement>) => {
+  const { width = 15, height = 9, fill = 'none', ...rest } = props;
+  return (
+    <svg width={width} height={height} viewBox="0 0 15 9" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7071 8.70711C14.3166 9.09763 13.6834 9.09763 13.2929 8.70711L7.5 2.91422L1.70711 8.70711C1.31658 9.09763 0.683417 9.09763 0.292893 8.70711C-0.0976316 8.31659 -0.0976317 7.68342 0.292893 7.2929L6.08578 1.5C6.86683 0.718952 8.13316 0.718953 8.91421 1.5L14.7071 7.29289C15.0976 7.68342 15.0976 8.31658 14.7071 8.70711Z" fill="#B8C9FF"/>
+    </svg>
+  );
+};
+
 
 export const LogoIcon = (props: SVGAttributes<SVGElement>) => {
   const { width = 106, height = 24, fill = 'none' } = props;

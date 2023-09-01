@@ -1,22 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Typography } from 'antd';
+import { Form, Typography, message } from 'antd';
 import { DeleteIcon, DotIcon, EditIcon } from '@icons';
 import CheckboxInput from '@components/common/input-fields/checkbox';
 import TextInput from '@components/common/input-fields/text-input';
-import { TaskItemProps } from '@models/tracker';
+import { TASK_TYPE, TaskItemProps, TaskStatusEnum, UpdateTaskPayload } from '@models/task';
 import './task-item.css';
+import { updateTask } from '@services/task-service';
+import { ResponseType } from '@models/global-models';
 
 const { Text } = Typography;
 
-const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete }) => {
   const [isInputOpen, setIsInputOpen] = useState<boolean>(false);
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
   const taskItemRef = useRef<HTMLDivElement | null>(null);
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  // const [isChecked, setIsChecked] = useState<boolean>(false);
+
+  const [form] = Form.useForm();
 
   const handleTaskUpdate = (e: any) => {
     console.log(e.target.value);
+    const payload = {
+      title: e.target.value,
+    };
+    onTaskUpdate(task.id, payload);
     setIsInputOpen(false);
+  };
+
+  const handleTaskDelete = () => {
+    onTaskDelete(task.id);
   };
 
   const handleEditClick = (event: React.MouseEvent) => {
@@ -28,15 +40,19 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
     setIsInputOpen(false);
   };
 
-  const handleDelteClick = () => {
-    console.log('deleted');
-  };
-
-  console.log('rerendering');
-
   const handleCheckbox = (e: any) => {
-    setIsChecked(e.target.checked);
+    const payload = {
+      task_type: TASK_TYPE.TRACKER,
+      is_done: e.target.checked ? TaskStatusEnum.DONE : TaskStatusEnum.PENDING
+    };
+    // setIsChecked(e.target.checked);
+    onTaskUpdate(task.id, payload);
+
   };
+
+  useEffect(() => {
+    form.setFieldValue('task-name', task.title);
+  }, [task]);
 
   // TODO
   // const handleClickOutside = (event: MouseEvent) => {
@@ -60,16 +76,22 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
       onMouseLeave={handleOnMouseLeave}
     >
       <DotIcon />
-      <CheckboxInput onChange={handleCheckbox} />
+      <CheckboxInput checked={task?.is_done} onChange={handleCheckbox} />
       {!isInputOpen && (
-        <Text style={{textDecoration: isChecked ? 'line-through' : ''}}>{task}</Text>
+        <Text style={{textDecoration: task?.is_done ? 'line-through' : ''}}>{task?.title}</Text>
       )}
       
-      {isInputOpen && <TextInput className='task-item-input' onPressEnter={handleTaskUpdate}/>}
+      {isInputOpen && 
+        <Form form={form}>
+          <Form.Item name='task-name'>
+            <TextInput className='task-item-input' onPressEnter={handleTaskUpdate}/>
+          </Form.Item>
+        </Form>
+      }
       {isMouseOver && !isInputOpen && (
         <>
           <EditIcon onClick={handleEditClick} />
-          <DeleteIcon onClick={handleDelteClick}/>
+          <DeleteIcon onClick={handleTaskDelete}/>
         </>
       )}
       

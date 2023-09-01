@@ -1,28 +1,81 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { DotIcon, EditIcon, PlusCircleRoundedIcon } from '@icons';
-import { Button, Card, Col, Row, Typography, message } from 'antd';
+import { Button, Card, Col, Form, Row, Typography, message } from 'antd';
 import './task-bar.css';
 import TextInput from '@components/common/input-fields/text-input';
-import { TRACKER_TYPE, TaskBarProps, TrackerCardInfo } from '@models/tracker';
 import Checkbox from 'antd/es/checkbox/Checkbox';
 import TaskItem from './task-item';
+import { createTask, deleteTask, getTasks, updateTask } from '@services/task-service';
+import { ResponseType } from '@models/global-models';
+import { TASK_TYPE, TaskBarProps, TaskStatusEnum, UpdateTaskPayload } from '@models/task';
+import { TRACKER_TYPE } from '@models/tracker';
 const { Text } = Typography;
 
 const TaskBar = ({ tracker }: TaskBarProps) => {
   const [isTextInputOpen, setIsTextInputOpen] = useState<boolean>(false);
   const [isLoading, setIsloading] = useState<boolean>(false);
+  const [tasks, setTasks] = useState<any>();
+  const [taskItemForm] = Form.useForm();
 
-  const handleTaskCreate = (e: any) => {
+  const fetchData = async () => {
+    try {
+      console.log('task fetching');
+      const payload = {
+        tracker_id: tracker.id!,
+        task_type: TASK_TYPE.TRACKER,
+        // milestone_id: 'sadfasdfasd'
+      };
+      const res: ResponseType = await getTasks(payload);
+      setTasks(res?.payload);
+    } catch (error: any) {
+      console.log('task error');
+    };
+  };
+
+  console.log('task', tasks);
+  useEffect(() => {
+    fetchData();
+  }, [tracker]);
+
+  const onTaskUpdate = (id: string, payload: Omit<UpdateTaskPayload,'tracker_id'>) => {
+    const newPayload: UpdateTaskPayload = {...payload, tracker_id: tracker?.id!};
+    updateTask(id, newPayload)
+      .then((res: ResponseType) => {
+        message.success(res?.message ?? 'Successfully updated');
+        // taskItemForm.setFieldValue('task-name', payload.title);
+        fetchData();
+      })
+      .catch((error: any) => message.error(error?.message ?? 'Unable to update'));
+  };
+
+  const onTaskDelete = (id:string) => {
+    deleteTask(id)
+      .then((res: ResponseType) => {
+        message.success(res?.message ?? 'Successfully Deleted');
+        // taskItemForm.setFieldValue('task-name', payload.title);
+        fetchData();
+      })
+      .catch((error: any) => message.error(error?.message ?? 'Unable to update'));
+  };
+
+  const handleTaskCreate = async (e: any) => {
     try {
       setIsloading(true);
-      // const res = await addTask(e.target.value);
-      // message.success(res?.message ?? 'Successfully added task!');
+      const payload = {
+        title: e.target.value,
+        task_type: TASK_TYPE.TRACKER,
+        tracker_id: tracker.id!,
+        is_done: TaskStatusEnum.PENDING,
+      };
+      const res = await createTask(payload);
+      message.success(res?.message ?? 'Successfully added task!');
       e.target.value = '';
       setIsTextInputOpen(false);
       setIsloading(false);
+      fetchData();
     } catch (error: any) {
       message.error(error?.message ?? 'Something went wrong!');
-    }
+    };
   };
 
   const handleBtnClick = () => {
@@ -31,14 +84,14 @@ const TaskBar = ({ tracker }: TaskBarProps) => {
 
   const renderTaskContent = (
     <div>
-      {tracker?.task?.map((task: any) => (
-        <TaskItem task={task}/>
+      {tasks?.map((task: any) => (
+        <TaskItem form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} />
       ))}
     </div>
   );
 
   return (
-    <Card className='task-bar-container' title="Task" bordered={false}>
+    <Card className='task-bar-container hide-scrollbar' title="Task" bordered={false}>
       <Button 
         icon={<PlusCircleRoundedIcon />} 
         type='link' 

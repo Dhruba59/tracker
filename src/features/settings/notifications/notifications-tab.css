@@ -1,3 +1,7 @@
+.notifications-tab-container {
+  width: 500px;
+}
+
 .notifications-tab-header {
   display: flex;
   justify-content: space-between;

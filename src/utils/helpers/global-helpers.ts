@@ -25,3 +25,31 @@ export const tracker: TrackerCardInfo = {
     'task2', 'task43', 'tasdfas43', 'task'
   ]
 };
+
+export function formatTime(date: string | Date) {
+  date = new Date(date);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  // Convert hours to 12-hour format
+  const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+
+  // Determine whether it's AM or PM
+  const amOrPm = hours < 12 ? 'am' : 'pm';
+
+  // Format minutes with leading zero if needed
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+  // Create the formatted time string
+  const formattedTime = `${formattedHours}.${formattedMinutes} ${amOrPm}`;
+
+  return formattedTime;
+}
+
+export const generateMilestoneTitle = (length: number) => {
+  return `milestone-${length+1}`;
+};
+
+const currentDate = new Date();
+const formattedTimeString = formatTime(currentDate);
+console.log(formattedTimeString); // Output: '8.20 pm'

@@ -133,6 +133,21 @@ class HttpClientInstance {
 
     return this.returnPromiseData(response);
   }
+  // TODO - That might be good rather than using try catch in every api hit
+  // TODO - using it here and sending the data or error from here
+  // async post(url: string, config: RequestConfig = {}) {
+  //   try {
+  //     let response: Response = await this.httpClient.post(url, config);
+  //     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
+  //       // await getRetoken();
+  //       response = await this.httpClient.post(url, config);
+  //     }
+  //     return { data: response }
+  //   } catch(error: any) {
+  //     return { error };
+  //   }
+  //   // return this.returnPromiseData(response);
+  // }
 
   async put(url: string, config: RequestConfig = {}) {
     let response: Response = await this.httpClient.put(url, config);

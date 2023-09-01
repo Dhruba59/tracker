@@ -1,36 +1,43 @@
-import AppTable from '@components/common/table';
 
-import './members.css';
-import { TableDataType } from '@models/members';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { ColumnsType } from 'antd/es/table';
-import { Avatar, Dropdown, MenuProps, Space, Typography } from 'antd';
+import { Avatar, Dropdown, MenuProps, Space, Typography, message } from 'antd';
+
+import { MEMBER_ROLE_TYPE, TableDataType } from '@models/members';
 import { DeleteIcon2, DownArrowIcon, PlusIcon } from '@icons';
 import AddMemberModal from './add-member-modal';
-import { useState } from 'react';
 import PageHeader from '@components/common/page-header';
+import AppTable from '@components/common/table';
+import './members.css';
+import { deleteWorkspaceMember, getMembersByWorkspaceId } from '@services/workspace-members-service';
+import { ResponseType } from '@models/global-models';
+import { getWorkspaceById } from '@services/workspace-services';
+import { getAllUser } from '@services/user-services';
 
 const { Text } = Typography;
 
 const roleItems: MenuProps['items'] = [
   {
-    key: '1',
-    label: 'Viewer',
+    key:  MEMBER_ROLE_TYPE.OWNER,
+    label: 'Owner',
   },
   {
-    key: '2',
-    label: 'Editor',
-  },
-  {
-    key: '3',
-    label: 'Admin',
+    key: MEMBER_ROLE_TYPE.NOT_OWNER,
+    label: 'Not Owner',
   },
 ];
 
-const RoleDropDown = () => (
-  <Dropdown menu={{items: roleItems }}>
+const handleRoleChange = (e: any) => {
+  //updateMember(e.key)
+  // setSelectedRole(e.key);
+};
+
+const RoleDropDown = ({children}: any) => (
+  <Dropdown menu={{items: roleItems, onClick: handleRoleChange }}>
     <a onClick={(e) => e.preventDefault()}>
       <Space>
-        Hover me
+        {children}
         <DownArrowIcon />
       </Space>
     </a>
@@ -39,14 +46,19 @@ const RoleDropDown = () => (
 
 const Members = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [members, setMembers] = useState<any>();
+  const [title, setTitle] = useState<string>('');
+  const [selectedRole, setSelectedRole] = useState('');
+  const [memberOptions, setMemberOptions] = useState();
+  const {workspaceId} = useParams();
 
   const onCloseModal = () => {
     setIsModalOpen(false);
   };
 
-const openModal = () => {
-  setIsModalOpen(false);
-};
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
   // rowSelection object indicates the need for row selection
   const rowSelection = {
@@ -57,6 +69,18 @@ const openModal = () => {
       disabled: record.name === 'Disabled User', // Column configuration not to be checked
       name: record.name,
     }),
+  };
+
+  const handleDelete = (id: string) => {
+    deleteWorkspaceMember({
+      memberId: id,
+      workspaceId: workspaceId!
+    }).then((res: ResponseType) => {
+      message.success(res?.message ?? 'Successfully Deleted!');
+      fetchMembers();
+    }).catch((error: any) => {
+      message.error(error?.message ?? '');
+    });
   };
 
   const columns: ColumnsType<TableDataType> = [
@@ -72,59 +96,68 @@ const openModal = () => {
     {
       title: <Text className='members-table-title'>Role</Text>,
       dataIndex: 'role',
-      render: (text, record) => <RoleDropDown />,
+      render: (text, record) => <RoleDropDown>{RoleDropDown}</RoleDropDown>,
     },
     {
       title: <Text className='members-table-title'>Action</Text>,
       dataIndex: 'action',
-      render: () => <DeleteIcon2 />
+      render: (_, record) => <DeleteIcon2 onClick={() => handleDelete(record.id)} />
     },
   ];
 
-  const data: TableDataType[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      email: 'acbd@gmail.com',
-      role: 'New ',
-      action: 'sssss'
-    },
-    {
-      key: '2',
-      name: 'John Brown',
-      email: 'acbd@gmail.com',
-      role: 'New ',
-      action: 'sssss'
-    },
-    {
-      key: '3',
-      name: 'John Brown',
-      email: 'acbd@gmail.com',
-      role: 'New ',
-      action: 'sssss'
-    },
-    {
-      key: '4',
-      name: 'John Brown',
-      email: 'acbd@gmail.com',
-      role: 'New ',
-      action: 'sssss'
-    },
-  ];
+  const getTableData: any = () => (
+    members?.map((member: any) => ({
+      key: member.user.id,
+      id: member.user.id,
+      name: member.user.name,
+      email: member.user.email,
+      role: member.is_owner ? MEMBER_ROLE_TYPE.OWNER : MEMBER_ROLE_TYPE.NOT_OWNER,
+    }))
+  );
+
+  const formatSelectOptions = (list: any) => (
+    list.map((item: any) => ({
+      value: item.id,
+      label: item.name
+    }))
+  );
+
+  const fetchMembers = () => {
+    getMembersByWorkspaceId(workspaceId!)
+      .then((res: ResponseType) => setMembers(res.payload))
+      .catch(() => console.log('error'));
+  };
+
+  useEffect(() => {
+    getAllUser().then((res: ResponseType) => setMemberOptions(formatSelectOptions(res.payload)));
+  }, []);
+
+  useEffect(() => {
+    fetchMembers();
+    getWorkspaceById(workspaceId!)
+      .then((res: ResponseType) => setTitle(res.payload.title))
+      .catch(() => console.log('error'));
+  }, [workspaceId]);
+  
 
   return (
     <div className='members-container'>
       <PageHeader 
         icon={<Avatar />} 
-        title='Workspace Name'
-        buttonName='Create Tracker'
+        title={title}
+        buttonName='Add Member'
         buttonIcon={<PlusIcon />}
         onButtonClick={openModal}
       />
       <div className='members-body-container'>
         <Text className='members-title'>Members</Text>
-        <AppTable className='members-table' columns={columns} data={data} rowSelection={rowSelection}/>
-        <AddMemberModal isOpen={isModalOpen} onClose={onCloseModal}/>
+        <AppTable className='members-table' columns={columns} data={getTableData()} rowSelection={rowSelection}/>
+        <AddMemberModal 
+          members={members}
+          isOpen={isModalOpen} 
+          onClose={onCloseModal} 
+          memberOptions={memberOptions} 
+          workspaceId={workspaceId!}/>
       </div>  
     </div>
     

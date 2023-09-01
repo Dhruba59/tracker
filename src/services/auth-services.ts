@@ -9,7 +9,7 @@ import {
   RequestResetPasswordCredentials,
   ResetPasswordCredentials,
 } from '@models/auth-models';
-import { getAccessToken, ensureTrailingSlash } from '@helpers/auth-helpers';
+import { getAccessToken, ensureTrailingSlash, getRefreshToken } from '@helpers/auth-helpers';
 import { API_END_POINTS } from '@constants/global-constants';
 import { LOCAL_STORAGE_KEYS } from '@constants/storage-constants';
 import { routes } from '@constants/route-constants';
@@ -44,6 +44,11 @@ export function userLogin(
       return Promise.reject(err);
     });
 }
+
+// export const userLogin = async (credentials: Credentials) => {
+//   const url = API_END_POINTS.LOGIN;
+//   return await httpClient.post(url, { data: { ...credentials }});
+// } 
 
 export const userSignUp = (credentials : any) => {
   const url = API_END_POINTS.SIGN_UP;
@@ -86,7 +91,7 @@ export function getRetoken(): Promise<LoginResponse> {
           Authorization: `Bearer ${getAccessToken()}`,
         },
       })
-      .get(API_END_POINTS.RE_TOKEN)
+      .post(API_END_POINTS.RE_TOKEN, { data: {refreshToken: getRefreshToken()}})
       .then((resp) => {
         //? Replace auth_token with
         localStorage.setItem(

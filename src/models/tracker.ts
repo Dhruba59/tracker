@@ -24,7 +24,8 @@ export interface TrackerCardInfo {
 }
 
 export interface TrackerCardProps {
-  tracker: TrackerCardInfo;
+  trackerData: any;
+  workspaceId: string;
 }
 
 export enum TRACKER_TYPE {
@@ -32,11 +33,14 @@ export enum TRACKER_TYPE {
   NUMERIC = 'NUMERIC'
 }
 
-export interface TaskBarProps {
-  tracker: TrackerCardInfo;
+export interface CreateUpdateTrackerPayload {
+  title: string;
+  description?: string;
+  start_date?: string;
+  end_date?: string;
+  type?: string;
+  target_start?: number;
+  target_end?: number;
+  workspace_id: string;
+  user_ids?: string[];
 }
-
-export interface TaskItemProps {
-  task: string;
-}
-

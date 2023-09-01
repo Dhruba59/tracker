@@ -54,3 +54,13 @@ html, body, h1, h2, h3, h4, h5, h6, div, p, span, strong, a, ul, li, label, .ant
   font-weight: 400 !important;
   font-size: 14px;
 }
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 11 */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0px; /* Safari and Chrome */
+  height: 0px; /* Safari and Chrome */
+}

@@ -66,11 +66,11 @@ const MainRoutes = createBrowserRouter([
         element: <WorkspaceDetails />,
       },
       {
-        path: `${routes.tracker.path}/:id`,
+        path: `/workspace/:workspaceId/${routes.tracker.path}/:trackerId`,
         element: <TrackerDetails />,
       },
       {
-        path: routes.members.path,
+        path: `${routes.workspace.path}/:workspaceId/members`,
         element: <Members />,
       },
       {

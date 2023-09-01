@@ -9,12 +9,14 @@ interface AppCollapseProps extends CollapseProps {
   children: ReactNode;
 }
 
-const AppCollapse = ({ key, label, children }:AppCollapseProps) => {
+const AppCollapse = ({ key, label, children, defaultActiveKey, ...rest }: AppCollapseProps) => {
   return (
     <Collapse
+      defaultActiveKey={defaultActiveKey}
       className='app-collapse'
       bordered={false}
       items={[{key, label, children}]}
+      {...rest}
   />
   );
 };

@@ -1,5 +1,7 @@
 .milestone-bar-container {
   height: 100%;
+  max-height: 480px;
+  overflow: scroll;
 }
 
 .milestone-bar-container .ant-card-body {
@@ -7,5 +9,16 @@
   flex-direction: column;
   row-gap: 10px;
   margin-top: -10px;
+}
+
+.milestone-bar-btn {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 0px;
+  margin-bottom: 10px;
 }
 

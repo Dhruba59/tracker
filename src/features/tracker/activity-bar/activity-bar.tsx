@@ -4,13 +4,20 @@ import TextInput from '@components/common/input-fields/text-input';
 import './activity-bar.css';
 import Activity from './activity/activity';
 
-const ActivityBar = () => {
+export interface ActivityProps {
+  activities: any;
+}
+
+const ActivityBar = ({activities}: ActivityProps) => {
   return (
-    <Card className='activity-card-container' title="Activities" bordered={false}>
+    <Card className='activity-card-container hide-scrollbar' title="Activities" bordered={false}>
+      {activities?.map((activity: any) => (
+        <Activity activity={activity}/>
+      ))}
+      {/* <Activity />
       <Activity />
-      <Activity />
-      <Activity />
-      <Activity />
+      <Activity /> */}
+
     </Card>
   );
 };

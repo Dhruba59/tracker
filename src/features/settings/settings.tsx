@@ -3,11 +3,14 @@ import { Tabs } from 'antd';
 import GeneralForm from './general-form';
 import SecurityForm from './security-form';
 import Notifications from './notifications/notifications-tab';
+import './settings.css';
 
 const Settings: FC = () => (
-  <Tabs
-    defaultActiveKey="1"
-    items={[
+  <div className='settings-container'>
+    <Tabs
+      className='settings-tab-container'
+      defaultActiveKey="1"
+      items={[
       {
         label: 'General',
         key: '1',
@@ -24,7 +27,8 @@ const Settings: FC = () => (
         children: <Notifications />,
       },
     ]}
-  />
-);
+    />
+  </div>
+  );
 
 export default Settings;

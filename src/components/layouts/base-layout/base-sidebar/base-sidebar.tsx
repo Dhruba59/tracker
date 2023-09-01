@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, MenuProps, Menu, Form, message } from 'antd';
 
-import { DashboardIcon, ExpandIcon, PlusIcon, SettingsIcon, WorkspaceIcon } from '@icons';
+import { DashboardIcon, ArrowDown, PlusIcon, SettingsIcon, WorkspaceIcon } from '@icons';
 import { createWorkspace, getWorkspaceList } from '@services/workspace-services';
 import { ResponseType } from '@models/global-models';
 import TextInput from '@components/common/input-fields/text-input';
@@ -54,11 +54,13 @@ const BaseSidebar: React.FC = () => {
         key: '1',
         icon: <DashboardIcon />,
         label: 'Dashboard',
+        onClick: () => navigate(routes.dashboard.path)
       },
       {
         key: '2',
         icon: <SettingsIcon />,
         label: 'Settings',
+        onClick: () => navigate(routes.settings.path)
       },
       {
         key: '3',
@@ -98,11 +100,12 @@ const BaseSidebar: React.FC = () => {
           </span>
         ),
         
-        expandIcon: <ExpandIcon/>,
+        expandIcon: <ArrowDown />,
         children: [
           {
             key: `${workspace.id}members`,
-            label: 'Members'
+            label: 'Members',
+            onClick: () => navigate(`${routes.workspace.path}/${workspace.id}/members`)
           },
           {
             key: `${workspace.id}archive`,

@@ -15,10 +15,10 @@ const TrackerProgressbar = ({ type, breakPoints, progressPercent }: TrackerProgr
 
   const taskContent = (
     <div className='progress-popover-container'>
+      {/* <TaskItem task='sdsdfsd'/>
       <TaskItem task='sdsdfsd'/>
       <TaskItem task='sdsdfsd'/>
-      <TaskItem task='sdsdfsd'/>
-      <TaskItem task='sdsdfsd'/>
+      <TaskItem task='sdsdfsd'/> */}
     </div>
   );
 
