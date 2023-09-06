@@ -4,23 +4,15 @@ import AppModal from '@components/common/modal';
 import { DatePicker, Form, FormInstance, Input, Radio, Select, message } from 'antd';
 import './create-tracker-modal.css';
 import AppButton from '@components/common/button';
-import { TRACKER_TYPE } from '@models/tracker';
+import { CreateTrackerModalProps, TRACKER_TYPE } from '@models/tracker';
 import { createTracker } from '@services/tracker-service';
 import { ResponseType } from '@models/global-models';
 import { getAllUser } from '@services/user-services';
 import NumberRangeInput from '@components/common/input-fields/number-range-input';
 
-export interface CreateTrackerModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (values: any) => Promise<void>;
-  workspaceId: string;
-  form?: any;
-};
-
 const { TextArea } = Input;
 
-const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, form }: CreateTrackerModalProps) => {
+const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLoading, form }: CreateTrackerModalProps) => {
   const [type, setType] = useState<TRACKER_TYPE>(TRACKER_TYPE.TASK);
   const [memberOptions, setMemberOptions] = useState<any>();
 
@@ -96,7 +88,13 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, form }: Cr
             </Form.Item>
           </div>
           )}
-        <AppButton htmlType='submit' type='primary' className='create-tracker-modal-btn'>Save Tracker</AppButton>
+        <AppButton 
+          htmlType='submit' 
+          type='primary' 
+          loading={isCreateLoading} 
+          className='create-tracker-modal-btn'>
+            Save Tracker
+          </AppButton>
       </Form>
     </AppModal>  
   );

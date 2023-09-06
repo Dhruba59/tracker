@@ -52,6 +52,7 @@ export interface MemberFormValues {
 const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }: AddMemberModalProps) => {
   const [form] = Form.useForm();
   const [values, setValues] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onInviteInputChange = (values: SelectDropdownValueType) => {
     console.log(values);
@@ -64,13 +65,16 @@ const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }
       workspace_id: workspaceId,
       user_ids: members
     };
+    setIsLoading(true);
     addWorkspaceMember(payload)
       .then((res: ResponseType) => {
         message.success(res?.message);
         form.resetFields();
       }).catch((error: any) => {
-      message.error(error?.message ?? 'Unable to invite!');
-    });
+        message.error(error?.message ?? 'Unable to invite!');
+      }).finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -85,7 +89,13 @@ const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }
               prefixIcon={<SearchIcon />}
             />
           </Form.Item>
-          <AppButton htmlType='submit' type='primary' className='add-modal-invite-btn'>Invite</AppButton>
+          <AppButton
+            htmlType='submit' 
+            type='primary' 
+            loading={isLoading} 
+            className='add-modal-invite-btn'>
+              Invite
+            </AppButton>
         </Form>
         <div className='add-member-modal-member-list'>
           {members?.map((member: any, index: number) => (

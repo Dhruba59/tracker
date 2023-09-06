@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Form, Typography, message } from 'antd';
 
@@ -12,11 +12,13 @@ import './new-password-form.css';
 const { Text } = Typography;
 
 const NewPasswordForm: FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { token } = useParams();
   const navigate = useNavigate();
 
   const setNewPassword = async ({ password, confirmed_password }: any) => {
     try {
+      setIsLoading(true);
       const payload = {
         newPassword: password,
         confirmNewPassword: confirmed_password,
@@ -27,6 +29,8 @@ const NewPasswordForm: FC = () => {
       message.success('Successfully reset password!');
     } catch(error: any) {
       message.error(error?.message ?? 'Something went wrong!');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,7 +63,8 @@ const NewPasswordForm: FC = () => {
           size='large'
           type='primary'
           htmlType='submit' 
-          className=""> Update
+          loading={isLoading}>
+           Update
         </Button>           
       </Form>
     </AuthCardWrapper>

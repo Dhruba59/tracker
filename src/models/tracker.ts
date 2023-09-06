@@ -57,3 +57,12 @@ export interface CreateUpdateTrackerPayload {
   user_ids?: string[];
   is_archived?: ARCHIVE_TYPE_ENUM;
 }
+
+export interface CreateTrackerModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (values: any) => Promise<void>;
+  workspaceId: string;
+  form?: any;
+  isCreateLoading: boolean;
+};

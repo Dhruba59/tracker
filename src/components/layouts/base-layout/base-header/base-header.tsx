@@ -64,16 +64,19 @@ const BaseHeader = () => {
     {
       key: 'questionCircle',
       icon: <QuestionCircle />,
-      // className: 'header-menu-item'
+      className: 'header-menu-item'
     },
     {
       key: 'app',
       icon: (
-        <Badge>
-          <NotificationIcon />
-        </Badge>
+        <div>
+          <Badge style={{height: '100%'}}>
+            <NotificationIcon />
+          </Badge>
+        </div>
+      
       ),
-      // className: 'header-menu-item'
+      className: 'header-menu-item'
     },
     {
       key: 'avatar',
