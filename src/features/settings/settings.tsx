@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Tabs } from 'antd';
-import GeneralForm from './general-form';
-import SecurityForm from './security-form';
+import GeneralForm from './general';
+import SecurityForm from './security';
 import Notifications from './notifications/notifications-tab';
 import './settings.css';
 
@@ -25,6 +25,7 @@ const Settings: FC = () => (
         label: 'Notifications',
         key: '3',
         children: <Notifications />,
+        disabled: true
       },
     ]}
     />

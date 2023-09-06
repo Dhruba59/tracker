@@ -7,6 +7,7 @@ import { getWorkspaceList } from '@services/workspace-services';
 import { Fragment, useEffect, useState } from 'react';
 import { ResponseType } from '@models/global-models';
 import WorkspaceCard from './workspace-card';
+import WelcomeCard from '@components/common/welcome-card';
 
 const Dashboard = () => {
   const [workspaces, setWorkspaces] = useState<any>();
@@ -26,10 +27,14 @@ const Dashboard = () => {
 
   return (
     <div className='dashboard-main-container'>
-      {workspaces?.map((workspace: any) => (
-        <WorkspaceCard key={workspace.id} id={workspace.id}/>
-      ))}
+      <WelcomeCard />
+      <div className='dashboard-body'>
+        {workspaces?.map((workspace: any) => (
+        <WorkspaceCard key={workspace.id} workspace={workspace}/>
+        ))}
+      </div>
     </div>
+    
   );
 };
 

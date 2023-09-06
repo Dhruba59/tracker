@@ -14,3 +14,7 @@
   flex-direction: column;
 }
 
+.member-card-role {
+  display: flex;
+  align-items: center;
+}

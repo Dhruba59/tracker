@@ -1,6 +1,6 @@
 import { API_END_POINTS } from '@constants/global-constants';
 import HttpClientInstance from './base-services';
-import { CreateUpdateTrackerPayload } from '@models/tracker';
+import { CreateUpdateTrackerPayload, GetTrackerByWorkspaceIdPayload } from '@models/tracker';
 
 const httpClient = new HttpClientInstance();
 
@@ -14,9 +14,10 @@ const httpClient = new HttpClientInstance();
 //   return httpClient.get(url);
 // };
 
-export const getTrackersByWorkspaceId= (id: string) => {
+
+export const getTrackersByWorkspaceId= (data: GetTrackerByWorkspaceIdPayload) => {
   const url = API_END_POINTS.TRACKER;
-  return httpClient.get(url, { params: id});
+  return httpClient.get(url, { params: data });
 };
 
 export const getTrackerById= (id: string) => {

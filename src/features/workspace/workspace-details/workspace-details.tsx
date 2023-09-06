@@ -12,7 +12,7 @@ import AppButton from '@components/common/button';
 import { PlusIcon } from '@icons';
 import { tracker } from '@helpers/global-helpers';
 import AppModal from '@components/common/modal';
-import CreateTrackerModal from './create-tracker-modal';
+import CreateTrackerModal from '../../../components/modal/create-tracker-modal';
 import PageHeader from '@components/common/page-header';
 import EmptyPageCard from '@components/common/empty-page-card';
 
@@ -21,16 +21,26 @@ const { Text } = Typography;
 const WorkspaceDetails = () => {
   const {id} = useParams();
   const [workspaceData, setWorkspaceData] = useState<any>();
+  const [trackers, setTrackers] = useState<any>();
   const [isTrackerModalOpen, setIsTrackerModalOpen] = useState<boolean>(false);
   const [form] = Form.useForm();
 
-  const fetchWorkspaceTrackers = async () => {
+  const fetchWorkspace = async () => {
     try {
       const res: ResponseType = await getWorkspaceById(id ?? '');
       setWorkspaceData(res.payload);
     } catch {
       console.log('error');
     };
+  };
+
+  const fetchTrackers = async () => {
+    try {
+      const res: ResponseType = await getTrackersByWorkspaceId({ workspaceId: id! });
+      setTrackers(res.payload);
+    } catch (error: any) {
+      console.log('errors');
+    }
   };
   
   const handleClick = () => {
@@ -62,29 +72,30 @@ const WorkspaceDetails = () => {
       message.success(res?.message ?? 'Tracker created!');
       closeModal();
       form.resetFields();
-      fetchWorkspaceTrackers();
+      // fetchWorkspace();
+      fetchTrackers();
     } catch (error: any) {
       message.error(error?.message ?? 'Something went wrong!');
     }
   };
 
   const renderTrackers = (
-    workspaceData?.trackers.length === 0 ? (
+    trackers?.length === 0 ? (
     <div className='workspace-empty-page'>
       <EmptyPageCard title='You have no trackers here.' buttonText='Create Tracker' onButtonClick={handleClick} />
-    </div>
-      
-    ): (
-      workspaceData?.trackers?.map((tracker: any) => (
-        <div className='workspace-trackers-container'>
-          <TrackerCard trackerData={tracker} workspaceId={workspaceData.id}/>
+    </div>    
+    ) : (
+      trackers?.map((tracker: any) => (
+        <div key={tracker?.id} className='workspace-trackers-container'>
+          <TrackerCard trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers}/>
         </div>
      ))
     )
   );
 
   useEffect(() => {
-    fetchWorkspaceTrackers();
+    fetchWorkspace();
+    fetchTrackers();
   }, [id]);
 
   return (
@@ -96,7 +107,7 @@ const WorkspaceDetails = () => {
         buttonIcon={<PlusIcon />}
         onButtonClick={handleClick}
       />
-        {renderTrackers} 
+      {renderTrackers} 
       <CreateTrackerModal form={form} onSubmit={onSubmit} isOpen={isTrackerModalOpen} onClose={closeModal} workspaceId={id!}/>
     </div>
   );

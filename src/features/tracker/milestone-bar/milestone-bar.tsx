@@ -6,10 +6,11 @@ import { useState, useEffect } from 'react';
 import { CreateOrUpdateMilestonePayload } from '@models/milestone';
 import { createMilestone, updateMilestone } from '@services/milestone-service';
 import { ResponseType } from '@models/global-models';
+import { TRACKER_TYPE } from '@models/tracker';
 
 export interface MilestoneProps {
   milestones: string[];
-  trackerId: string;
+  tracker: any,
   refetchTracker: () => void;
 }
 
@@ -17,13 +18,13 @@ const generateTitle = (length: number) => {
   return `milestone-${length+1}`;
 };
 
-const MilestoneBar = ({ milestones, trackerId, refetchTracker }: MilestoneProps) => {
+const MilestoneBar = ({ milestones, tracker, refetchTracker }: MilestoneProps) => {
   const [isNewMilestoneTabOpen, setIsNewMilestoneTabOpen] = useState<boolean>(false);
   const [isMilestoneCreated, setIsMilestoneCreated] = useState<boolean>();
 
   const onCreateMilestone = async (data: CreateOrUpdateMilestonePayload): Promise<ResponseType> => {
     try {
-      data = { ...data, title: generateTitle(milestones.length), tracker_id: trackerId };
+      data = { ...data, title: generateTitle(milestones.length), tracker_id: tracker?.id, tracker_type: tracker?.type! };
       const res: ResponseType = await createMilestone(data);
       message.success(res?.message ?? 'Successfully created milestones');
       setIsMilestoneCreated(true);
@@ -37,10 +38,9 @@ const MilestoneBar = ({ milestones, trackerId, refetchTracker }: MilestoneProps)
   };
 
   const onUpdateMilestone = (id: string, data: CreateOrUpdateMilestonePayload) => {
-    data = { ...data, tracker_id: trackerId };
     updateMilestone(id, data).then((res: ResponseType) => {
       message.success(res?.message ?? 'Successfully created milestones');
-      
+      refetchTracker();
     }).catch((error: any) => {
       message.error(error?.message ?? 'Something went wrong!');
     });
@@ -52,9 +52,10 @@ const MilestoneBar = ({ milestones, trackerId, refetchTracker }: MilestoneProps)
 
   const renderMilestoneItems = () => (
     milestones?.map((milestone) => (
-      <Milestone 
-        trackerId={trackerId}
+      <Milestone
+        tracker={tracker}
         milestoneData={milestone} 
+        refetchTracker={refetchTracker}
         createMilestone={onCreateMilestone} 
         updateMilestone={onUpdateMilestone} />
     )
@@ -78,8 +79,9 @@ const MilestoneBar = ({ milestones, trackerId, refetchTracker }: MilestoneProps)
       {renderMilestoneItems()}
       {isNewMilestoneTabOpen && !isMilestoneCreated &&
         <Milestone
+          tracker={tracker}
           newMilestoneTitle={generateTitle(milestones.length)}
-          trackerId={trackerId}
+          refetchTracker={refetchTracker}
           createMilestone={onCreateMilestone} 
           updateMilestone={onUpdateMilestone} 
         /> }

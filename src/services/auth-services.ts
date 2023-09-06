@@ -36,7 +36,6 @@ export function userLogin(
           refresh_token: resp.payload.refresh_token ?? '' 
          })
       );
-      location.pathname = routes.create_first_workspace.path;
       return resp;
     })
     .catch((err) => {

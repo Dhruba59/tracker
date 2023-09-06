@@ -82,3 +82,19 @@
   flex-direction: column;
   row-gap: 16px;
 }
+
+.login-password-input {
+  padding-left: 4px;
+}
+
+.login-form-item .ant-input {
+  padding-left: 10px !important;
+}
+
+.login-form-item .ant-input-affix-wrapper {
+  padding: 0px !important;
+}
+
+.login-form-item .ant-input-affix-wrapper.password-input  {
+  background: rgb(228, 242, 254) !important;
+}

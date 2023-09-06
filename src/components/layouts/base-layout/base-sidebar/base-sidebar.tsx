@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, MenuProps, Menu, Form, message } from 'antd';
+import { Layout, MenuProps, Menu, Form, message, Input } from 'antd';
 
 import { DashboardIcon, ArrowDown, PlusIcon, SettingsIcon, WorkspaceIcon } from '@icons';
 import { createWorkspace, getWorkspaceList } from '@services/workspace-services';
@@ -79,7 +79,7 @@ const BaseSidebar: React.FC = () => {
             {isWorkspaceInputOpen && (
               <Form form={form} className='sidebar-workspace-form'>
                 <Form.Item name='title'>
-                  <TextInput onPressEnter={createNewWorkspace} className='sidebar-workspace-create-input' />
+                  <Input size='small' onPressEnter={createNewWorkspace} placeholder='Workspace name'/>
                 </Form.Item>
               </Form>
             )}
@@ -109,7 +109,8 @@ const BaseSidebar: React.FC = () => {
           },
           {
             key: `${workspace.id}archive`,
-            label: 'Archive'
+            label: 'Archive',
+            onClick: () => navigate(`/${workspace.id}/${routes.archive.path}`)
           }
         ]
       });

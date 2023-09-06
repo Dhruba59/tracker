@@ -28,7 +28,8 @@ export enum TASK_TYPE {
 }
 
 export interface TaskBarProps {
-  tracker: TrackerCardInfo;
+  tracker: any;
+  refetchTracker: () => void;
 }
 
 export interface TaskItemProps {

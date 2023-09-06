@@ -3,17 +3,21 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ColumnsType } from 'antd/es/table';
 import { Avatar, Dropdown, MenuProps, Space, Typography, message } from 'antd';
+import { debounce } from 'lodash';
 
-import { MEMBER_ROLE_TYPE, TableDataType } from '@models/members';
-import { DeleteIcon2, DownArrowIcon, PlusIcon } from '@icons';
-import AddMemberModal from './add-member-modal';
+import { GetMembersByWorkspaceIdParamsType, MEMBER_ROLE_TYPE, TableDataType } from '@models/members';
+import { DeleteIcon2, DownArrowIcon, PlusIcon, SearchIcon } from '@icons';
+import AddMemberModal from '../../components/modal/add-member-modal';
 import PageHeader from '@components/common/page-header';
 import AppTable from '@components/common/table';
-import './members.css';
 import { deleteWorkspaceMember, getMembersByWorkspaceId } from '@services/workspace-members-service';
 import { ResponseType } from '@models/global-models';
 import { getWorkspaceById } from '@services/workspace-services';
 import { getAllUser } from '@services/user-services';
+import './members.css';
+import UserAvatar from '@components/common/user-avatar';
+import TextInput from '@components/common/input-fields/text-input';
+import useDebounce from '@hooks/debounce-hooks';
 
 const { Text } = Typography;
 
@@ -28,28 +32,13 @@ const roleItems: MenuProps['items'] = [
   },
 ];
 
-const handleRoleChange = (e: any) => {
-  //updateMember(e.key)
-  // setSelectedRole(e.key);
-};
-
-const RoleDropDown = ({children}: any) => (
-  <Dropdown menu={{items: roleItems, onClick: handleRoleChange }}>
-    <a onClick={(e) => e.preventDefault()}>
-      <Space>
-        {children}
-        <DownArrowIcon />
-      </Space>
-    </a>
-  </Dropdown>
-);
-
 const Members = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [members, setMembers] = useState<any>();
   const [title, setTitle] = useState<string>('');
   const [selectedRole, setSelectedRole] = useState('');
   const [memberOptions, setMemberOptions] = useState();
+  const [searchText, setSearchText] = useState<string>('');
   const {workspaceId} = useParams();
 
   const onCloseModal = () => {
@@ -59,6 +48,12 @@ const Members = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
+
+  
+const handleRoleChange = (e: any) => {
+  // updateMember(e.key)
+  setSelectedRole(e.key);
+};
 
   // rowSelection object indicates the need for row selection
   const rowSelection = {
@@ -96,7 +91,15 @@ const Members = () => {
     {
       title: <Text className='members-table-title'>Role</Text>,
       dataIndex: 'role',
-      render: (text, record) => <RoleDropDown>{RoleDropDown}</RoleDropDown>,
+      render: (text, record) => (
+        <Dropdown menu={{items: roleItems, onClick: handleRoleChange }} arrow>
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              {selectedRole}
+              <DownArrowIcon />
+            </Space>
+          </a>
+        </Dropdown> ),
     },
     {
       title: <Text className='members-table-title'>Action</Text>,
@@ -123,9 +126,17 @@ const Members = () => {
   );
 
   const fetchMembers = () => {
-    getMembersByWorkspaceId(workspaceId!)
+    const membersQueryParams = { userName: searchText };
+    getMembersByWorkspaceId(workspaceId!, membersQueryParams)
       .then((res: ResponseType) => setMembers(res.payload))
       .catch(() => console.log('error'));
+  };
+
+  const handleSearch = (e: any) => {
+    debounce(() => {
+      setSearchText(e.target.value);
+    }, 500);
+    // setSearchText(e.target.value);
   };
 
   useEffect(() => {
@@ -134,6 +145,9 @@ const Members = () => {
 
   useEffect(() => {
     fetchMembers();
+  }, [workspaceId, searchText]);
+
+  useEffect(() => {
     getWorkspaceById(workspaceId!)
       .then((res: ResponseType) => setTitle(res.payload.title))
       .catch(() => console.log('error'));
@@ -143,15 +157,18 @@ const Members = () => {
   return (
     <div className='members-container'>
       <PageHeader 
-        icon={<Avatar />} 
+        icon={<UserAvatar title={title ?? ''} />} 
         title={title}
         buttonName='Add Member'
         buttonIcon={<PlusIcon />}
         onButtonClick={openModal}
       />
       <div className='members-body-container'>
-        <Text className='members-title'>Members</Text>
-        <AppTable className='members-table' columns={columns} data={getTableData()} rowSelection={rowSelection}/>
+        <div className='members-table-header'>
+          <Text className='members-title'>Members</Text>
+          <TextInput className='members-table-search-input' onChange={handleSearch} placeholder='search' prefix={<SearchIcon />}/>
+        </div>
+        <AppTable className='members-table' columns={columns} data={getTableData()} rowSelection={rowSelection} />
         <AddMemberModal 
           members={members}
           isOpen={isModalOpen} 

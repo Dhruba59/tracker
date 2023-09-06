@@ -14,10 +14,6 @@ const ActivityBar = ({activities}: ActivityProps) => {
       {activities?.map((activity: any) => (
         <Activity activity={activity}/>
       ))}
-      {/* <Activity />
-      <Activity />
-      <Activity /> */}
-
     </Card>
   );
 };

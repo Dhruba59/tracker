@@ -1,7 +1,9 @@
-import { Avatar, Dropdown, MenuProps } from 'antd';
+import { useState } from 'react';
+import { Avatar, Dropdown, MenuProps, Space } from 'antd';
 import AppButton from '@components/common/button';
 
 import './member-card.css';
+import { ArrowDown } from '@icons';
 
 export interface MemberCardProps {
   member: any;
@@ -9,20 +11,26 @@ export interface MemberCardProps {
 
 const items: MenuProps['items'] = [
   {
-    key: '1',
+    key: 'admin',
     label: 'admin',
   },
   {
-    key: '2',
+    key: 'editor',
     label: 'editor',
   },
   {
-    key: '3',
+    key: 'viewer',
     label: 'viewer',
   },
 ];
 
 const MemberCard = ({ member }: MemberCardProps) => {
+  const [role, setRole] = useState<string>();
+
+  const handleDropdownChange = (e: any) => {
+    setRole(e.key);
+  };
+
   return (
     <div className='member-card-container'>
       <div className='member-card-col-1'>
@@ -32,8 +40,13 @@ const MemberCard = ({ member }: MemberCardProps) => {
           <span className='member-card-email'>{member?.user.email}</span>
         </div>
       </div>
-      <Dropdown menu={{ items }} placement="bottomLeft" arrow={{ pointAtCenter: true }}>
-        <AppButton type='link'>{member?.is_owner ? 'admin' : 'not admin'}</AppButton>
+      <Dropdown className='member-card-role' menu={{ items, onClick: handleDropdownChange }} >
+        <a onClick={(e) => e.preventDefault()}>
+          <Space>
+            {role}
+            <ArrowDown />
+          </Space>
+        </a>
       </Dropdown>
     </div>
   );

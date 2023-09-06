@@ -1,0 +1,18 @@
+.multiple-select-container {
+  display: flex;
+  align-items: center;
+  /* height: 100%; */
+  padding: 0px 8px;
+  border: 1px solid #DBE1F4;
+}
+
+.multiple-select-container .ant-select-selector, .multiple-select-container.ant-select:focus  {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.multiplce-select-placeholder {
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+}

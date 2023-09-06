@@ -34,3 +34,8 @@ export interface AddMemberPayload {
   workspace_id: string;
   user_ids: string[];
 }
+
+export interface GetMembersByWorkspaceIdParamsType {
+  userName?: string;
+  is_owner?: MEMBER_ROLE_TYPE; 
+}

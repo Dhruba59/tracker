@@ -5,7 +5,7 @@ import { AntDesignOutlined, UserOutlined } from '@ant-design/icons';
 
 import TrackerProgressbar from '../tracker-progressbar';
 import './tracker-card.css';
-import { TRACKER_TYPE, TrackerCardInfo, TrackerCardProps } from '@models/tracker';
+import { ARCHIVE_TYPE_ENUM, TRACKER_TYPE, TrackerCardInfo, TrackerCardProps } from '@models/tracker';
 import { stringToDateOnly, tracker } from '@helpers/global-helpers';
 import AppPopover from '@components/common/pop-over';
 import { useNavigate } from 'react-router-dom';
@@ -14,13 +14,17 @@ import { getTrackerById, updateTracker } from '@services/tracker-service';
 import { PaginationResponseType, ResponseType } from '@models/global-models';
 import { getMembersByTrackerId } from '@services/tracker-member-service';
 import UserAvatar from '@components/common/user-avatar';
+import TaskBar from '@features/tracker/task-bar';
 
 const { Text, Paragraph } = Typography;
 
-const TrackerCard = ({ trackerData, workspaceId }: TrackerCardProps) => {
+const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardProps) => {
   const navigate = useNavigate();
   const [members, setMembers] = useState<any>();
   const [tracker, setTracker] = useState<any>(trackerData);
+  const [milestone, setMilestone] = useState<any>();
+
+  console.log('refetch tracker2', tracker);
 
   const fetchMembers = () => {
     getMembersByTrackerId(tracker.id)
@@ -28,17 +32,34 @@ const TrackerCard = ({ trackerData, workspaceId }: TrackerCardProps) => {
       .catch((error: any) => console.log('Unable to fetch members'));
   };
 
-  const fetchTracker = () => {
-    getTrackerById(tracker.id)
-    .then((res: ResponseType) => setTracker(res.payload))
-    .catch((error: any) => console.log('Unable to fetch tracker'));
+  const handleArchiveToogle = (isArchive: ARCHIVE_TYPE_ENUM) => {
+    updateTracker(trackerData?.id, { is_archived: isArchive, workspace_id: workspaceId })
+      .then((res: ResponseType) => {
+        onUpdateTracker();
+        message.success(res?.message);
+        navigate(routes.dashboard.path);
+      })
+      .catch((error: any) => console.log('Unable to archieve!'));
   };
 
+  // const fetchTracker = () => {
+  //   getTrackerById(tracker.id)
+  //   .then((res: ResponseType) => setTracker(res.payload))
+  //   .catch((error: any) => console.log('Unable to fetch tracker'));
+  // };
+
   const threeDotItems: MenuProps['items'] = [
-    {
+    
+    tracker?.is_archived ? {
       key: '1',
       label: 'Restore',
-      onClick: () => console.log('s'),
+      onClick: () => handleArchiveToogle(ARCHIVE_TYPE_ENUM.NOT_ARCHIVE),
+      className: 'tracker-popover-item'
+    } : 
+    {      
+      key: '1',
+      label: 'Archive',
+      onClick: () =>  handleArchiveToogle(ARCHIVE_TYPE_ENUM.ARCHIVE),
       className: 'tracker-popover-item'
     },
     {
@@ -66,7 +87,8 @@ const TrackerCard = ({ trackerData, workspaceId }: TrackerCardProps) => {
       updateTracker(tracker.id, payload)
       .then((res: ResponseType) => {
         message.success(res.message);
-        fetchTracker();
+        // fetchTracker();
+        onUpdateTracker?.();
       })
       .catch(error => message.error('unable to update!'));
     }
@@ -75,6 +97,8 @@ const TrackerCard = ({ trackerData, workspaceId }: TrackerCardProps) => {
   
   useEffect(() => {
     fetchMembers();
+    // fetchTracker();
+    // onUpdateTracker?.();
   }, []);
 
   useEffect(() => {
@@ -86,24 +110,31 @@ const TrackerCard = ({ trackerData, workspaceId }: TrackerCardProps) => {
       <div className='tracker-row'>
         <Paragraph editable={{
           onChange: handleOnTitleChange,
-          icon: <EditIcon />
+          icon: <EditIcon />,
+          enterIcon: null,
+          // editing: true
         }} className='tracker-title'>{tracker?.title}</Paragraph>
         <AppPopover className='tracker-popover' content={threeDotContent} placement='leftTop'>
-          <ThreeDotIcon />
+          <ThreeDotIcon style={{cursor: 'pointer'}}/>
         </AppPopover>
 
       </div>
       <div className='tracker-row'>
         <div className='tracker-target'>
           <CorrectSignIcon width={12} height={12} />
-          {tracker?.type === TRACKER_TYPE.TASK && <Text>Target: {tracker?.done_task ?? 0}/{tracker?.total_task ?? 0}</Text>}
-          {tracker?.type === TRACKER_TYPE.NUMERIC && <Text>Target: {tracker?.target_start ?? 0}/{tracker?.target_end ?? 0}</Text>}
+          <AppPopover content={<TaskBar tracker={tracker} refetchTracker={onUpdateTracker}/>}>
+          {/* <AppPopover content={null}> */}
+            {tracker?.type === TRACKER_TYPE.TASK && <Text>Task: {tracker?.done_task ?? 0}/{tracker?.total_task ?? 0}</Text>}
+            {tracker?.type === TRACKER_TYPE.NUMERIC && <Text>Target: {tracker?.achieved_target ?? 0}/{tracker?.target_end ?? 0}</Text>}
+          </AppPopover>
+          {/* {tracker?.type === TRACKER_TYPE.TASK && <Text>Task: {tracker?.done_task ?? 0}/{tracker?.total_task ?? 0}</Text>}
+          {tracker?.type === TRACKER_TYPE.NUMERIC && <Text>Target: {tracker?.target_start ?? 0}/{tracker?.target_end ?? 0}</Text>} */}
         </div>
         <Avatar.Group>
           {renderMembersAvatar()}
         </Avatar.Group>
       </div>
-      <TrackerProgressbar type={tracker?.type} progressPercent={tracker?.percentage ?? 0} breakPoints={[23, 44, 90]} />
+      <TrackerProgressbar tracker={tracker} progressPercent={tracker?.percentage ?? 0} milestones={tracker?.milestones} onUpdateTracker={onUpdateTracker}/>
       <div className='tracker-row'>
         <div className='tracker-date-card'>{stringToDateOnly(tracker?.start_date)}</div>
         <Text className='tracker-progress-text'>Work Progress: <span>{tracker?.percentage ?? 0}%</span></Text>

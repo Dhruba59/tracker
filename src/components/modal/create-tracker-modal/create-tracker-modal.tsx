@@ -8,6 +8,7 @@ import { TRACKER_TYPE } from '@models/tracker';
 import { createTracker } from '@services/tracker-service';
 import { ResponseType } from '@models/global-models';
 import { getAllUser } from '@services/user-services';
+import NumberRangeInput from '@components/common/input-fields/number-range-input';
 
 export interface CreateTrackerModalProps {
   isOpen: boolean;

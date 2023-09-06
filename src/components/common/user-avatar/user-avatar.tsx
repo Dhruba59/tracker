@@ -7,8 +7,8 @@ const UserAvatar = ({ title, src, ...rest }: UserAvatarProps) => {
   return (
     <Tooltip title={title} placement='top'>
       <a href=''>
-        <Avatar {...rest}>
-          {!src && title[0]} 
+        <Avatar src={src} {...rest}>
+          {!src && title[0]?.toUpperCase()} 
         </Avatar>
       </a>
     </Tooltip>

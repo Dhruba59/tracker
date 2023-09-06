@@ -4,24 +4,26 @@ import TrackerCard from '@components/common/tracker/tracker-card';
 import { ResponseType } from '@models/global-models';
 import { getWorkspaceById } from '@services/workspace-services';
 import './workspace-card.css';
+import UserAvatar from '@components/common/user-avatar';
+import { getTrackersByWorkspaceId } from '@services/tracker-service';
 
-const WorkspaceCard = ({ id }: any) => {
-  const [workspace, setWorkspace] = useState<any>();
+const WorkspaceCard = ({ workspace }: any) => {
+  const [trackers, setTrackers] = useState<any>();
 
-  const fetchWorkspace = async () => {
+  const fetchTrackers = async () => {
     try {
-      const res: ResponseType = await getWorkspaceById(id);
-      setWorkspace(res.payload);
+      const res: ResponseType = await getTrackersByWorkspaceId({ workspaceId: workspace?.id });
+      setTrackers(res.payload);
     } catch (error: any) {
-      console.log('error');
+      console.log('errors');
     }
   };
 
   useEffect(() => {
-    fetchWorkspace();
+    fetchTrackers();
   }, []);
 
-  if(workspace?.trackers?.length === 0){
+  if(trackers?.length === 0){
     return (
       <></>
     );
@@ -30,12 +32,17 @@ const WorkspaceCard = ({ id }: any) => {
   return (
     <div>
       <div className='dashboard-workspace-title'>
-        <Avatar />
+        <UserAvatar title={workspace?.title ?? ''} />
         <span>{workspace?.title}</span>
       </div>
       <div className='dashboard-workspace-tracker-container'>
-        {workspace?.trackers?.map((tracker: any) => (
-          <TrackerCard key={tracker.id} trackerData={tracker} workspaceId={workspace.id} />
+        {trackers?.map((tracker: any) => (
+          <TrackerCard 
+            key={tracker.id} 
+            trackerData={tracker} 
+            workspaceId={workspace.id} 
+            onUpdateTracker={fetchTrackers}
+          />
         ))}
       </div>
     </div>

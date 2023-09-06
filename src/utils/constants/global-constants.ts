@@ -66,6 +66,7 @@ export const API_END_POINTS = {
   MILESTONE: 'milestone',
   USER: 'user',
   EVENT_LOG: 'event-logs',
+  TARGET: 'target',
   CAMPAIGNS: 'campaigns',
   LINE_ITEMS: 'campaigns/line-item',
   BUSINESS_UNITS: 'campaigns/business-unit',

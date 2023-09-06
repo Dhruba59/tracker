@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { Breadcrumb, Col, Row } from 'antd';
 import TrackerCard from '@components/common/tracker/tracker-card';
@@ -12,14 +12,25 @@ import './tracker.css';
 import { ResponseType } from '@models/global-models';
 import { getEventLogByTrackerId } from '@services/event-service';
 import { getTrackerById } from '@services/tracker-service';
+import { getWorkspaceById } from '@services/workspace-services';
 
 
-const TrackerDetails = () => {
+const Tracker = () => {
   const { workspaceId, trackerId } = useParams();
   const [activities, setActivities] = useState<any>();
   const [tracker, setTracker] = useState<any>();
+  const [workspace, setWorkspace] = useState<any>();
 
-  const fetchData = async () => {
+  const fetchWorkspaceData = async () => {
+    try {
+      const res: ResponseType = await getWorkspaceById(workspaceId!);
+      setWorkspace(res.payload);
+    } catch (error: any) {
+      console.log('error');
+    };
+  };
+
+  const fetchTrackerData = async () => {
     try {
       const res: ResponseType = await getTrackerById(trackerId!);
       setTracker(res.payload);
@@ -27,56 +38,53 @@ const TrackerDetails = () => {
       setActivities(activities.payload);
     } catch (error: any) {
       console.log('error');
-    }
+    };
+  };
+
+  const onUpdateTracker = () => {
+    fetchTrackerData();
   };
 
   useEffect(() => {
-    fetchData();
+    fetchTrackerData();
+    fetchWorkspaceData();
   }, []);
-
-  // const fetchData = async () => {
-  //   try {
-  //     const activities: ResponseType = await getEventLogByTrackerId(id ?? '');
-  //     setActivities(activities);
-  //   } catch (error: any) {
-  //     console.log(error?.message);
-  //   };
-  // };
-  
-  // useEffect(() => {
-  //   // fetchData(); 
-  //   getEventLogByTrackerId(id ?? '').then((res: ResponseType) => setActivities(res.payload));
-  // }, []);
-  
 
   const breadCumbItems = [
     {
-      title: <a href={`${routes.workspace.path}/${workspaceId}`}>Workspace</a>,
+      title: <a href={`${routes.workspace.path}/${workspaceId}`}>{workspace?.title}</a>,
     },
     {
-      title: <a href={`${routes.workspace.path}/${workspaceId}/${routes.tracker.path}/${tracker?.id}`}>{tracker?.title}</a>,
+      title: <a style={{color: '#000000D9'}} href={`${routes.workspace.path}/${workspaceId}/${routes.tracker.path}/${tracker?.id}`}>{tracker?.title}</a>,
     },
   ];
+
+  console.log('refetch tracker', tracker);
 
   return (
     <div className='tracker-details-container'>
       <Breadcrumb
         items={breadCumbItems}
       />
-      {tracker && <TrackerCard trackerData={tracker} workspaceId={workspaceId!}/>}
+      {tracker &&
+        <TrackerCard
+          trackerData={tracker}
+          workspaceId={workspaceId!}
+          onUpdateTracker={onUpdateTracker}
+        />}
       <Row className='tracker-details-row-2' gutter={16}>
         <Col span={8}>
-          <TaskBar tracker={tracker}/>
+          <TaskBar tracker={tracker} refetchTracker={fetchTrackerData}/>
         </Col>
         <Col span={8}>
-          <MilestoneBar trackerId={tracker?.id} milestones={tracker?.milestones} refetchTracker={fetchData}/>
+          <MilestoneBar tracker={tracker} milestones={tracker?.milestones} refetchTracker={fetchTrackerData}/>
         </Col>
         <Col span={8}>
-          <ActivityBar activities={activities}/>
+          <ActivityBar activities={activities} />
         </Col>
       </Row>
     </div>
   );
 };
 
-export default TrackerDetails;
+export default Tracker;

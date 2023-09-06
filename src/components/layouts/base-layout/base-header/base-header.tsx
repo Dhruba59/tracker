@@ -1,22 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Avatar, Badge, Dropdown, Layout, Menu, MenuProps, Popover, Typography } from 'antd';
 
 import { LogOutIcon, LogoIcon, NotificationIcon, QuestionCircle, SettingsIcon, WorkspaceIcon } from '@icons';
 import { userLogout } from '@services/auth-services';
 import './base-header.css';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '@constants/route-constants';
+import { getUserProfile } from '@services/user-services';
+import { ResponseType } from '@models/global-models';
 
 const { Header } = Layout;
 const { Text } = Typography;
 
 const BaseHeader = () => {
+  const [user, setUser] = useState<any>();
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setIsPopupOpen(!isPopupOpen);
   };
+
+  const fetchUser = () => {
+    getUserProfile()
+    .then((res: ResponseType) => setUser(res.payload))
+    .catch((error: any) => console.log('error fetching user!'));
+  };
+
   const handleLogout = () => {
     userLogout();
   };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const dropdownItems: MenuProps['items'] = [
     {
@@ -26,15 +43,16 @@ const BaseHeader = () => {
           <span className='header-popover-item-icon' >
             <Avatar size='small'/>
           </span>
-          <Text>John doe</Text>
+          <Text>{user?.name}</Text>
         </div>
       ),
+      onClick: () => navigate(routes.settings.path)
     },
     {
       key: '2',
       label: (
         <div className='header-popover-item'>
-          <span className='header-popover-item-icon'><LogOutIcon /></span>
+          <span className='header-popover-item-icon'><LogOutIcon style={{marginLeft: '4px'}}/></span>
           <Text>Log out</Text>
         </div>
       ),
@@ -46,33 +64,36 @@ const BaseHeader = () => {
     {
       key: 'questionCircle',
       icon: <QuestionCircle />,
-      className: 'header-menu-item'
+      // className: 'header-menu-item'
     },
     {
       key: 'app',
       icon: (
-        <Badge count={22}>
+        <Badge>
           <NotificationIcon />
         </Badge>
       ),
-      className: 'header-menu-item'
+      // className: 'header-menu-item'
     },
     {
       key: 'avatar',
-      icon: <Avatar />,
+      // icon: <Avatar />,
       label: (
           <Dropdown menu={{ items: dropdownItems }} placement="bottomLeft" arrow>
-            <span>John Doe</span>
+            <div>
+              <Avatar />
+              <span style={{marginLeft: '8px'}}>{user?.name}</span>
+            </div>
           </Dropdown>
         ),
-      className: 'header-menu-item',
+      // className: 'header-menu-item',
       onClick: handleClick
     },
   ];
 
   return (
     <Header className='header'>
-      <LogoIcon />
+      <LogoIcon onClick={() => navigate(routes.dashboard.path)} style={{cursor: 'pointer'}}/>
       <Menu className='header-menu' mode="horizontal" items={headerMenuItems} />   
     </Header>
   );

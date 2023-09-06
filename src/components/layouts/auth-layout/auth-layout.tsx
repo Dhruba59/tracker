@@ -1,4 +1,5 @@
 import { Outlet, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import authImage from 'assets/images/auth-image.png';
 import { useSession } from '@hooks/session-hooks';
@@ -6,17 +7,20 @@ import { routes } from '@constants/route-constants';
 import { EmailIcon2, LogoIcon } from '@icons';
 import { Typography } from 'antd';
 import './auth-layout.css';
+import { getWorkspaceList } from '@services/workspace-services';
+import { ResponseType } from '@models/global-models';
+import { manageRouteAfterLogin } from '@helpers/global-helpers';
 
 const { Text } = Typography;
 
 const AuthLayout = () => {
   const { session, status } = useSession();
-  const navigate = useNavigate();
   console.log('session', session);
-  if(session) {
-    navigate(routes.dashboard.path);
-  }
   
+  if(session) {
+    manageRouteAfterLogin();
+  }
+
   return (
     <div className="parent-container">
       <div className='col-1'>

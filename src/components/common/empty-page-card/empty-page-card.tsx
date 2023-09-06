@@ -14,8 +14,8 @@ const EmptyPageCard = ({ title, buttonText, onButtonClick }: EmptyPageCardProps)
     <div className='empty-page-container'>
       <img src={EmtpySpaceIcon} />
       <div className='empty-page-row-2'>
-        <p>{title}</p>
-        <AppButton className='empty-page-btn' type='primary' onClick={onButtonClick}>{buttonText}</AppButton>
+        {title && <p>{title}</p>}
+        {buttonText && <AppButton className='empty-page-btn' type='primary' onClick={onButtonClick}> {buttonText}</AppButton> }
       </div>
     </div>
   );

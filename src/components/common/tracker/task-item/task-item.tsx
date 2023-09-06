@@ -5,8 +5,6 @@ import CheckboxInput from '@components/common/input-fields/checkbox';
 import TextInput from '@components/common/input-fields/text-input';
 import { TASK_TYPE, TaskItemProps, TaskStatusEnum, UpdateTaskPayload } from '@models/task';
 import './task-item.css';
-import { updateTask } from '@services/task-service';
-import { ResponseType } from '@models/global-models';
 
 const { Text } = Typography;
 
@@ -78,7 +76,11 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
       <DotIcon />
       <CheckboxInput checked={task?.is_done} onChange={handleCheckbox} />
       {!isInputOpen && (
-        <Text style={{textDecoration: task?.is_done ? 'line-through' : ''}}>{task?.title}</Text>
+        <Text style={{
+          textDecoration: task?.is_done ? 'line-through' : '',
+          opacity: task?.is_done ? '.6' : '1'
+        }}
+        >{task?.title}</Text>
       )}
       
       {isInputOpen && 
@@ -90,8 +92,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
       }
       {isMouseOver && !isInputOpen && (
         <>
-          <EditIcon onClick={handleEditClick} />
-          <DeleteIcon onClick={handleTaskDelete}/>
+          <EditIcon onClick={handleEditClick} style={{cursor: 'pointer'}}/>
+          <DeleteIcon onClick={handleTaskDelete} style={{cursor: 'pointer'}}/>
         </>
       )}
       

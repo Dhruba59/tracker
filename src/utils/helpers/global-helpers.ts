@@ -1,4 +1,7 @@
+import { routes } from '@constants/route-constants';
+import { ResponseType } from '@models/global-models';
 import { TRACKER_TYPE, TrackerCardInfo } from '@models/tracker';
+import { getWorkspaceList } from '@services/workspace-services';
 
 export const stringToDateOnly = (date: string) => {
   const newDate = new Date(date);
@@ -48,6 +51,41 @@ export function formatTime(date: string | Date) {
 
 export const generateMilestoneTitle = (length: number) => {
   return `milestone-${length+1}`;
+};
+
+export const manageRouteAfterLogin = () => {
+  getWorkspaceList().then((res: ResponseType) => {
+    if(res.payload.length === 0) {
+      window.location.pathname = routes.create_first_workspace.path;
+    }
+    else {
+      window.location.pathname = routes.dashboard.path;
+    }
+  }).catch((error: any) => console.log('Something went wrong!'));
+};
+
+export function CalculateMilestonePercent (startDateString: string | Date, endDateString: string | Date, thirdDateString: string | Date): number {
+  const startDate = new Date(startDateString);
+  const endDate = new Date(endDateString);
+  const thirdDate = new Date(thirdDateString);
+
+  const totalDuration = endDate.getTime() - startDate.getTime();
+  const elapsedDuration = thirdDate.getTime() - startDate.getTime();
+
+  const percentage = (elapsedDuration / totalDuration) * 100;
+
+  return percentage;
+}
+
+export const greetByTime = () => {
+  const currentHour = new Date().getHours();
+  if (currentHour < 12) {
+    return 'Good morning!';
+  } else if (currentHour < 17) {
+    return 'Good afternoon!';
+  } else {
+    return 'Good night!';
+  };
 };
 
 const currentDate = new Date();

@@ -13,3 +13,10 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
+
+/* Media query for mobile and tablet screens */
+@media screen and (max-width: 1080px) {
+  .dashboard-workspace-tracker-container {
+    grid-template-columns: 1fr; /* Show one item in each row for mobile screens */
+  }
+}
