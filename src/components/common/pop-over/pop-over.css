@@ -1,0 +1,10 @@
+.popover-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-popover .ant-popover-inner {
+  padding: 4px !important;
+  border-radius: 8px !important;
+}

@@ -1,0 +1,11 @@
+.tracker-details-container {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.tracker-details-row-2 {
+  height: 100%;
+}

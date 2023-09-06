@@ -4,7 +4,7 @@
   width: 100%;
   padding: 30px;
   border-radius: 16px;
-  background-color: antiquewhite;
+  background-color: white;
   row-gap: 20px;
 }
 
@@ -18,6 +18,7 @@
   font-size: 20px;
   font-weight: 600;
   line-height: 23px;
+  margin-bottom: 0px;
 }
 
 .tracker-target {
@@ -36,6 +37,7 @@
 .tracker-date-card {
   border-radius: 14px;
   background-color: #EBF0FF;
+  color: #2D52CC;
   padding: 6px 12px;
   font-family: Roboto;
   font-size: 14px;
@@ -48,4 +50,47 @@
   font-weight: 600;
   line-height: 24px;
   color: #020D3D; 
+}
+
+.tracker-popover {
+  padding: 0px;
+}
+
+.tracker-popover-item {
+  width: 100% !important;
+  min-width: 100px;
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+  padding: 0px;
+  margin: 0px;
+  /* padding: 4px 0px; */
+  /* font-size: 14px;
+  font-weight: 400; */
+  /* cursor: pointer; */
+}
+
+.tracker-title {
+  display: flex;
+  align-items: center;
+}
+
+.ant-typography.tracker-title {
+  margin-bottom: 0px;
+}
+
+.tracker-title .ant-input {
+  border: none;
+  border-radius: 0px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.tracker-title .ant-input:focus{
+  box-shadow: none;
+}
+
+.tracker-title .ant-typography-edit {
+  display: flex !important;
+  align-items: center;
 }

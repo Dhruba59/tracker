@@ -1,0 +1,44 @@
+.add-member-modal-container {
+  margin: 24px;
+}
+
+.add-member-modal-member-list {
+  border: 1px solid #E6E7ECCC;
+}
+ .add-member-modal-form{
+  display: flex;
+  justify-content: space-between;
+  column-gap: 4px;
+ }
+ 
+.member-card-name {
+  color: #000000D9;
+}
+
+.member-card-email {
+  color: #00000073;
+}
+
+.add-member-form-item{
+  width: 100%;
+}
+
+.add-modal-invite-btn{
+  height: 32px;
+}
+
+.add-member-modal-input{
+  height: 32px;
+  /* width: 80%; */
+
+/* padding: 5px 12px 5px 12px; */
+  border-radius: 2px;
+  border: 1px solid #D9D9D9;
+  gap: 4px;
+  /* color: #D9D9D9; */
+  margin-top: 0px;
+}
+
+.add-member-modal-input .ant-select-selector {
+  border: 0px !important;
+}

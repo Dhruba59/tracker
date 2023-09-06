@@ -34,6 +34,36 @@ export const routes = {
     key: 'dashboard',
     path: '/dashboard',
   },
+  workspace: {
+    title: 'Workspace',
+    key: 'workspace',
+    path: '/workspace'
+  },
+  tracker: {
+    title: 'Tracker',
+    key: 'tracker',
+    path: '/tracker'
+  },
+  members: {
+    title: 'Members',
+    key: 'members',
+    path: '/members'
+  },
+  settings: {
+    title: 'Settings',
+    key: 'settings',
+    path: '/settings'
+  },
+  archive: {
+    title: 'Archive',
+    key: 'Archive',
+    path: '/archive'
+  },
+  create_first_workspace: {
+    title: 'Create First Workspace',
+    key: 'create-first-workspace',
+    path: '/workspace/first-workspace',
+  },
   notFound: {
     title: 'Page Not Found',
     key: 'page-not-found',

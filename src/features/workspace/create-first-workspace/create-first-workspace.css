@@ -1,0 +1,31 @@
+.create-first-workspace-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-first-workspace-title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  color: #101828;
+}
+
+.create-first-workspace-btn {
+  min-width: 150px;
+  width: fit-content;
+  padding: 8px, 18px, 8px, 18px;
+  border-radius: 4px;
+  background-color: #E7E7E7;
+  color: #818181;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.ant-input.ant-input-borderless.create-first-workspace-input {
+  height: 80px;
+  font-size: 48px;
+  font-weight: 400;
+  margin-top: 14px;
+  margin-bottom: 24px;
+}

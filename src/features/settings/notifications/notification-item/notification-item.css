@@ -1,0 +1,30 @@
+.notification-item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 400px; */
+  padding: 0px 25px;
+}
+
+.notification-item-col-1 {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.notification-item-title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #000000D9;
+}
+
+.notifications-dropdown-item {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.notification-action-btn {
+  
+}

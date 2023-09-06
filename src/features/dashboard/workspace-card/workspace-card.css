@@ -1,0 +1,22 @@
+.dashboard-workspace-title {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #000000D9;
+  margin-bottom: 20px;
+}
+
+.dashboard-workspace-tracker-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Media query for mobile and tablet screens */
+@media screen and (max-width: 1080px) {
+  .dashboard-workspace-tracker-container {
+    grid-template-columns: 1fr; /* Show one item in each row for mobile screens */
+  }
+}

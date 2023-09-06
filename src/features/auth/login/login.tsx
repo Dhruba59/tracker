@@ -12,18 +12,24 @@ import AuthFormWrapper from '@components/common/wrapper/auth-form-wrapper';
 import Button from '@components/common/button';
 import { ResponseType } from '@models/global-models';
 import './login.css';
+import { getWorkspaceList } from '@services/workspace-services';
+import { useNavigate } from 'react-router-dom';
+import { manageRouteAfterLogin } from '@helpers/global-helpers';
 
 const { Text } = Typography;
 
 const Login: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const handleLogin = async (values: Credentials) => {
     try {
+      setIsLoading(true);
       const res: ResponseType = await userLogin(values);
       form.resetFields();
       message.success(res?.message);
+      manageRouteAfterLogin();
     } catch (error: any) {
       message.error(error?.message ?? 'Something went wrong!');
     } finally {

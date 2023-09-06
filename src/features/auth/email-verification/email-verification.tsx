@@ -20,18 +20,22 @@ enum EMAIL_VERIFICATION_STATUS {
 
 const EmailVerification = () => {
   const { token } = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [verificationStatus, setVerificationStatus] = useState<EMAIL_VERIFICATION_STATUS>(EMAIL_VERIFICATION_STATUS.NOT_VERIFIED);
 
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
         setVerificationStatus(EMAIL_VERIFICATION_STATUS.LOADING);
         await verifyEmail({ token: token ?? '' });
         setVerificationStatus(EMAIL_VERIFICATION_STATUS.VERIFIED);
       } catch (error: any) {
         message.error(error?.message ?? 'Something went wrong!');
         setVerificationStatus(EMAIL_VERIFICATION_STATUS.NOT_VERIFIED);
-      }
+      } finally {
+        setIsLoading(false);
+      };
     })(); 
   }, []);
   
@@ -47,7 +51,7 @@ const EmailVerification = () => {
           'Your email has verified!' : 'Not Verified, try again!' 
         }
       </Text>
-      <Button type='link' href={routes.login.path}>Go to login</Button>
+      <Button loading={isLoading} type='link' href={routes.login.path}>Go to login</Button>
     </AuthFormWrapper>
   );
 };

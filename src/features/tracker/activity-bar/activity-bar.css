@@ -1,0 +1,12 @@
+.activity-card-container {
+  height: 100%;
+  max-height: 480px;
+  overflow: scroll;
+}
+
+.activity-card-container .ant-card-body{
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  margin-top: -24px;
+}

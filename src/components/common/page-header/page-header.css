@@ -1,0 +1,37 @@
+.page-header-container {
+  width: 100%;
+  padding: 12px 24px 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+}
+.page-header-col-1 {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+.page-header-col-2{
+
+}
+.page-header-btn {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  padding: 4px 15px 4px 15px;
+  background-color: #3866FF;
+  color: white;
+  /* font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: center; */
+}
+
+.page-header-col-1 p {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;
+  color: #000000D9;
+  margin: 0px;
+}

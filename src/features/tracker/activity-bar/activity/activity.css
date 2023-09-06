@@ -1,0 +1,41 @@
+.activity-container {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.activity-dp {
+  width: 40px;
+  height: 40px;
+}
+
+.activity-col-2 {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+}
+
+.activity-title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #00156A;
+}
+
+.activity-title span {
+  color: #3866FF;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.activity-time-user {
+  font-size: 10px;
+  color: #00156A;
+}
+
+.activity-time-user span{
+  font-size: 10px;
+  font-weight: 500;
+  color: #3866FF;
+}

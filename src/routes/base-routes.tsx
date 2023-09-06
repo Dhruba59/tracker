@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, useNavigate } from 'react-router-dom';
 
 import { routes } from '@constants/route-constants';
 import BaseLayout from '@components/layouts/base-layout';
@@ -9,6 +9,24 @@ import Dashboard from '@features/dashboard';
 import ResetPassword from '@features/reset-password';
 import NewPasswordForm from '@features/reset-password/new-password-form';
 import EmailVerification from '@features/auth/email-verification';
+import WorkspaceLayout from '@components/layouts/create-workspace-layout';
+import CreateFirstWorkspace from '@features/workspace/create-first-workspace';
+import WorkspaceDetails from '@features/workspace/workspace-details';
+import Tracker from '@features/tracker';
+import Members from '@features/members';
+import Settings from '@features/settings';
+import Archive from '@features/archive';
+import { useEffect } from 'react';
+
+const Redirect = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate(routes.dashboard.path);
+  },[]);
+
+  return <></>;
+};
 
 const MainRoutes = createBrowserRouter([
   {
@@ -38,12 +56,46 @@ const MainRoutes = createBrowserRouter([
     ],
   },
   {
+    element: <WorkspaceLayout />,
+    // errorElement: <BaseLayout errorBoundary={true} />,
+    children: [
+      {
+        path: routes.create_first_workspace.path,
+        element: <CreateFirstWorkspace />,
+      },
+    ],
+  },
+  {
     element: <BaseLayout />,
     // errorElement: <BaseLayout errorBoundary={true} />,
     children: [
       {
+        path: routes.home.path,
+        element: <Redirect/>
+      },
+      {
         path: routes.dashboard.path,
         element: <Dashboard />,
+      },
+      {
+        path: `${routes.workspace.path}/:id`,
+        element: <WorkspaceDetails />,
+      },
+      {
+        path: `/workspace/:workspaceId/${routes.tracker.path}/:trackerId`,
+        element: <Tracker />,
+      },
+      {
+        path: `${routes.workspace.path}/:workspaceId/members`,
+        element: <Members />,
+      },
+      {
+        path: `/:workspaceId/${routes.archive.path}`,
+        element: <Archive />,
+      },
+      {
+        path: routes.settings.path,
+        element: <Settings />,
       },
     ],
   }

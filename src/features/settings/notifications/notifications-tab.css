@@ -1,0 +1,29 @@
+.notifications-tab-container {
+  width: 500px;
+}
+
+.notifications-tab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 30px;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #00156A;
+}
+
+.notifications-tab-body {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border: 1px solid #E8E8E8;
+}
+.notifications-item-divider {
+  margin-inline: auto;
+  min-width: 0px;
+  width: 85%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

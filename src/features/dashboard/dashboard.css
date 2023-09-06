@@ -1,3 +1,16 @@
 .dashboard-main-container {
   width: 100%;
+  /* padding: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 35px; */
 }
+
+.dashboard-body {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 35px;
+}
+

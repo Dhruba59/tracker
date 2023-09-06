@@ -57,37 +57,37 @@ class AxiosConfigService {
     });
   }
 
-  // private getAuthHeader(config: RequestConfig) {
-  //   return {
-  //     ...config.headers,
-  //     Authorization: `Bearer ${getAccessToken()}`,
-  //   };
-  // }
+  private getAuthHeader(config: RequestConfig) {
+    return {
+      ...config.headers,
+      Authorization: `Bearer ${getAccessToken()}`,
+    };
+  }
 
   get(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'get', url, ...config }).catch((err) => err);
   }
 
   post(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'post', url, ...config }).catch((err) => err);
   }
 
   put(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'put', url, ...config }).catch((err) => err);
   }
 
   patch(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'patch', url, ...config }).catch(
       (err) => err
     );
   }
 
   delete(url: string, config: RequestConfig = {}) {
-    // config.headers = this.getAuthHeader(config);
+    config.headers = this.getAuthHeader(config);
     return this.request({ method: 'delete', url, ...config }).catch(
       (err) => err
     );
@@ -133,6 +133,21 @@ class HttpClientInstance {
 
     return this.returnPromiseData(response);
   }
+  // TODO - That might be good rather than using try catch in every api hit
+  // TODO - using it here and sending the data or error from here
+  // async post(url: string, config: RequestConfig = {}) {
+  //   try {
+  //     let response: Response = await this.httpClient.post(url, config);
+  //     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
+  //       // await getRetoken();
+  //       response = await this.httpClient.post(url, config);
+  //     }
+  //     return { data: response }
+  //   } catch(error: any) {
+  //     return { error };
+  //   }
+  //   // return this.returnPromiseData(response);
+  // }
 
   async put(url: string, config: RequestConfig = {}) {
     let response: Response = await this.httpClient.put(url, config);

@@ -1,0 +1,40 @@
+.welcome-card-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  column-gap: 20px;
+  background-color: white;
+  padding: 12px;
+}
+
+.welcome-card-container img{
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  padding: 0px;
+}
+
+.welcome-card-col-2 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  justify-content: space-between;
+  padding: 4px 0px;
+  /* background-color: antiquewhite; */
+}
+
+.welcome-card-title {
+  font-family: Roboto;
+  font-size: 20px;
+  font-weight: 500;
+  color: #000000D9;
+}
+
+.welcome-card-subtitle {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  color: #00000073;
+}
