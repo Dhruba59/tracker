@@ -1,20 +1,16 @@
 .dashboard-main-container {
   width: 100%;
-  padding: 20px;
-}
-
-.dashboard-title {
+  /* padding: 20px;
   display: flex;
-  align-items: center;
-  column-gap: 10px;
-  font-size: 20px;
-  font-weight: 500;
-  color: #000000D9;
-  margin-bottom: 20px;
+  flex-direction: column;
+  row-gap: 35px; */
 }
 
-.dashboard-tracker-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.dashboard-body {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 35px;
 }
+

@@ -30,7 +30,7 @@ const AppPopover: FC<PopOverProps> = ({ title, content, open, closeIcon, childre
 
   return (
     <Popover
-      className='tracker-modal' 
+      rootClassName='app-popover' 
       title={title && titleContent}
       content={content}
       {...rest}

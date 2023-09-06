@@ -4,6 +4,11 @@
   column-gap: 10px;
 }
 
+.activity-dp {
+  width: 40px;
+  height: 40px;
+}
+
 .activity-col-2 {
   display: flex;
   flex-direction: column;

@@ -1,0 +1,14 @@
+.progress-popover-container {
+  width: 180px;
+}
+
+.progress-popover-container p {
+  padding: 0px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00156A;
+}
+
+.progress-popover-body {
+  padding: 10px 16px;
+}

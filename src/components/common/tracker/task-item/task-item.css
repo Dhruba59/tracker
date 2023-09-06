@@ -1,0 +1,29 @@
+.task-item-container {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  justify-items: center;
+  column-gap: 6px;
+  margin-bottom: 10px;
+  min-width: 200px;
+}
+ 
+.task-item-input-form {
+  background-color: antiquewhite;
+  width: fit-content;
+}
+.task-item-input {
+  height: 24px;
+  padding: 1px 8px 1px 8px;
+  border: 1px solid #D9D9D9;
+  margin: 0px;
+  max-width: 160px;
+}
+
+.task-item-container .checkbox {
+  margin-bottom: 0px;
+}
+
+.task-item-container .ant-form-item {
+  margin: 0px !important;
+}

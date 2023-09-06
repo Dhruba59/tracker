@@ -1,3 +1,3 @@
-import TrackerDetails from './tracker';
+import Tracker from './tracker';
 
-export default TrackerDetails;
+export default Tracker;

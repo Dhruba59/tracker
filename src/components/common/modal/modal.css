@@ -3,6 +3,7 @@
   display: flex;
   width: 1000px;
   min-height: 400px;
+  border-radius: 8px;
 }
 
 .modal-container .ant-modal-body{
@@ -12,6 +13,8 @@
 }
 
 .modal-col-1 {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   width: 30%;
   background-image: url('../../../assets//images//bg-auth.png');
   background-size: cover;

@@ -11,6 +11,12 @@ export const getAccessToken = () => {
   return accessToken ?? '';
 };
 
+export const getRefreshToken = () => {
+  const tokenData = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
+  const refreshToken = tokenData ? JSON.parse(tokenData)?.refresh_token : '';
+  return refreshToken ?? '';
+};
+
 export const getCookies = () => {
   const cookieData = localStorage.getItem(LOCAL_STORAGE_KEYS.COOKIE);
   const accessCookie = cookieData ? JSON.parse(cookieData)?.access_token : '';

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, useNavigate } from 'react-router-dom';
 
 import { routes } from '@constants/route-constants';
 import BaseLayout from '@components/layouts/base-layout';
@@ -12,9 +12,21 @@ import EmailVerification from '@features/auth/email-verification';
 import WorkspaceLayout from '@components/layouts/create-workspace-layout';
 import CreateFirstWorkspace from '@features/workspace/create-first-workspace';
 import WorkspaceDetails from '@features/workspace/workspace-details';
-import TrackerDetails from '@features/tracker';
+import Tracker from '@features/tracker';
 import Members from '@features/members';
 import Settings from '@features/settings';
+import Archive from '@features/archive';
+import { useEffect } from 'react';
+
+const Redirect = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate(routes.dashboard.path);
+  },[]);
+
+  return <></>;
+};
 
 const MainRoutes = createBrowserRouter([
   {
@@ -58,6 +70,10 @@ const MainRoutes = createBrowserRouter([
     // errorElement: <BaseLayout errorBoundary={true} />,
     children: [
       {
+        path: routes.home.path,
+        element: <Redirect/>
+      },
+      {
         path: routes.dashboard.path,
         element: <Dashboard />,
       },
@@ -66,12 +82,16 @@ const MainRoutes = createBrowserRouter([
         element: <WorkspaceDetails />,
       },
       {
-        path: `${routes.tracker.path}/:id`,
-        element: <TrackerDetails />,
+        path: `/workspace/:workspaceId/${routes.tracker.path}/:trackerId`,
+        element: <Tracker />,
       },
       {
-        path: routes.members.path,
+        path: `${routes.workspace.path}/:workspaceId/members`,
         element: <Members />,
+      },
+      {
+        path: `/:workspaceId/${routes.archive.path}`,
+        element: <Archive />,
       },
       {
         path: routes.settings.path,

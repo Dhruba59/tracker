@@ -51,13 +51,18 @@ export const routes = {
   },
   settings: {
     title: 'Settings',
-    key: 'settins',
+    key: 'settings',
     path: '/settings'
+  },
+  archive: {
+    title: 'Archive',
+    key: 'Archive',
+    path: '/archive'
   },
   create_first_workspace: {
     title: 'Create First Workspace',
     key: 'create-first-workspace',
-    path: 'workspace/first-workspace',
+    path: '/workspace/first-workspace',
   },
   notFound: {
     title: 'Page Not Found',

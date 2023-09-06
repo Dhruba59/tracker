@@ -1,7 +1,8 @@
 export interface TrackerProgressbarProps {
-  breakPoints: Array<number>;
-  type: TRACKER_TYPE;
+  tracker: any;
   progressPercent: number;
+  milestones: any;
+  onUpdateTracker: () => void;
 }
 
 export interface TrackerCardInfo {
@@ -24,7 +25,9 @@ export interface TrackerCardInfo {
 }
 
 export interface TrackerCardProps {
-  tracker: TrackerCardInfo;
+  trackerData: any;
+  workspaceId: string;
+  onUpdateTracker: () => void;
 }
 
 export enum TRACKER_TYPE {
@@ -32,11 +35,25 @@ export enum TRACKER_TYPE {
   NUMERIC = 'NUMERIC'
 }
 
-export interface TaskBarProps {
-  tracker: TrackerCardInfo;
+export enum ARCHIVE_TYPE_ENUM {
+  ARCHIVE = 1,
+  NOT_ARCHIVE = 0
 }
 
-export interface TaskItemProps {
-  task: string;
+export interface GetTrackerByWorkspaceIdPayload {
+  workspaceId: string;
+  isArchived?: boolean;
 }
 
+export interface CreateUpdateTrackerPayload {
+  title?: string;
+  description?: string;
+  start_date?: string;
+  end_date?: string;
+  type?: string;
+  target_start?: number;
+  target_end?: number;
+  workspace_id: string;
+  user_ids?: string[];
+  is_archived?: ARCHIVE_TYPE_ENUM;
+}

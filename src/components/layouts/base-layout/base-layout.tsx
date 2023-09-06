@@ -9,9 +9,9 @@ import { useSession } from '@hooks/session-hooks';
 const BaseLayout = (props: any) => {
   const { session, status } = useSession();
   const navigate = useNavigate();
-  // if(!session) {
-  //   navigate(routes.login.path);
-  // }; 
+  if(!session) {
+    navigate(routes.login.path);
+  }; 
   
   return (
     <Layout>
