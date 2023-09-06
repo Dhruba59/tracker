@@ -37,13 +37,13 @@ const WorkspaceCard = ({ workspace }: any) => {
       </div>
       <div className='dashboard-workspace-tracker-container'>
         {trackers?.map((tracker: any) => (
-          <TrackerCard 
-            key={tracker.id} 
-            trackerData={tracker} 
-            workspaceId={workspace.id} 
-            onUpdateTracker={fetchTrackers}
-          />
-        ))}
+            <TrackerCard 
+              key={tracker?.id} 
+              trackerData={tracker} 
+              workspaceId={workspace.id} 
+              onUpdateTracker={fetchTrackers}
+            />
+          ))}
       </div>
     </div>
   );

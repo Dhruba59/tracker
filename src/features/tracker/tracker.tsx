@@ -63,9 +63,7 @@ const Tracker = () => {
 
   return (
     <div className='tracker-details-container'>
-      <Breadcrumb
-        items={breadCumbItems}
-      />
+      <Breadcrumb items={breadCumbItems}/>
       {tracker &&
         <TrackerCard
           trackerData={tracker}

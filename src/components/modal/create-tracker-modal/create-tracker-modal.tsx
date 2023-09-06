@@ -22,8 +22,6 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
       label: item.name
     }))
   );
-
-  console.log(memberOptions);
   
   useEffect(() => {
     getAllUser().then((res: ResponseType) => setMemberOptions(formatSelectOptions(res.payload)));

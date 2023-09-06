@@ -55,7 +55,6 @@ const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onInviteInputChange = (values: SelectDropdownValueType) => {
-    console.log(values);
     setValues(values);
   };
 
@@ -100,9 +99,9 @@ const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }
         <div className='add-member-modal-member-list'>
           {members?.map((member: any, index: number) => (
             index === members.length-1 ? 
-              <MemberCard member={member}/> :
+              <MemberCard key={index} member={member}/> :
             <>
-              <MemberCard member={member}/>
+              <MemberCard key={index} member={member}/>
               <Divider />
             </>
           ))}
