@@ -86,8 +86,8 @@ const WorkspaceDetails = () => {
     </div>    
     ) : (
       trackers?.map((tracker: any) => (
-        <div key={tracker?.id} className='workspace-trackers-container'>
-          <TrackerCard trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers}/>
+        <div className='workspace-trackers-container'>
+          <TrackerCard key={tracker?.id} trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers}/>
         </div>
      ))
     )

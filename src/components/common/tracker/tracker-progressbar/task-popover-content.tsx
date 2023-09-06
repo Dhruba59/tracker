@@ -64,8 +64,10 @@ const TaskPopoverContent = ({ milestoneId, tracker, onUpdateTracker } : Mileston
       <p>Tasks</p>
       <Divider />
       <div className='progress-popover-body'>
-        {tasks && tasks.map((task: any) => (
-          <TaskItem task={task} 
+        {tasks && tasks.map((task: any, index: number) => (
+          <TaskItem 
+            key={index}
+            task={task} 
             onTaskDelete={onTaskDelete} 
             onTaskUpdate={onTaskUpdate} 
             form={form}

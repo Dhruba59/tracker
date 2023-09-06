@@ -97,8 +97,8 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
 
   const renderTaskContent = (
     <div className='task-bar-task-items'>
-      {tasks?.map((task: any) => (
-        <TaskItem form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} />
+      {tasks?.map((task: any, index: number) => (
+        <TaskItem key={index} form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} />
       ))}
     </div>
   );

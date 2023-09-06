@@ -90,4 +90,4 @@ export const greetByTime = () => {
 
 const currentDate = new Date();
 const formattedTimeString = formatTime(currentDate);
-console.log(formattedTimeString); // Output: '8.20 pm'
+// console.log(formattedTimeString); // Output: '8.20 pm'
