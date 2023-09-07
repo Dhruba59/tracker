@@ -85,7 +85,7 @@
     "prefer-rest-params": "error",
     "prefer-spread": "error",
     "prefer-template": "error",
-    "prefer-promise-reject-errors": "error",
+    // "prefer-promise-reject-errors": "error",
     "quotes": ["error", "single"],
     "rest-spread-spacing": "error",
     "require-await": "error",
