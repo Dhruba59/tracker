@@ -22,23 +22,6 @@ const TrackerProgressbar = ({ tracker, progressPercent, milestones, onUpdateTrac
     return (CalculateMilestonePercent(tracker?.start_date, tracker?.end_date, milestone.created_at));
   }) || [];
 
-  const renderNumericContent = (milestoneId: string) => (
-    <Form>
-      <Form.Item name='target' rules={[{ required: true, message: 'Value required!' }]}>
-        <TextInput className='progress-tracker-input' />
-      </Form.Item>
-      <Form.Item name='date' rules={[{ required: true, message: 'Date is required!' }]}>
-        <TextInput className='progress-tracker-input' type="date" onPressEnter={handleMilestoneUpdate} />
-      </Form.Item>
-    </Form>
-  );
-
-  const renderPopOverContent = (milestoneId: string) => (
-    tracker?.type === TRACKER_TYPE.TASK ? 
-      <TaskPopoverContent tracker={tracker} milestoneId={milestoneId} onUpdateTracker={onUpdateTracker}/> : 
-      renderNumericContent(milestoneId)
-  );
-
   return (
     <div className="progress-container">
       <Progress className='progress-bar' percent={progressPercent} showInfo={false} />
@@ -52,8 +35,8 @@ const TrackerProgressbar = ({ tracker, progressPercent, milestones, onUpdateTrac
               className='progress-tracker-tasks-popup' 
               // title="Tasks" 
               closeIcon
-              content={() => renderPopOverContent(milestone?.id)}
-              mouseLeaveDelay={1}
+              content={() => <TaskPopoverContent tracker={tracker} milestone={milestone} onUpdateTracker={onUpdateTracker}/>}
+              // mouseLeaveDelay={1}
               >
                 <MilestoneBarIcon />
             </AppPopover>

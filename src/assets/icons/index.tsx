@@ -279,7 +279,7 @@ export const CorrectSignIcon = (props: SVGAttributes<SVGElement>) => {
 };
 
 export const MilestoneBarIcon = (props: SVGAttributes<SVGElement>) => {
-  const { width = 16, height = 16, fill = 'none', ...rest } = props;
+  const { width = 16, height = 16, fill = 'white', ...rest } = props;
   return (
   <svg width={width} height={height} viewBox="0 0 16 16" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
     <rect x="0.400391" y="8" width="10.748" height="10.748" rx="1.2" transform="rotate(-45 0.400391 8)" fill="#3866FF"/>

@@ -1,12 +1,13 @@
 import { TRACKER_TYPE } from "./tracker";
 
 export interface CreateOrUpdateMilestonePayload {
-  title: string;
+  title?: string;
   tracker_type?: TRACKER_TYPE;
   description?: string;
-  start_date: string;
-  end_date: string;
+  start_date?: string;
+  end_date?: string;
   tracker_id: string;
+  achieved_target?: number;
 }
 
 // export interface GetTasksPayload {

@@ -118,7 +118,8 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
     if(tracker?.type === TRACKER_TYPE.NUMERIC) {
       payload = { ...payload, target_value: milestoneForm.getFieldValue('target')};
     };
-    if(milestone) {
+    if(milestone?.id) {
+      console.log('mile', milestone);
       updateMilestone(milestone?.id, payload);
     } else {
       const res = await createMilestone(payload);
@@ -147,6 +148,15 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
     return current.isBefore(minDate) || current.isAfter(maxDate);
   };
 
+  const handleTargetAchieved = (e: any) => {
+    const payload = {
+      achieved_target: e.target.value,
+      tracker_type: TRACKER_TYPE.NUMERIC,
+      tracker_id: tracker?.id,
+    };
+    updateMilestone(milestone?.id, payload);
+  };
+
   return (
     <AppCollapse 
       label={editableLabel}
@@ -156,21 +166,28 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
       >
       <div className='milestone-container'>
         <div className='milestone-row-1'>
-          {/* {tracker?.type === TRACKER_TYPE.TASK && <Text className='milestone-title'>Tasks</Text>}
-          <Form form={milestoneForm}>
-            {tracker?.type === TRACKER_TYPE.NUMERIC &&
+          {tracker?.type === TRACKER_TYPE.TASK && <Text className='milestone-title'>Tasks</Text>}
+          {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC && <span className='milestone-target'>target: {milestone?.target_value}</span>}
+          <Form form={milestoneForm} className='milestone-form'>
+            {tracker?.type === TRACKER_TYPE.NUMERIC && !milestone?.id &&
             <Form.Item name='target'>
-              <Input />
+              <Input size='middle' className='milestone-task-add-input' placeholder='input target here'/>
             </Form.Item>}
-            <Form.Item name='date'>
+            {/* <Form.Item name='date'>
               <RangePicker size='small' value={selectedDateRange} disabledDate={disabledDate} className='milestone-datepicker' onChange={handleDateChange} showTime={false} />
-            </Form.Item>
-          </Form> */}
-          {tracker?.type === TRACKER_TYPE.TASK ?
+            </Form.Item> */}
+            <RangePicker size='small' value={selectedDateRange} disabledDate={disabledDate} className='milestone-datepicker' onChange={handleDateChange} showTime={false} />
+          </Form>
+          {/* {tracker?.type === TRACKER_TYPE.TASK ?
             <Text className='milestone-title'>Tasks</Text> :
             <TextInput />}
-            <RangePicker size='small' value={selectedDateRange} disabledDate={disabledDate} className='milestone-datepicker' onChange={handleDateChange} showTime={false} />
+            <RangePicker size='small' value={selectedDateRange} disabledDate={disabledDate} className='milestone-datepicker' onChange={handleDateChange} showTime={false} /> */}
         </div>
+        <div>
+        {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC && <Input size='middle' onPressEnter={handleTargetAchieved} className='milestone-task-add-input' placeholder='input value here' />}
+        </div>
+        
+            
         
         {tracker?.type === TRACKER_TYPE.TASK &&
           <div className='milestone-row-2'>
