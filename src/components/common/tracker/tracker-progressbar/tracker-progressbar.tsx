@@ -18,8 +18,6 @@ const TrackerProgressbar = ({ tracker, progressPercent, milestones, onUpdateTrac
     console.log('update milestone!');
   };
 
-  console.log('refetch tracker progressbar', tracker);
-
   const milestonesPosition: number[] = milestones?.map((milestone: any) => {
     return (CalculateMilestonePercent(tracker?.start_date, tracker?.end_date, milestone.created_at));
   }) || [];

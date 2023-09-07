@@ -17,7 +17,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
   const [form] = Form.useForm();
 
   const handleTaskUpdate = (e: any) => {
-    console.log(e.target.value);
     const payload = {
       title: e.target.value,
     };

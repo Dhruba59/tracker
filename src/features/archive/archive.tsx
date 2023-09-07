@@ -39,8 +39,8 @@ const Archive = () => {
     </div>    
     ) : (
       trackers?.map((tracker: any) => (
-        <div key={tracker?.id} className='workspace-trackers-container'>
-          <TrackerCard trackerData={tracker} workspaceId={workspaceId!} onUpdateTracker={fetchTrackers} />
+        <div className='workspace-trackers-container'>
+          <TrackerCard key={tracker?.id} trackerData={tracker} workspaceId={workspaceId!} onUpdateTracker={fetchTrackers} />
         </div>
       ))
     )

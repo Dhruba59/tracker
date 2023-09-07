@@ -11,8 +11,8 @@ export interface ActivityProps {
 const ActivityBar = ({activities}: ActivityProps) => {
   return (
     <Card className='activity-card-container hide-scrollbar' title="Activities" bordered={false}>
-      {activities?.map((activity: any) => (
-        <Activity activity={activity}/>
+      {activities?.map((activity: any, index: number) => (
+        <Activity key={index} activity={activity}/>
       ))}
     </Card>
   );

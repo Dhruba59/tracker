@@ -51,8 +51,7 @@ class AxiosConfigService {
       this.axiosInstance
         .request(config)
         .then(({ status, data }) => resolve({ status, data }))
-        .catch((err) =>
-          reject(new Error('Something went wrong!'))
+        .catch((err) => reject({ data: err?.response?.data, status: err?.response?.data?.statusCode })
         );
     });
   }
@@ -117,6 +116,7 @@ class HttpClientInstance {
 
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
       // await getRetoken();
+      localStorage.clear();
       response = await this.httpClient.get(url, config);
     }
 
@@ -128,6 +128,7 @@ class HttpClientInstance {
 
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
       // await getRetoken();
+      localStorage.clear();
       response = await this.httpClient.post(url, config);
     }
 
@@ -154,6 +155,7 @@ class HttpClientInstance {
 
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
       // await getRetoken();
+      localStorage.clear();
       response = await this.httpClient.put(url, config);
     }
 
@@ -165,6 +167,7 @@ class HttpClientInstance {
 
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
       // await getRetoken();
+      localStorage.clear();
       response = await this.httpClient.patch(url, config);
     }
 
@@ -176,6 +179,7 @@ class HttpClientInstance {
 
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
       // await getRetoken();
+      localStorage.clear();
       response = await this.httpClient.delete(url, config);
     }
 

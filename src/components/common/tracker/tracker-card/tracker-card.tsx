@@ -24,8 +24,6 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
   const [tracker, setTracker] = useState<any>(trackerData);
   const [milestone, setMilestone] = useState<any>();
 
-  console.log('refetch tracker2', tracker);
-
   const fetchMembers = () => {
     getMembersByTrackerId(tracker.id)
       .then((res: ResponseType) => setMembers(res.payload))
@@ -51,7 +49,7 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
   const threeDotItems: MenuProps['items'] = [
     
     tracker?.is_archived ? {
-      key: '1',
+      key: '3',
       label: 'Restore',
       onClick: () => handleArchiveToogle(ARCHIVE_TYPE_ENUM.NOT_ARCHIVE),
       className: 'tracker-popover-item'
@@ -71,8 +69,8 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
   ];
 
   const renderMembersAvatar = () => (
-    members?.map((member: any) => (
-      <UserAvatar title={member?.user.name} />
+    members?.map((member: any, index: number) => (
+      <UserAvatar key={index} title={member?.user.name} />
     ))
   );
 
@@ -81,7 +79,6 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
   );
 
   const handleOnTitleChange = (title: string) => {
-    console.log(title);
     const payload = { title, workspace_id: workspaceId };
     if(title !== tracker.title) {
       updateTracker(tracker.id, payload)

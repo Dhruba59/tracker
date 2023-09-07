@@ -30,8 +30,6 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, form }: Cr
       label: item.name
     }))
   );
-
-  console.log(memberOptions);
   
   useEffect(() => {
     getAllUser().then((res: ResponseType) => setMemberOptions(formatSelectOptions(res.payload)));

@@ -51,8 +51,9 @@ const MilestoneBar = ({ milestones, tracker, refetchTracker }: MilestoneProps) =
   };
 
   const renderMilestoneItems = () => (
-    milestones?.map((milestone) => (
+    milestones?.map((milestone, index: number) => (
       <Milestone
+        key={index}
         tracker={tracker}
         milestoneData={milestone} 
         refetchTracker={refetchTracker}

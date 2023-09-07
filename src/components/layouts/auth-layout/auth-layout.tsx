@@ -15,7 +15,6 @@ const { Text } = Typography;
 
 const AuthLayout = () => {
   const { session, status } = useSession();
-  console.log('session', session);
   
   if(session) {
     manageRouteAfterLogin();

@@ -16,9 +16,7 @@ const Dashboard = () => {
     try {
       const res: ResponseType = await getWorkspaceList();
       setWorkspaces(res.payload);
-    } catch (error: any) {
-      console.log('error');
-    }
+    } catch (error: any) { }
   };
 
   useEffect(() => {
