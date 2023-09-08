@@ -88,6 +88,7 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
     addTarget(payload).then((res: ResponseType) => {
       message.success(res.message);
       refetchTracker();
+      numericForm.resetFields();
     }).catch((error: any) => message.error(error?.message ?? 'Unable to add target!'));
   };
 

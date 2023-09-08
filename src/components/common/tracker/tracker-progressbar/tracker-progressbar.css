@@ -11,7 +11,7 @@
 }
 
 .progress-container .ant-progress-bg {
-  background-color: #d4ba10; 
+  /* padding-inline: 20px !important; */
 }
 
 .progress-stop-point {

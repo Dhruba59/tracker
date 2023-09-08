@@ -55,7 +55,7 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
         <Form.Item name='description' label='Description'>
           <TextArea className='create-tracker-modal-input'/>
         </Form.Item>
-        <Form.Item name='date' label='Time Period' >
+        <Form.Item name='date' label='Time Period' required rules={[{required: true, message: 'Date is required'}]} >
           <DatePicker.RangePicker className='create-tracker-modal-input'/>
         </Form.Item>
         <Form.Item name='members' label='Assign Members'>
@@ -70,7 +70,7 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
             options={memberOptions}
           />
         </Form.Item>
-        <Form.Item name='type' label='Tracker Type'>
+        <Form.Item name='type' label='Tracker Type' required rules={[{required: true, message: 'Type is required'}]} >
           <Radio.Group onChange={onRadioChange}>
             <Radio value={TRACKER_TYPE.TASK}>Task</Radio>
             <Radio value={TRACKER_TYPE.NUMERIC}>Numeric</Radio>

@@ -4,6 +4,7 @@ import AppButton from '@components/common/button';
 
 import './member-card.css';
 import { ArrowDown } from '@icons';
+import { MEMBER_ROLE_TYPE } from '@models/members';
 
 export interface MemberCardProps {
   member: any;
@@ -11,26 +12,23 @@ export interface MemberCardProps {
 
 const items: MenuProps['items'] = [
   {
-    key: 'admin',
-    label: 'admin',
+    key: MEMBER_ROLE_TYPE.OWNER,
+    label: MEMBER_ROLE_TYPE.OWNER
   },
   {
-    key: 'editor',
-    label: 'editor',
-  },
-  {
-    key: 'viewer',
-    label: 'viewer',
+    key: MEMBER_ROLE_TYPE.NOT_OWNER,
+    label: MEMBER_ROLE_TYPE.NOT_OWNER
   },
 ];
 
 const MemberCard = ({ member }: MemberCardProps) => {
-  const [role, setRole] = useState<string>();
+  const [role, setRole] = useState<string>(member?.is_owner === 1 ? MEMBER_ROLE_TYPE.OWNER : MEMBER_ROLE_TYPE.NOT_OWNER);
 
   const handleDropdownChange = (e: any) => {
     setRole(e.key);
   };
-
+  console.log(member);
+  console.log(role);
   return (
     <div className='member-card-container'>
       <div className='member-card-col-1'>

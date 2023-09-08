@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Avatar, Badge, Dropdown, Layout, Menu, MenuProps, Popover, Typography } from 'antd';
+import { Avatar, Badge, Dropdown, Layout, Menu, MenuProps, Popover, Tooltip, Typography } from 'antd';
 
 import { LogOutIcon, LogoIcon, NotificationIcon, QuestionCircle, SettingsIcon, WorkspaceIcon } from '@icons';
 import { userLogout } from '@services/auth-services';
@@ -63,7 +63,14 @@ const BaseHeader = () => {
   const headerMenuItems: MenuProps['items'] = [
     {
       key: 'questionCircle',
-      icon: <QuestionCircle />,
+      icon: (
+        <Tooltip title={
+          <div style={{ textAlign: 'center' }}>
+            For any kind of help mail at example@mail.com
+          </div>}>
+          <QuestionCircle />
+        </Tooltip>
+      ),
       className: 'header-menu-item'
     },
     {
@@ -76,7 +83,8 @@ const BaseHeader = () => {
         </div>
       
       ),
-      className: 'header-menu-item'
+      className: 'header-menu-item',
+      disabled: true
     },
     {
       key: 'avatar',

@@ -6,7 +6,7 @@
   display: flex;
   justify-content: space-between !important;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .milestone-row-2 {
@@ -44,11 +44,35 @@
   column-gap: 6px;
 }
 
-.milestone-task-add-input {
-  padding: 1px 8px 1px 8px;
+/* .milestone-target-add-input{
   border-radius: 2px;
   border: 1px solid #D9D9D9;
   gap: 4px;
+} */
+
+.milestone-target-input {
+  border-radius: 2px;
+  border: 1px solid #D9D9D9;
+  gap: 4px;
+}
+
+.milestone-task-add-input {
+  border-radius: 2px;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  margin: 6px 0px;
+  margin-bottom: 4px;
+}
+
+.milestone-row-2 .ant-input:focus{
+  border-radius: 2px;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  margin: 6px 0px;
+  box-sizing: none;
+  box-shadow: none;
 }
 
 .milestone-editable-label {
@@ -78,8 +102,8 @@
   box-shadow: none;
 }
 
-.milestone-row-1 .ant-form-item {
-  margin-bottom: 0px;
+.milestone-container .ant-form-item {
+  margin-bottom: 0px !important;
 }
 
 .milestone-target {

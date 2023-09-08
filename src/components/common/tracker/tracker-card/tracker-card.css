@@ -12,6 +12,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
 
 .tracker-title {
@@ -57,8 +59,8 @@
 }
 
 .tracker-popover-item {
-  width: 100% !important;
-  min-width: 100px;
+  /* width: 100% !important; */
+  min-width: 80px;
   display: flex;
   column-gap: 4px;
   align-items: center;
@@ -94,3 +96,4 @@
   display: flex !important;
   align-items: center;
 }
+

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import MemberCard from './member-card';
 import { Divider, Dropdown, Form, MenuProps, Select, Space, message } from 'antd';
 import AppModal from '@components/common/modal';
-import { AddMemberModalProps } from '@models/members';
+import { AddMemberModalProps, MEMBER_ROLE_TYPE } from '@models/members';
 import './add-member-modal.css';
 import AppButton from '@components/common/button';
 import { addWorkspaceMember, getMembersByWorkspaceId } from '@services/workspace-members-service';
@@ -13,43 +13,24 @@ import { SelectDropdownValueType } from '@components/common/select-dropdown/sele
 
 const items: MenuProps['items'] = [
   {
-    key: '1',
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-        1st menu item
-      </a>
-    ),
+    key: MEMBER_ROLE_TYPE.OWNER,
+    label: MEMBER_ROLE_TYPE.OWNER
   },
   {
-    key: '2',
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-        2nd menu item (disabled)
-      </a>
-    ),
-    disabled: true,
-  },
-  {
-    key: '3',
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-        3rd menu item (disabled)
-      </a>
-    ),
-    disabled: true,
-  },
-  {
-    key: '4',
-    danger: true,
-    label: 'a danger item',
-  },
+    key: MEMBER_ROLE_TYPE.NOT_OWNER,
+    label: MEMBER_ROLE_TYPE.NOT_OWNER,
+  }
 ];
 
 export interface MemberFormValues {
-  members: string[];
+  memberIds: string[];
+  role: MEMBER_ROLE_TYPE;
+};
+export interface MembersFormValues {
+  members: MemberFormValues;
 };
 
-const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }: AddMemberModalProps) => {
+const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId, onMemberAddUpdate }: AddMemberModalProps) => {
   const [form] = Form.useForm();
   const [values, setValues] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -58,17 +39,19 @@ const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }
     setValues(values);
   };
 
-  const onSubmit = ({ members }: MemberFormValues) => {
+  const onSubmit = ({ members }: MembersFormValues) => {
+    console.log(members);
     const payload = {
-      is_owner: false,
+      is_owner: members?.role === MEMBER_ROLE_TYPE.OWNER ? 1 : 0,
       workspace_id: workspaceId,
-      user_ids: members
+      user_ids: members.memberIds
     };
     setIsLoading(true);
     addWorkspaceMember(payload)
       .then((res: ResponseType) => {
         message.success(res?.message);
         form.resetFields();
+        onMemberAddUpdate?.();
       }).catch((error: any) => {
         message.error(error?.message ?? 'Unable to invite!');
       }).finally(() => {
@@ -82,6 +65,7 @@ const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }
         <Form onFinish={onSubmit} className='add-member-modal-form' form={form}>
           <Form.Item name='members' className='add-member-form-item'>
             <SelectDropdown 
+              defaultDropDownSelect={MEMBER_ROLE_TYPE.OWNER}
               onChange={onInviteInputChange} 
               dropdownItems={items} 
               selectOptions={memberOptions} 
@@ -100,10 +84,10 @@ const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId }
           {members?.map((member: any, index: number) => (
             index === members.length-1 ? 
               <MemberCard key={index} member={member}/> :
-            <>
-              <MemberCard key={index} member={member}/>
+            <Fragment key={index}>
+              <MemberCard member={member}/>
               <Divider />
-            </>
+            </Fragment>
           ))}
         </div>  
       </div>

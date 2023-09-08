@@ -1,4 +1,3 @@
-import TextInput from '@components/common/input-fields/text-input';
 import TaskItem from '@components/common/tracker/task-item/task-item';
 import { Collapse, CollapsePanelProps, DatePicker, Form, Input, Typography, message } from 'antd';
 import { useEffect, useState } from 'react';
@@ -7,7 +6,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import './milestone.css';
 import AppCollapse from '@components/common/collapse';
 import AppButton from '@components/common/button';
-import { getMilestoneById } from '@services/milestone-service';
 import { ResponseType } from '@models/global-models';
 import { error } from 'console';
 import { CreateOrUpdateMilestonePayload } from '@models/milestone';
@@ -35,6 +33,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   const [tasks, setTasks] = useState<any>();
   const [taskItemForm] = Form.useForm();
   const [milestoneForm] = Form.useForm();
+  const [numericInputForm] = Form.useForm();
 
   const fetchTasks = () => {
     getTasks({
@@ -113,7 +112,9 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
     ]);
     let payload: any = {
       start_date: new Date(date[0].$d),
-      end_date: new Date(date[1].$d)
+      end_date: new Date(date[1].$d),
+      // tracker_type: tracker?.type,
+      // tracker_id: tracker?.id
     };
     if(tracker?.type === TRACKER_TYPE.NUMERIC) {
       payload = { ...payload, target_value: milestoneForm.getFieldValue('target')};
@@ -137,7 +138,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   const editableLabel = (
     <Typography.Paragraph editable={{
       onChange: handleLabelChange,
-      icon: <EditIcon style={{marginTop: 'auto'}}/>,
+      icon: milestone?.id ? <EditIcon style={{marginTop: 'auto'}}/> : <></>,
       enterIcon: null,
     }} className='milestone-editable-label'>{milestone?.title ?? newMilestoneTitle}</Typography.Paragraph>
   );
@@ -152,9 +153,9 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
     const payload = {
       achieved_target: e.target.value,
       tracker_type: TRACKER_TYPE.NUMERIC,
-      tracker_id: tracker?.id,
     };
     updateMilestone(milestone?.id, payload);
+    numericInputForm.resetFields();
   };
 
   return (
@@ -171,7 +172,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
           <Form form={milestoneForm} className='milestone-form'>
             {tracker?.type === TRACKER_TYPE.NUMERIC && !milestone?.id &&
             <Form.Item name='target'>
-              <Input size='middle' className='milestone-task-add-input' placeholder='input target here'/>
+              <Input size='small' className='milestone-target-input' placeholder='input target here'/>
             </Form.Item>}
             {/* <Form.Item name='date'>
               <RangePicker size='small' value={selectedDateRange} disabledDate={disabledDate} className='milestone-datepicker' onChange={handleDateChange} showTime={false} />
@@ -184,7 +185,13 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
             <RangePicker size='small' value={selectedDateRange} disabledDate={disabledDate} className='milestone-datepicker' onChange={handleDateChange} showTime={false} /> */}
         </div>
         <div>
-        {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC && <Input size='middle' onPressEnter={handleTargetAchieved} className='milestone-task-add-input' placeholder='input value here' />}
+        {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC &&
+         <Form form={numericInputForm}>
+            <Form.Item name='achieved_target'>
+              <Input size='middle' onPressEnter={handleTargetAchieved} className='milestone-target-input' placeholder='input value here' />
+            </Form.Item>
+         </Form>}
+
         </div>
         
             
@@ -194,8 +201,8 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
             {tasks?.map((task: any) => (
               <TaskItem key={task.id} form={taskItemForm} task={task} onTaskDelete={onTaskDelete} onTaskUpdate={onTaskUpdate} />
             ))}
-            <AppButton className='milestone-task-add-btn' type='link' onClick={() => setIsTaskInputOpen(true)}>+ Add New</AppButton>
-            {isTaskInputOpen && <TextInput className='milestone-task-add-input' onPressEnter={handleTaskAdd} />}
+            {isTaskInputOpen && <Input placeholder='Task name here' size='small' className='milestone-task-add-input' onPressEnter={handleTaskAdd}/>}
+            <AppButton className='milestone-task-add-btn' type='link' onClick={() => setIsTaskInputOpen(true)} >+ Add New</AppButton> 
           </div>
         }
       </div>

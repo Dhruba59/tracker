@@ -1,5 +1,7 @@
 .add-member-modal-container {
   margin: 24px;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .add-member-modal-member-list {
