@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from 'react';
-import { Popover, PopoverProps, Typography } from 'antd';
+import { Popover, PopoverProps, Tree, Typography } from 'antd';
 
 import { CloseIcon } from '@icons';
 import './pop-over.css';

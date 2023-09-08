@@ -2,9 +2,9 @@ import { SVGAttributes } from 'react';
 
 
 export const QuestionCircle = (props: SVGAttributes<SVGElement>) => {
-  const { width = 14, height = 14, fill = 'none' } = props;
+  const { width = 14, height = 14, fill = 'none', ...rest } = props;
   return (
-    <svg width={width} height={height} viewBox="0 0 14 14" fill={fill} xmlns="http://www.w3.org/2000/svg">
+    <svg width={width} height={height} viewBox="0 0 14 14" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
       <g clipPath="url(#clip0_662_955)">
         <path
           d="M6.99902 0C3.1334 0 -0.000976562 3.13437 -0.000976562 7C-0.000976562 10.8656 3.1334 14 6.99902 14C10.8646 14 13.999 10.8656 13.999 7C13.999 3.13437 10.8646 0 6.99902 0ZM6.99902 12.8125C3.78965 12.8125 1.18652 10.2094 1.18652 7C1.18652 3.79063 3.78965 1.1875 6.99902 1.1875C10.2084 1.1875 12.8115 3.79063 12.8115 7C12.8115 10.2094 10.2084 12.8125 6.99902 12.8125Z"
@@ -278,15 +278,55 @@ export const CorrectSignIcon = (props: SVGAttributes<SVGElement>) => {
   );
 };
 
-export const MilestoneBarIcon = (props: SVGAttributes<SVGElement>) => {
-  const { width = 16, height = 16, fill = 'none', ...rest } = props;
+export const BlueMilestoneBarIcon = (props: SVGAttributes<SVGElement>) => {
+  const { width = 16, height = 16, fill = 'white', ...rest } = props;
   return (
   <svg width={width} height={height} viewBox="0 0 16 16" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
     <rect x="0.400391" y="8" width="10.748" height="10.748" rx="1.2" transform="rotate(-45 0.400391 8)" fill="#3866FF"/>
-    <path d="M5.7676 7.93631L6.87502 8.21151L6.23743 10.7888C6.08977 11.3928 6.38507 11.5942 6.89516 11.2385L10.3718 8.82897C10.7947 8.53366 10.7342 8.19135 10.2309 8.06383L9.12344 7.78867L9.76106 5.21136C9.90872 4.60731 9.6134 4.40597 9.10331 4.76169L5.62666 7.1712C5.20382 7.46652 5.26422 7.80878 5.7676 7.93631Z" fill="#FCFCFF"/>
+    <path d="M5.7676 7.93631L6.87502 8.21151L6.23743 10.7888C6.08977 11.3928 6.38507 11.5942 6.89516 11.2385L10.3718 8.82897C10.7947 8.53366 10.7342 8.19135 10.2309 8.06383L9.12344 7.78867L9.76106 5.21136C9.90872 4.60731 9.6134 4.40597 9.10331 4.76169L5.62666 7.1712C5.20382 7.46652 5.26422 7.80878 5.7676 7.93631Z" fill="FFA800"/>
   </svg>
   );
 };
+
+export const YellowMilestoneBarIcon = (props: SVGAttributes<SVGElement>) => {
+  const { width = 14, height = 14, fill = 'white', ...rest } = props;
+  return (
+    <svg width={width} height={height} viewBox="0 0 14 14" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
+    <rect y="6.6499" width="9.40452" height="9.40452" rx="1.05" transform="rotate(-45 0 6.6499)" fill="white"/>
+    <path d="M4.69728 6.59368L5.66628 6.83448L5.10838 9.08959C4.97918 9.61813 5.23757 9.79434 5.6839 9.48309L8.72598 7.37476C9.09597 7.11636 9.0431 6.81685 8.60264 6.70526L7.63365 6.4645L8.19156 4.20936C8.32076 3.68081 8.06236 3.50464 7.61603 3.81589L4.57396 5.92422C4.20398 6.18262 4.25683 6.4821 4.69728 6.59368Z" fill="#FFA800"/>
+    </svg>
+  );
+};
+
+export const RedMilestoneBarIcon = (props: SVGAttributes<SVGElement>) => {
+  const { width = 14, height = 14, fill = 'white', ...rest } = props;
+  return (
+    <svg width={width} height={height} viewBox="0 0 14 14" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <rect y="6.6499" width="9.40452" height="9.40452" rx="1.05" transform="rotate(-45 0 6.6499)" fill="white"/> 
+      <path d="M4.69728 6.59368L5.66628 6.83448L5.10838 9.08959C4.97918 9.61813 5.23757 9.79434 5.6839 9.48309L8.72598 7.37476C9.09597 7.11636 9.0431 6.81685 8.60264 6.70526L7.63365 6.4645L8.19156 4.20936C8.32076 3.68081 8.06236 3.50464 7.61603 3.81589L4.57396 5.92422C4.20398 6.18262 4.25683 6.4821 4.69728 6.59368Z" fill="#FF6231"/>
+    </svg>
+  );
+};  
+
+export const GreenMilestoneBarIcon = (props: SVGAttributes<SVGElement>) => {
+  const { width = 14, height = 14, fill = 'white', ...rest } = props;
+  return (
+    <svg width={width} height={height} viewBox="0 0 14 14" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <rect x="0.349609" y="6.99976" width="9.40452" height="9.40452" rx="1.05" transform="rotate(-45 0.349609 6.99976)" fill="white"/>
+      <path d="M5.04689 6.94353L6.01589 7.18434L5.45799 9.43944C5.32879 9.96799 5.58718 10.1442 6.03351 9.83294L9.07559 7.72462C9.44557 7.46622 9.39271 7.1667 8.95225 7.05512L7.98326 6.81435L8.54117 4.55921C8.67037 4.03066 8.41197 3.85449 7.96564 4.16575L4.92357 6.27407C4.55359 6.53247 4.60644 6.83195 5.04689 6.94353Z" fill="#82E57B"/>
+    </svg>
+  );
+};  
+
+export const DefaultMilestoneBarIcon = (props: SVGAttributes<SVGElement>) => {
+  const { width = 14, height = 14, fill = 'white', ...rest } = props;
+  return (
+    <svg width={width} height={height} viewBox="0 0 14 14" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <rect x="0.349609" y="6.99976" width="9.40452" height="9.40452" rx="1.05" transform="rotate(-45 0.349609 6.99976)" fill="#B1B2B7"/>
+      <path d="M5.04689 6.94353L6.01589 7.18434L5.45799 9.43944C5.32879 9.96799 5.58718 10.1442 6.03351 9.83294L9.07559 7.72462C9.44557 7.46622 9.39271 7.1667 8.95225 7.05512L7.98326 6.81435L8.54117 4.55921C8.67037 4.03066 8.41197 3.85449 7.96564 4.16575L4.92357 6.27407C4.55359 6.53247 4.60644 6.83195 5.04689 6.94353Z" fill="#FCFCFF"/>
+    </svg>
+  );
+};  
 
 export const LogOutIcon = (props: SVGAttributes<SVGElement>) => {
   const { width = 15, height = 14, fill = 'none', ...rest } = props;

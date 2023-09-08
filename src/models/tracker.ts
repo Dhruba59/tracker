@@ -37,7 +37,7 @@ export enum TRACKER_TYPE {
 
 export enum ARCHIVE_TYPE_ENUM {
   ARCHIVE = 1,
-  NOT_ARCHIVE = 0
+  RESTORE = 0
 }
 
 export interface GetTrackerByWorkspaceIdPayload {
@@ -56,4 +56,20 @@ export interface CreateUpdateTrackerPayload {
   workspace_id: string;
   user_ids?: string[];
   is_archived?: ARCHIVE_TYPE_ENUM;
+}
+
+export interface CreateTrackerModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (values: any) => Promise<void>;
+  workspaceId: string;
+  form?: any;
+  isCreateLoading: boolean;
+};
+
+export enum TrackerStatusEnum {
+  COMPLETED = 1,
+  OVERDUE = 2,
+  IN_PROGRESS = 3,
+  NOT_STARTED = 4,
 }

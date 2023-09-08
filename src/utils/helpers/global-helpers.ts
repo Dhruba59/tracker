@@ -77,16 +77,28 @@ export function CalculateMilestonePercent (startDateString: string | Date, endDa
   return percentage;
 }
 
-export const greetByTime = () => {
+export const greetByTime = (userName: string) => {
   const currentHour = new Date().getHours();
-  if (currentHour < 12) {
-    return 'Good morning!';
-  } else if (currentHour < 17) {
-    return 'Good afternoon!';
+  if (currentHour >= 4 && currentHour < 12) {
+    return `Good Morning, ${userName}! Have a good day! ✨`;
+  } else if (currentHour >= 12 && currentHour < 17) {
+    return `Good Afternoon, ${userName}! Have a good day! ✨`;
+  } else if (currentHour >= 17 && currentHour < 22) {
+    return `Good Evening, ${userName}! Hope you have a good day! ✨`;
   } else {
-    return 'Good night!';
-  };
+    return `Good Night, ${userName}! Have a good sleep! ✨`;
+  }
 };
+
+
+export function formatNumberWithTwoDecimals(number: number) {
+  if (Number.isInteger(number)) {
+    return number.toString(); // It's an integer, return as is
+  } else {
+    return number.toFixed(2); // It's not an integer, format with two decimals
+  }
+}
+
 
 const currentDate = new Date();
 const formattedTimeString = formatTime(currentDate);

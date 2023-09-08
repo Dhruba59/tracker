@@ -12,3 +12,21 @@
 .progress-popover-body {
   padding: 10px 16px;
 }
+
+.progress-popover-target {
+  width: fit-content;
+  border-radius: 14px;
+  background-color: #EBF0FF;
+  color: #2D52CC;
+  padding: 6px 8px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 2px 0px;
+}
+
+.progress-popover-input {
+  border: 1px solid #DBE1F4;
+  height: 32px;
+}

@@ -11,7 +11,7 @@
 }
 
 .progress-container .ant-progress-bg {
-  background-color: #d4ba10; 
+  /* padding-inline: 20px !important; */
 }
 
 .progress-stop-point {
@@ -24,8 +24,4 @@
 
 .progress-tracker-tasks-popup .ant-modal-content {
   width: 220px;
-}
-
-.progress-tracker-input {
-  border: 1px solid #DBE1F4;
 }

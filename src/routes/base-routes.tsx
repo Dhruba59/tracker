@@ -17,6 +17,7 @@ import Members from '@features/members';
 import Settings from '@features/settings';
 import Archive from '@features/archive';
 import { useEffect } from 'react';
+import NotFoundPage from '@features/not-found-page';
 
 const Redirect = () => {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ const MainRoutes = createBrowserRouter([
         element: <WorkspaceDetails />,
       },
       {
-        path: `/workspace/:workspaceId/${routes.tracker.path}/:trackerId`,
+        path: `${routes.workspace.path}/:workspaceId/tracker/:trackerId`,
         element: <Tracker />,
       },
       {
@@ -98,7 +99,11 @@ const MainRoutes = createBrowserRouter([
         element: <Settings />,
       },
     ],
-  }
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
+  },
 ]);
 
 export default MainRoutes;

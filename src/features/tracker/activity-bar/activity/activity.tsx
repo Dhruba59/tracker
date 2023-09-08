@@ -13,7 +13,7 @@ const Activity = ({ activity }: any) => {
         <Avatar size='large' />
       </div>
       <div className='activity-col-2'>
-        <Text className='activity-title'>{message[0]} called <span>{message[1]}</span></Text>
+        <Text className='activity-title'>{message[0]} {message.length > 1 ? 'called': ''}<span> {message[1]}.</span></Text>
         <Text className='activity-time-user'>{formatTime(activity.created_at)} by <span>{activity.created_by.name}</span></Text>
       </div>
     </div>

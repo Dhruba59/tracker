@@ -3,6 +3,7 @@ import { Dropdown, MenuProps, Select, Space } from 'antd';
 import { BaseOptionType } from 'antd/es/select';
 import { ArrowDown } from '@icons';
 import './select-dropdown.css';
+import { MEMBER_ROLE_TYPE } from '@models/members';
 
 export interface SelectDropdownProps {
   selectOptions: BaseOptionType[];
@@ -13,6 +14,7 @@ export interface SelectDropdownProps {
   placeholder?: string;
   prefixIcon?: ReactNode;
   onChange: (values: any) => void;
+  defaultDropDownSelect: MEMBER_ROLE_TYPE;
 };
 
 export interface SelectDropdownValueType {
@@ -20,10 +22,10 @@ export interface SelectDropdownValueType {
   role: string;
 }
 
-const SelectDropdown = ({selectOptions, dropdownItems, onChange, selectClassName, dropdownClassName, mode='multiple', prefixIcon, placeholder='Please select'}: SelectDropdownProps) => {
+const SelectDropdown = ({selectOptions, dropdownItems, onChange, defaultDropDownSelect, selectClassName, dropdownClassName, mode='multiple', prefixIcon, placeholder='Please select'}: SelectDropdownProps) => {
   const [values, setValues] = useState<SelectDropdownValueType>({
     memberIds: [],
-    role: 'admin'
+    role: defaultDropDownSelect
   });
 
   const handleSelectChange = (memberIds: any) => {
@@ -32,8 +34,7 @@ const SelectDropdown = ({selectOptions, dropdownItems, onChange, selectClassName
   };
 
   const handleDropdown = (role: any) => {
-    console.log(role);
-    setValues({ ...values, role });
+    setValues({ ...values, role: role.key });
     onChange({ ...values, role: role.key });
   };
 
@@ -52,7 +53,7 @@ const SelectDropdown = ({selectOptions, dropdownItems, onChange, selectClassName
         // onSelect={handleOnSelect}
         children={<div>Hello world</div>}
       />
-      <Dropdown menu={{ items: dropdownItems, onClick: handleDropdown }} >
+      <Dropdown menu={{ items: dropdownItems, onClick: handleDropdown, defaultValue: defaultDropDownSelect }} >
         <a onClick={(e) => e.preventDefault()}>
           <Space>
             {values.role}

@@ -67,7 +67,7 @@ const Login: FC = () => {
         </Form.Item>
         <div className="login-checkbox-forget-pass-group">
           <Form.Item className="login-checkbox">
-            <CheckboxInput>Remember for 30 days</CheckboxInput>
+            <CheckboxInput defaultChecked>Remember for 30 days</CheckboxInput>
           </Form.Item>
           <a className='login-forget-pass' href={routes.reset_password.path}>Forgot Password</a>
         </div>

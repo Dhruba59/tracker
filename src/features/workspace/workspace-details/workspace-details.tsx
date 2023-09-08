@@ -21,6 +21,7 @@ const { Text } = Typography;
 const WorkspaceDetails = () => {
   const {id} = useParams();
   const [workspaceData, setWorkspaceData] = useState<any>();
+  const [isTrackerCreateLoading, setIsTrackerCreateLoading] = useState<boolean>(false);
   const [trackers, setTrackers] = useState<any>();
   const [isTrackerModalOpen, setIsTrackerModalOpen] = useState<boolean>(false);
   const [form] = Form.useForm();
@@ -53,7 +54,7 @@ const WorkspaceDetails = () => {
 
   const onSubmit = async (values: any) => {
     const { title, description, date, members, type, target_start, target_end } = values;
-    console.log(values);
+    setIsTrackerCreateLoading(true);
     let payload: CreateUpdateTrackerPayload = {
       title,
       description,
@@ -76,6 +77,8 @@ const WorkspaceDetails = () => {
       fetchTrackers();
     } catch (error: any) {
       message.error(error?.message ?? 'Something went wrong!');
+    } finally {
+      setIsTrackerCreateLoading(false);
     }
   };
 
@@ -108,7 +111,7 @@ const WorkspaceDetails = () => {
         onButtonClick={handleClick}
       />
       {renderTrackers} 
-      <CreateTrackerModal form={form} onSubmit={onSubmit} isOpen={isTrackerModalOpen} onClose={closeModal} workspaceId={id!}/>
+      <CreateTrackerModal form={form} onSubmit={onSubmit} isOpen={isTrackerModalOpen} onClose={closeModal} isCreateLoading={isTrackerCreateLoading} workspaceId={id!}/>
     </div>
   );
 };

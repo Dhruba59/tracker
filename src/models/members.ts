@@ -12,6 +12,7 @@ export interface AddMemberModalProps {
   memberOptions: any;
   workspaceId: string;
   members: any;
+  onMemberAddUpdate?: () => void;
 }
 
 export enum MEMBER_ROLE_TYPE {
@@ -20,7 +21,7 @@ export enum MEMBER_ROLE_TYPE {
 }
 
 export interface WorkspaceMemberDeletePayload {
-  memberId: string;
+  memberId: string[];
   workspaceId: string;
 }
 
@@ -30,7 +31,7 @@ export interface TrackerMemberDeletePayload {
 }
 
 export interface AddMemberPayload {
-  is_owner: boolean;
+  is_owner: number;
   workspace_id: string;
   user_ids: string[];
 }

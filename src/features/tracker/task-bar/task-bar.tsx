@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { DotIcon, EditIcon, PlusCircleRoundedIcon } from '@icons';
-import { Button, Card, Col, DatePicker, Form, Row, Typography, message } from 'antd';
+import { Button, Card, Col, DatePicker, Form, Input, Row, Typography, message } from 'antd';
 import './task-bar.css';
 import TextInput from '@components/common/input-fields/text-input';
 import Checkbox from 'antd/es/checkbox/Checkbox';
@@ -88,6 +88,7 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
     addTarget(payload).then((res: ResponseType) => {
       message.success(res.message);
       refetchTracker();
+      numericForm.resetFields();
     }).catch((error: any) => message.error(error?.message ?? 'Unable to add target!'));
   };
 
@@ -110,8 +111,12 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
   }, [tracker]);
 
   return (
-    <Card className='task-bar-container hide-scrollbar' title="Task" bordered={false}>
-      {tracker?.type === TRACKER_TYPE.TASK &&
+    <Card 
+      className='task-bar-container hide-scrollbar' 
+      title={tracker?.type === TRACKER_TYPE.TASK ? 'Task' : 'Target'} 
+      bordered={false}
+      >
+      {tracker?.type === TRACKER_TYPE.TASK && 
       <Button 
         icon={<PlusCircleRoundedIcon />} 
         type='link' 
@@ -142,7 +147,7 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
               <TextInput
                 className='taskbar-input'
                 placeholder={'Input value'}
-                disabled={isLoading || tracker?.is_enabled}
+                disabled={isLoading || !tracker?.is_enabled}
               />
             </Form.Item>
           </Col>
@@ -152,7 +157,7 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
                 className='taskbar-input' 
                 placeholder='Select Date' 
                 onChange={handleTargetCreate} 
-                disabled={isLoading || tracker?.is_enabled}
+                disabled={isLoading || !tracker?.is_enabled}
               />
             </Form.Item> 
           </Col>  

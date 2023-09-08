@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Form, Typography, message } from 'antd';
 
 import TextInput from '@components/common/input-fields/text-input';
@@ -12,9 +12,11 @@ import './reset-password-form.css';
 const { Text } = Typography;
 
 const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  
   const handleResetPass = async ({ email }: any) => {
     try {
+      setIsLoading(true);
       await requestResetPassword({ email });
       setValues({
         step: 2,
@@ -23,7 +25,9 @@ const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
       message.success('A link has been sent to your email!');
     } catch(error: any) {
       message.error(error?.message ?? 'Something went wrong!');
-    };
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -47,7 +51,7 @@ const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
         </Form.Item>
        
         <div className="resetpass-btn-group">
-          <Button type='primary' size='large' htmlType='submit' className="">Send reset Link</Button>
+          <Button type='primary' size='large' htmlType='submit' loading={isLoading}>Send reset Link</Button>
           <a href={routes.login.path} className="resetpass-login">
             Back to login
           </a>
