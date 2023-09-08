@@ -39,7 +39,7 @@ const MilestoneBar = ({ milestones, tracker, refetchTracker }: MilestoneProps) =
 
   const onUpdateMilestone = (id: string, data: CreateOrUpdateMilestonePayload) => {
     updateMilestone(id, data).then((res: ResponseType) => {
-      message.success(res?.message ?? 'Successfully created milestones');
+      message.success(res?.message ?? 'Successfully updated milestones');
       refetchTracker();
     }).catch((error: any) => {
       message.error(error?.message ?? 'Something went wrong!');

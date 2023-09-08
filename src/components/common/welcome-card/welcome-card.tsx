@@ -21,7 +21,7 @@ const WelcomeCard = () => {
       {/* <UserAvatar size='large' title='Avatar' src={userImage}/> */}
       <img src={userImage} />
       <div className='welcome-card-col-2'>
-        <span className='welcome-card-title'>{greetByTime()} {user?.name}!, have a great day✨</span>
+        <span className='welcome-card-title'>{greetByTime(user?.name)}</span>
         <span className='welcome-card-subtitle'>User interaction expert | ant financial service - business group - platform department - technology department -UED</span>
       </div>
     </div>

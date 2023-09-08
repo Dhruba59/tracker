@@ -63,6 +63,10 @@ html, body, h1, h2, h3, h4, h5, h6, div, p, span, strong, a, ul, li, label, .ant
   padding: 12px 16px !important;
 }
 
+.ant-menu {
+  border-inline-end: 0px !important;
+}
+
 .hide-scrollbar {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 11 */

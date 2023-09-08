@@ -6,9 +6,9 @@ import { AntDesignOutlined, UserOutlined } from '@ant-design/icons';
 import TrackerProgressbar from '../tracker-progressbar';
 import './tracker-card.css';
 import { ARCHIVE_TYPE_ENUM, TRACKER_TYPE, TrackerCardInfo, TrackerCardProps } from '@models/tracker';
-import { stringToDateOnly, tracker } from '@helpers/global-helpers';
+import { formatNumberWithTwoDecimals, stringToDateOnly, tracker } from '@helpers/global-helpers';
 import AppPopover from '@components/common/pop-over';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { routes } from '@constants/route-constants';
 import { getTrackerById, updateTracker } from '@services/tracker-service';
 import { PaginationResponseType, ResponseType } from '@models/global-models';
@@ -20,6 +20,7 @@ const { Text, Paragraph } = Typography;
 
 const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardProps) => {
   const navigate = useNavigate();
+  const {pathname} = useLocation();
   const [members, setMembers] = useState<any>();
   const [tracker, setTracker] = useState<any>(trackerData);
   const [milestone, setMilestone] = useState<any>();
@@ -35,11 +36,16 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
       .then((res: ResponseType) => {
         onUpdateTracker();
         message.success(res?.message);
-        navigate(routes.dashboard.path);
+        if(isArchive === ARCHIVE_TYPE_ENUM.RESTORE) {
+          navigate(`${routes.workspace.path}/${workspaceId}/tracker/${tracker?.id}`);
+        } else {
+          navigate(routes.dashboard.path);
+        } 
+    
       })
       .catch((error: any) => console.log('Unable to archieve!'));
   };
-
+  console.log('path', pathname.includes('tracker') && pathname.includes('workspace'));
   // const fetchTracker = () => {
   //   getTrackerById(tracker.id)
   //   .then((res: ResponseType) => setTracker(res.payload))
@@ -51,7 +57,7 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
     tracker?.is_archived ? {
       key: '3',
       label: 'Restore',
-      onClick: () => handleArchiveToogle(ARCHIVE_TYPE_ENUM.NOT_ARCHIVE),
+      onClick: () => handleArchiveToogle(ARCHIVE_TYPE_ENUM.RESTORE),
       className: 'tracker-popover-item'
     } : 
     {      
@@ -63,8 +69,9 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
     {
       key: '2',
       label: 'View',
-      onClick: () => navigate(`${routes.workspace.path}/${workspaceId}/${routes.tracker.path}/${tracker?.id}`),
-      className: 'tracker-popover-item'
+      onClick: () => navigate(`${routes.workspace.path}/${workspaceId}/tracker/${tracker?.id}`),
+      className: 'tracker-popover-item',
+      disabled:  (pathname.includes('tracker') && pathname.includes('workspace')) || pathname.includes('archive')
     }
   ];
 
@@ -114,7 +121,6 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
         <AppPopover className='tracker-popover' content={threeDotContent} placement='leftTop'>
           <ThreeDotIcon style={{cursor: 'pointer'}}/>
         </AppPopover>
-
       </div>
       <div className='tracker-row'>
         <div className='tracker-target'>
@@ -134,7 +140,7 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
       <TrackerProgressbar tracker={tracker} progressPercent={tracker?.percentage ?? 0} milestones={tracker?.milestones} onUpdateTracker={onUpdateTracker}/>
       <div className='tracker-row'>
         <div className='tracker-date-card'>{stringToDateOnly(tracker?.start_date)}</div>
-        <Text className='tracker-progress-text'>Work Progress: <span>{tracker?.percentage ?? 0}%</span></Text>
+        <Text className='tracker-progress-text'>Work Progress: <span>{formatNumberWithTwoDecimals(tracker?.percentage) ?? 0}%</span></Text>
         <div className='tracker-date-card'>{stringToDateOnly(tracker?.end_date)}</div>
       </div>
     </div>

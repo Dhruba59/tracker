@@ -21,7 +21,8 @@
 }
 
 .ant-layout-sider.sidebar-sider.ant-layout-sider-dark {
-  height: calc(100vh - 64px);
+  min-height: calc(100vh - 64px);
+  height: auto;
   border-right: 1px solid #F0F0F0;
 }
 
