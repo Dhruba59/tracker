@@ -356,11 +356,12 @@ export const PlusCircleRoundedIcon = (props: SVGAttributes<SVGElement>) => {
   );
 };
 
+
 export const EditIcon = (props: SVGAttributes<SVGElement>) => {
   const { width = 20, height = 20, fill = 'none', ...rest} = props;
   return (
-    <svg width={width} height={height} viewBox="0 0 20 20" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
-      <rect width="20" height="20" rx="10" fill="white" fillOpacity="0.7"/>
+    <svg style={{ borderRadius: '99999px', boxShadow: '0px 4px 20px 0px #3866FF1A', background: 'transparent' }} width={width} height={height} viewBox="0 0 20 20" fill={fill} xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <rect width={width} height={height} rx="10" fill="white" fillOpacity="0.7"/>
       <path d="M10.6677 6.95516L6.86755 10.7553C6.72111 10.9017 6.582 11.1873 6.55271 11.3923L6.3477 12.842C6.27448 13.3692 6.64058 13.7353 7.16776 13.6621L8.6175 13.4571C8.82252 13.4278 9.10809 13.2887 9.25453 13.1422L13.0547 9.34213C13.7063 8.69047 14.0212 7.92898 13.0547 6.96248C12.0881 5.98865 11.3267 6.29618 10.6677 6.95516Z" stroke="#B8C9FF" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
       <path d="M10.126 7.49719C10.4481 8.64675 11.3488 9.55467 12.5056 9.87684" stroke="#B8C9FF" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>

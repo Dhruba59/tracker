@@ -63,14 +63,8 @@ const BaseHeader = () => {
   const headerMenuItems: MenuProps['items'] = [
     {
       key: 'questionCircle',
-      icon: (
-        <Tooltip title={
-          <div style={{ textAlign: 'center' }}>
-            For any kind of help mail at example@mail.com
-          </div>}>
-          <QuestionCircle />
-        </Tooltip>
-      ),
+      icon: <QuestionCircle />,
+      disabled: true,
       className: 'header-menu-item'
     },
     {

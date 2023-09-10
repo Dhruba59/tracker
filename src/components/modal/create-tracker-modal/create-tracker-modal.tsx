@@ -9,6 +9,7 @@ import { createTracker } from '@services/tracker-service';
 import { ResponseType } from '@models/global-models';
 import { getAllUser } from '@services/user-services';
 import NumberRangeInput from '@components/common/input-fields/number-range-input';
+import { REGEX } from '@constants/global-constants';
 
 const { TextArea } = Input;
 
@@ -48,7 +49,9 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
         <Form.Item 
           name='title' 
           label='Tracker Title' 
-          rules={[{required: true, message: 'Title is required'}]}
+          rules={[
+            { required: true, message: 'Title is required' }, 
+            { pattern: REGEX.LETTERS_NUMBERS, message: 'Please enter valid title.', }]}
         >
           <TextInput className='create-tracker-modal-input' placeholder='Title'/>
         </Form.Item>

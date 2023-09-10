@@ -53,7 +53,11 @@ const MainRoutes = createBrowserRouter([
       {
         path: routes.email_verification.path,
         element: <EmailVerification />,
-      }
+      },
+      {
+        path: '/auth/*',
+        element: <NotFoundPage />,
+      },
     ],
   },
   {
@@ -98,12 +102,13 @@ const MainRoutes = createBrowserRouter([
         path: routes.settings.path,
         element: <Settings />,
       },
+      {
+        path: '*',
+        element: <NotFoundPage />,
+      },
     ],
   },
-  {
-    path: '*',
-    element: <NotFoundPage />,
-  },
+
 ]);
 
 export default MainRoutes;

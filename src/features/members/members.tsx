@@ -244,8 +244,8 @@ const Members = () => {
   };
 
   const rowSelection = {
-    // selectedRowKeys,
-    onChange: (selectedRowKeys: React.Key[]) => {
+    selectedRowKeys,
+    onChange: (selectedRowKeys: React.Key[], selectedRows: any) => {
       setSelectedRowKeys(selectedRowKeys);
     },
     getCheckboxProps: (record: TableDataType) => ({
@@ -264,6 +264,8 @@ const Members = () => {
     } else {
       // Batch delete: use the selectedRowKeys
       memberIdsToDelete = selectedRowKeys.map((key) => key.toString());
+      console.log('multi', memberIdsToDelete);
+      // debugger;
     }
   
     if (memberIdsToDelete.length === 0) {
@@ -313,16 +315,20 @@ const Members = () => {
       title: <Text className='members-table-title'>Action</Text>,
       dataIndex: 'action',
       render: (_, record) => (
-        <DeleteIcon2 
-          onClick={() => handleDelete(record.id)} 
-          style={{cursor: 'pointer'}} />
+        <DeleteIcon2
+          onClick={() => {
+            if( record.role !== MEMBER_ROLE_TYPE.OWNER ) {
+              handleDelete(record.id);
+            }
+          }}
+          style={{cursor: record.role === MEMBER_ROLE_TYPE.OWNER ? 'not-allowed' : 'pointer'}} />
         ),
     }
   ];
 
   const getTableData: any = () => (
     members?.map((member: any) => ({
-      key: member.user.id,
+      key: member.id,
       id: member.user.id,
       name: member.user.name,
       email: member.user.email,

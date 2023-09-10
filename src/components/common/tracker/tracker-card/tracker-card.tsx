@@ -114,9 +114,8 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
       <div className='tracker-row'>
         <Paragraph editable={{
           onChange: handleOnTitleChange,
-          icon: <EditIcon />,
+          icon: <EditIcon height={25} width={25} />,
           enterIcon: null,
-          // editing: true
         }} className='tracker-title'>{tracker?.title}</Paragraph>
         <AppPopover className='tracker-popover' content={threeDotContent} placement='leftTop'>
           <ThreeDotIcon style={{cursor: 'pointer'}}/>

@@ -88,11 +88,11 @@ const WorkspaceDetails = () => {
       <EmptyPageCard title='You have no trackers here.' buttonText='Create Tracker' onButtonClick={handleClick} />
     </div>    
     ) : (
-      trackers?.map((tracker: any) => (
-        <div className='workspace-trackers-container'>
-          <TrackerCard key={tracker?.id} trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers}/>
-        </div>
-     ))
+      <div className='workspace-trackers-container'>
+        {trackers?.map((tracker: any) => (
+          <TrackerCard key={tracker?.id} trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers} />
+        ))
+        }</div>
     )
   );
 

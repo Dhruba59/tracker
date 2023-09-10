@@ -34,8 +34,10 @@
 .ant-menu-item.sidebar-workspace-create-item{
   height: auto;
   margin: 0px !important;
-  padding: 0px 20px 0px 0px;
+  /* padding: 0px 20px 0px 0px; */
   width: 100%;
+  padding: 0px !important;
+  /* background-color: #334488; */
 }
 
 .ant-menu-item .sidebar-workspace-create-input{
@@ -44,5 +46,16 @@
 }
 
 .sidebar-workspace-form{
+  border-top: 1px solid #E9ECFF;;
   height: 40px;
+  background: #EBF0FF;
+  width: 100%;
+  padding-top: 4px;
+  padding-inline: 24px;
+}
+
+.sidebar-workspace-input {
+  border-radius: 2px;
+  border: 1px solid var(--neutral-5, #D9D9D9);
+  background: var(--neutral-1, #FFF);
 }

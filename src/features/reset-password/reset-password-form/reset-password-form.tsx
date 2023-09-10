@@ -11,7 +11,7 @@ import './reset-password-form.css';
 
 const { Text } = Typography;
 
-const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
+const ResetPasswordForm: FC<ResetPasswordProps> = ({ setValues }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   
   const handleResetPass = async ({ email }: any) => {
@@ -61,4 +61,4 @@ const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordForm;

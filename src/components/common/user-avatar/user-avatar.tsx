@@ -6,7 +6,7 @@ export interface UserAvatarProps extends AvatarProps {
 const UserAvatar = ({ title, src, ...rest }: UserAvatarProps) => {
   return (
     <Tooltip title={title} placement='top'>
-      <a href=''>
+      <a>
         <Avatar src={src} {...rest}>
           {!src && title[0]?.toUpperCase()} 
         </Avatar>

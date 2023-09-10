@@ -1,4 +1,4 @@
-import { Col, Form, Radio, Row, message } from 'antd';
+import { Col, Form, Popconfirm, Radio, Row, message } from 'antd';
 import AppButton from '@components/common/button';
 import TextInput from '@components/common/input-fields/text-input';
 import PasswordInput from '@components/common/input-fields/password-input';
@@ -12,7 +12,8 @@ const SecurityForm = () => {
   const [passwordUpdateLoading, setPasswordUpdateLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
 
-  const onSubmit = (values: any) => {
+  const onSubmit = () => {
+    const values = form.getFieldsValue();
     setPasswordUpdateLoading(true);
     changePassword(values).then((res: ResponseType) => {
       message.success(res.message ?? 'Successfully Changed password!');
@@ -22,15 +23,42 @@ const SecurityForm = () => {
     }).finally(() => setPasswordUpdateLoading(false));
   };
 
+  const passwordRules = [
+    {
+      required: true,
+      message: 'Please enter your password.',
+    },
+    {
+      min: 8, // Minimum password length is 8 characters
+      message: 'Password must be at least 8 characters long.',
+    },
+  ];
+
+  const confirmNewPasswordRules = [
+    {
+      required: true,
+      message: 'Please retype your new password.',
+    },
+    {
+      validator(_: any, value: any) { // Specify the types of 'value' and '_'
+        if (!value || form.getFieldValue('newPassword') === value) {
+          return Promise.resolve();
+        }
+        return Promise.reject(new Error('Password does not match.'));
+      },
+    },
+  ];
+  
+
   return (
     <Form className='security-form-container' onFinish={onSubmit} labelCol={{span: 24}} form={form}>
-      <Form.Item name='previousPassword' label='Current Password' rules={[{required: true}]}>
+      <Form.Item name='previousPassword' label='Current Password' rules={passwordRules}>
         <PasswordInput className='security-form-input'/>
       </Form.Item>
-      <Form.Item name='newPassword' label='New Password' rules={[{required: true}]}>
+      <Form.Item name='newPassword' label='New Password' rules={passwordRules}>
         <PasswordInput className='security-form-input'/>
       </Form.Item>
-      <Form.Item name='confirmNewPassword' label='Retype New Password' rules={[{required: true}]}>
+      <Form.Item name='confirmNewPassword' label='Retype New Password' rules={confirmNewPasswordRules}>
         <PasswordInput className='security-form-input'/>
       </Form.Item>
       <Row gutter={10}>
@@ -38,7 +66,16 @@ const SecurityForm = () => {
           <AppButton type='default' htmlType='submit'>Cancel</AppButton>
         </Col>
         <Col>
-          <AppButton loading={passwordUpdateLoading} type='primary' htmlType='submit'>Update</AppButton>
+          <Popconfirm
+            title="Change Password!"
+            description="Are you sure to change password?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={onSubmit}
+          >
+            <AppButton loading={passwordUpdateLoading} type='primary' htmlType='button'>Update</AppButton>
+          </Popconfirm>
+          
         </Col>
       </Row>    
     </Form>

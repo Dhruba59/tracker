@@ -9,6 +9,7 @@ import TextInput from '@components/common/input-fields/text-input';
 import { TRACKER_TYPE } from '@models/tracker';
 import Milestone from '@features/tracker/milestone-bar/milestone';
 import { updateMilestone } from '@services/milestone-service';
+import { REGEX } from '@constants/global-constants';
 
 export interface MilestonePopoverContentProps {
   milestone: any;
@@ -102,15 +103,24 @@ const TaskPopoverContent = ({ milestone, tracker, onUpdateTracker }: MilestonePo
             ))}
           </Fragment>
         ) : (
-          <Form form={numericForm}>
-            <div className='progress-popover-target'>Target: {milestone?.target_value}</div>
-            <Form.Item name='target' rules={[{ required: true, message: 'Value required!' }]}>
-              <TextInput onPressEnter={handleTargetAchieve} className='progress-popover-input' placeholder='Input value'/>
-            </Form.Item>
-            {/* <Form.Item name='date' rules={[{ required: true, message: 'Date is required!' }]}>
+            <Form form={numericForm}>
+              <div className='progress-popover-target'>Target: {milestone?.target_value}</div>
+              <Form.Item
+                name='target'
+                rules={[
+                  { required: true, message: 'Value required!' },
+                  { pattern: REGEX.NUMBERS, message: 'Invalid numbers' }
+                ]}>
+                <TextInput onPressEnter={(e) => {
+                  if (numericForm.getFieldError('target') && numericForm.getFieldError('target').length === 0) {
+                    handleTargetAchieve(e);
+                  }
+                }} className='progress-popover-input' placeholder='Input value' />
+              </Form.Item>
+              {/* <Form.Item name='date' rules={[{ required: true, message: 'Date is required!' }]}>
               <TextInput className='progress-popover-input' type="date" placeholder='Select Date'/>
             </Form.Item> */}
-          </Form>
+            </Form>
         )}
       </div>
     </div>

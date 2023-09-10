@@ -11,8 +11,10 @@ import { error } from 'console';
 import { CreateOrUpdateMilestonePayload } from '@models/milestone';
 import { createTask, deleteTask, getTasks, updateTask } from '@services/task-service';
 import { CreateTaskPayload, TASK_TYPE, TaskStatusEnum, UpdateTaskPayload } from '@models/task';
-import { ArrowDown, ArrowUp, EditIcon } from '@icons';
+import { ArrowDown, ArrowUp, DotIcon, EditIcon } from '@icons';
 import { TRACKER_TYPE } from '@models/tracker';
+import { REGEX } from '@constants/global-constants';
+import CheckboxInput from '@components/common/input-fields/checkbox';
 
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -34,6 +36,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   const [taskItemForm] = Form.useForm();
   const [milestoneForm] = Form.useForm();
   const [numericInputForm] = Form.useForm();
+  const [taskAddForm] = Form.useForm();
 
   const fetchTasks = () => {
     getTasks({
@@ -65,22 +68,24 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   }, [milestone]);
 
   const handleTaskAdd = (e: any) => {
-    const payload: CreateTaskPayload = {
-      title: e.target.value,
-      tracker_id: tracker?.id,
-      milestone_id: milestone?.id,
-      is_done: TaskStatusEnum.PENDING,
-      task_type: TASK_TYPE.TRACKER,
-    };
-    createTask(payload)
-      .then((res: ResponseType) => {
-        message.success('Successfully added');
-        fetchTasks();
-        setIsTaskInputOpen(false);
-        e.target.value = '';
-        refetchTracker();
-      })
-      .catch(error => message.error('Unable to create1'));
+    if (taskAddForm.getFieldError('task-name') && taskAddForm.getFieldError('task-name').length === 0) {
+      const payload: CreateTaskPayload = {
+        title: e.target.value,
+        tracker_id: tracker?.id,
+        milestone_id: milestone?.id,
+        is_done: TaskStatusEnum.PENDING,
+        task_type: TASK_TYPE.TRACKER,
+      };
+      createTask(payload)
+        .then((res: ResponseType) => {
+          message.success('Successfully added');
+          fetchTasks();
+          setIsTaskInputOpen(false);
+          e.target.value = '';
+          refetchTracker();
+        })
+        .catch(error => message.error('Unable to create1'));
+    }
   };
 
   const onTaskDelete = (id: string) => {
@@ -106,26 +111,32 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   };
 
   const handleDateChange = async (date: any) => {
-    setSelectedDateRange([
-      dayjs(new Date(date[0].$d).toISOString(), 'YYYY/MM/DD'), 
-      dayjs(new Date(date[1].$d).toISOString(), 'YYYY/MM/DD')
-    ]);
-    let payload: any = {
-      start_date: new Date(date[0].$d),
-      end_date: new Date(date[1].$d),
-      // tracker_type: tracker?.type,
-      // tracker_id: tracker?.id
-    };
-    if(tracker?.type === TRACKER_TYPE.NUMERIC) {
-      payload = { ...payload, target_value: milestoneForm.getFieldValue('target')};
-    };
-    if(milestone?.id) {
-      console.log('mile', milestone);
-      updateMilestone(milestone?.id, payload);
-    } else {
-      const res = await createMilestone(payload);
-      setMilestone(res.payload);
-    };
+    if (milestoneForm.getFieldError('target') && milestoneForm.getFieldError('target').length === 0) {
+      setSelectedDateRange([
+        dayjs(new Date(date[0].$d).toISOString(), 'YYYY/MM/DD'), 
+        dayjs(new Date(date[1].$d).toISOString(), 'YYYY/MM/DD')
+      ]);
+      let payload: any = {
+        start_date: new Date(date[0].$d),
+        end_date: new Date(date[1].$d),
+        // tracker_type: tracker?.type,
+        // tracker_id: tracker?.id
+      };
+      if(tracker?.type === TRACKER_TYPE.NUMERIC) {
+        console.log(milestoneForm.getFieldValue('target') );
+        if(milestoneForm.getFieldValue('target') === undefined || milestoneForm.getFieldValue('target') === '' ) {
+          return;
+        }
+        payload = { ...payload, target_value: milestoneForm.getFieldValue('target')};
+      };
+      if(milestone?.id) {
+        console.log('mile', milestone);
+        updateMilestone(milestone?.id, payload);
+      } else {
+        const res = await createMilestone(payload);
+        setMilestone(res.payload);
+      };
+    }
   };
 
   const handleLabelChange = (value: string) => {
@@ -171,7 +182,13 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
           {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC && <span className='milestone-target'>target: {milestone?.target_value}</span>}
           <Form form={milestoneForm} className='milestone-form'>
             {tracker?.type === TRACKER_TYPE.NUMERIC && !milestone?.id &&
-            <Form.Item name='target'>
+            <Form.Item 
+              name='target'
+              rules={[
+                { required: true, message: 'target required' },
+                { pattern: REGEX.NUMBERS, message: 'Invalid target.' },
+              ]}
+              >
               <Input size='small' className='milestone-target-input' placeholder='input target here'/>
             </Form.Item>}
             {/* <Form.Item name='date'>
@@ -185,15 +202,29 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
             <RangePicker size='small' value={selectedDateRange} disabledDate={disabledDate} className='milestone-datepicker' onChange={handleDateChange} showTime={false} /> */}
         </div>
         <div>
-        {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC &&
-         <Form form={numericInputForm}>
-            <Form.Item name='achieved_target'>
-              <Input size='middle' onPressEnter={handleTargetAchieved} className='milestone-target-input' placeholder='input value here' />
-            </Form.Item>
-         </Form>}
+          {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC &&
+            <Form form={numericInputForm}>
+              <Form.Item
+                name='achieved_target'
+                rules={[
+                  { required: true, message: 'Please enter value' },
+                  // Use a regular expression to allow only letters and spaces
+                  { pattern: REGEX.NUMBERS, message: 'Invalid number.' },
+                ]}>
+                <Input size='middle' onPressEnter={(e) => {
+                  if (numericInputForm.getFieldError('achieved_target') && numericInputForm.getFieldError('achieved_target').length === 0) {
+                    handleTargetAchieved(e);
+                  }
+                }} className='milestone-target-input' placeholder='input value here' />
+              </Form.Item>
+            </Form>}
 
         </div>
-        
+        {/* <TextInput onPressEnter={(e) => {
+                  if (numericForm.getFieldError('target') && numericForm.getFieldError('target').length === 0) {
+                    handleTargetAchieve(e);
+                  }
+                }} className='progress-popover-input' placeholder='Input value' /> */}
             
         
         {tracker?.type === TRACKER_TYPE.TASK &&
@@ -201,7 +232,20 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
             {tasks?.map((task: any) => (
               <TaskItem key={task.id} form={taskItemForm} task={task} onTaskDelete={onTaskDelete} onTaskUpdate={onTaskUpdate} />
             ))}
-            {isTaskInputOpen && <Input placeholder='Task name here' size='small' className='milestone-task-add-input' onPressEnter={handleTaskAdd}/>}
+            {isTaskInputOpen &&
+              <Form form={taskAddForm} className='milestone-new-task-row'>
+                  <div>
+                    <DotIcon style={{marginTop: '6px'}}/>
+                  </div>
+                  <div>
+                  <CheckboxInput disabled={true} />
+                  </div>
+                  
+                <Form.Item className='task-name'>
+                  <Input placeholder='Task name here' size='small' className='milestone-task-add-input' onPressEnter={handleTaskAdd}/>
+                </Form.Item>
+              </Form>
+            }
             <AppButton className='milestone-task-add-btn' type='link' onClick={() => setIsTaskInputOpen(true)} >+ Add New</AppButton> 
           </div>
         }

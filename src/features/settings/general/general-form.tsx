@@ -1,6 +1,6 @@
 import AppButton from '@components/common/button';
 import TextInput from '@components/common/input-fields/text-input';
-import { Form, Image, Radio, message } from 'antd';
+import { Button, Form, Image, Radio, Upload, UploadProps, message } from 'antd';
 import './general-form.css';
 import { useEffect, useState } from 'react';
 import { getUserProfile, updateUserProfile } from '@services/user-services';
@@ -40,17 +40,60 @@ const GeneralForm = () => {
       .finally(() => setIsUserDataLoading(false));
   };
 
+  // const props: UploadProps = {
+  //   name: 'file',
+  //   action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+  //   headers: {
+  //     authorization: 'authorization-text',
+  //   },
+  //   onChange(info: any) {
+  //     console.log('file',info.file);
+  //     if (info.file.status !== 'uploading') {
+  //       // console.log(info.file, info.fileList);
+  //     }
+  //     if (info.file.status === 'done') {
+  //       const fileReader = new FileReader();
+  //       fileReader.onload = (event: any) => {
+  //         const imageDataString = event.target.result; // This is the image data as a string.
+  //         console.log('image', imageDataString);
+  //         console.log('image1', event.target);
+  //         // Now you can send 'imageDataString' to your backend API using a separate API call.
+  //       };
+    
+  //       // Read the file as a data URL (string).
+  //       fileReader.readAsDataURL(info.file.originFileObj);
+  //     } else if (info.file.status === 'error') {
+  //       message.error(`${info.file.name} file upload failed.`);
+  //     }
+  //   },
+  // };
+
   return (
     <Form className='general-form-container' form={form} onFinish={onSubmit} labelCol={{ span: 24 }}>
       {/* <Image
         className='general-form-image'
         width={100}
         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      /> */}
-      <Form.Item name='name' label='Name' rules={[{ required: true }]}>
+      />
+      <Upload {...props}>
+        <Button>Click to Upload</Button>
+      </Upload> */}
+      <Form.Item 
+        name='name' 
+        label='Name' 
+        rules={[
+          { required: true, message: 'Please enter your name.' },
+          // Use a regular expression to allow only letters and spaces
+          { pattern: /^[a-zA-Z][a-zA-Z0-9\s]*$/, message: 'Please enter a valid name.' },
+        ]}>
         <TextInput className='general-form-input' />
       </Form.Item>
-      <Form.Item name='email' label='Email' rules={[{ required: true }]}>
+      <Form.Item 
+        name='email' 
+        label='Email' 
+        rules={[
+          { required: true, message: 'Please enter your email.' }, 
+          { type: 'email', message: 'Please enter valid email.', }]}>
         <TextInput className='general-form-input' />
       </Form.Item>
       {/* <Form.Item name='name' label='Time Zone' rules={[{ required: true }]}>
