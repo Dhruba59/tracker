@@ -34,7 +34,11 @@ const GeneralForm = () => {
 
   const onSubmit = ({name, email}: any) => {
     setIsUserDataLoading(true);
-    updateUserProfile({ name, email })
+    const payload = {
+      name: name.trim(),
+      email: email.trim()
+    };
+    updateUserProfile(payload)
       .then((res: ResponseType) => message.success(res?.message ?? 'Successfully updated user.'))
       .catch((error: any) => message.error(error?.message ?? 'unable to update!'))
       .finally(() => setIsUserDataLoading(false));
@@ -49,11 +53,15 @@ const GeneralForm = () => {
   //   onChange(info: any) {
   //     console.log('file',info.file);
   //     if (info.file.status !== 'uploading') {
-  //       // console.log(info.file, info.fileList);
+  //       console.log(info.file, info.fileList);
   //     }
   //     if (info.file.status === 'done') {
   //       const fileReader = new FileReader();
+  //       // updateUserProfile({profile_image: info.file}).then((res: ResponseType) => {
+  //       //   message.success(res?.message ?? 'Successfully updated image!'); 
+  //       // }).catch((err) => console.log(err));
   //       fileReader.onload = (event: any) => {
+  //         console.log('filereader', event.target);
   //         const imageDataString = event.target.result; // This is the image data as a string.
   //         console.log('image', imageDataString);
   //         console.log('image1', event.target);
@@ -74,8 +82,8 @@ const GeneralForm = () => {
         className='general-form-image'
         width={100}
         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      />
-      <Upload {...props}>
+      /> */}
+      {/* <Upload {...props}>
         <Button>Click to Upload</Button>
       </Upload> */}
       <Form.Item 

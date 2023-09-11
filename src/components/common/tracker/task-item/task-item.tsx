@@ -21,7 +21,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
 
   const handleTaskUpdate = (e: any) => {
     const payload = {
-      title: e.target.value,
+      title: e.target.value.trim(),
     };
     onTaskUpdate(task.id, payload);
     setIsInputOpen(false);

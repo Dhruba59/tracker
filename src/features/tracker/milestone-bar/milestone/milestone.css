@@ -3,6 +3,7 @@
 }
 
 .milestone-row-1 {
+  width: 100%;
   display: flex;
   justify-content: space-between !important;
   align-items: center;
@@ -39,6 +40,7 @@
 }
 
 .milestone-form {
+  width: auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -56,6 +58,7 @@
 } */
 
 .milestone-target-input {
+  /* width: auto; */
   border-radius: 2px;
   border: 1px solid #D9D9D9;
   gap: 4px;

@@ -30,7 +30,7 @@ const BaseSidebar: React.FC = () => {
   };
 
   const createNewWorkspace = async () => {
-    const title = form.getFieldValue('title');
+    const title = form.getFieldValue('title').trim();
     try{
       const res: ResponseType = await createWorkspace({ title });
       message.success(res?.message ?? 'Successfully created workspace!');

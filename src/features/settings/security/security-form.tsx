@@ -63,7 +63,7 @@ const SecurityForm = () => {
       </Form.Item>
       <Row gutter={10}>
         <Col>
-          <AppButton type='default' htmlType='submit'>Cancel</AppButton>
+          <AppButton type='default' htmlType='button'>Cancel</AppButton>
         </Col>
         <Col>
           <Popconfirm
@@ -72,8 +72,9 @@ const SecurityForm = () => {
             okText="Yes"
             cancelText="No"
             onConfirm={onSubmit}
+            disabled={!!form.getFieldsError()}
           >
-            <AppButton loading={passwordUpdateLoading} type='primary' htmlType='button'>Update</AppButton>
+            <AppButton loading={passwordUpdateLoading} type='primary' htmlType='submit'>Update</AppButton>
           </Popconfirm>
           
         </Col>

@@ -180,8 +180,8 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
       <div className='milestone-container'>
         <div className='milestone-row-1'>
           {tracker?.type === TRACKER_TYPE.TASK && <Text className='milestone-title'>Tasks</Text>}
-          {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC && <span className='milestone-target'>target: {milestone?.target_value}</span>}
-          <Form form={milestoneForm} className='milestone-form'>
+          <Form form={milestoneForm} className='milestone-form' style={{width: tracker?.type === TRACKER_TYPE.NUMERIC ? '100%': ''}}>
+            {milestone?.id && tracker?.type === TRACKER_TYPE.NUMERIC && <span className='milestone-target'>target: {milestone?.target_value}</span>}
             {tracker?.type === TRACKER_TYPE.NUMERIC && !milestone?.id &&
             <Form.Item 
               name='target'
@@ -262,7 +262,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
                     </Form.Item>
                   </Form>
                 }
-                <AppButton className='milestone-task-add-btn' type='link' onClick={() => setIsTaskInputOpen(true)} >+ Add New</AppButton>
+                <AppButton className='milestone-task-add-btn' type='link' disabled={!milestone?.id} onClick={() => setIsTaskInputOpen(true)} >+ Add New</AppButton>
                 {provided.placeholder}
               </div>
 

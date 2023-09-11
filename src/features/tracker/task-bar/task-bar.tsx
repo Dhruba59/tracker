@@ -67,14 +67,15 @@ const TaskBar = ({ tracker, refetchTracker, isDragDrop=true }: TaskBarProps) => 
     try {
       setIsloading(true);
       const payload = {
-        title: e.target.value,
+        title: e.target.value.trim(),
         task_type: TASK_TYPE.TRACKER,
         tracker_id: tracker?.id!,
         is_done: TaskStatusEnum.PENDING,
       };
       const res = await createTask(payload);
       message.success(res?.message ?? 'Successfully added task!');
-      e.target.value = '';
+      // e.target.value = '';
+      taskAddForm.resetFields();
       setIsTextInputOpen(false);
       setIsloading(false);
       fetchTasks();

@@ -61,8 +61,8 @@ const WorkspaceDetails = () => {
     const { title, description, date, members, type, target_start, target_end } = values;
     setIsTrackerCreateLoading(true);
     let payload: CreateUpdateTrackerPayload = {
-      title,
-      description,
+      title: title.trim(),
+      description: description.trim(),
       type,
       start_date: date[0].$d,
       end_date: date[1].$d,

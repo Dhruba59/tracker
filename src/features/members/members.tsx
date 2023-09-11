@@ -392,8 +392,8 @@ const Members = () => {
         <AppButton 
           className='delete-button' 
           onClick={() => handleDelete()} 
-          type='dashed'
-          style={{ display: selectedRowKeys.length > 0 ? 'block' : 'none' }}
+          type='default'
+          style={{ display: selectedRowKeys.length > 0 ? 'block' : 'none', background: '#e36464', color: 'white'}}
           >
             Delete Selected
           </AppButton>

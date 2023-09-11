@@ -20,10 +20,15 @@ const SignUp: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
 
-  const handleLogin = async (values: Credentials) => {
+  const handleSignup = async ({name, email, password}: any) => {
+    const payload = {
+      name: name.trim(),
+      email: email.trim(),
+      password
+    };
     setIsLoading(true);
     try {
-      const res: ResponseType = await userSignUp(values);
+      const res: ResponseType = await userSignUp(payload);
       form.resetFields();
       message.success('An verification mail has sent to your email! Please verfiy!');     
     } catch(error: any) {
@@ -40,7 +45,7 @@ const SignUp: FC = () => {
         <Text className="signup-subtitle">Micro management for progressive teams</Text>
       </div>
 
-      <Form form={form} className="signup-form" onFinish={handleLogin} requiredMark='optional'>
+      <Form form={form} className="signup-form" onFinish={handleSignup} requiredMark='optional'>
         <Form.Item 
           name='name' 
           className="signup-form-item" 
