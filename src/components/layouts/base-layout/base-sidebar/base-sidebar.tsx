@@ -112,7 +112,7 @@ const BaseSidebar: React.FC = () => {
           {
             key: `${workspace.id}archive`,
             label: 'Archive',
-            onClick: () => navigate(`/${workspace.id}/${routes.archive.path}`)
+            onClick: () => navigate(`/${workspace.id}/archive`)
           }
         ]
       });

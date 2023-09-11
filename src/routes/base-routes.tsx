@@ -95,7 +95,7 @@ const MainRoutes = createBrowserRouter([
         element: <Members />,
       },
       {
-        path: `/:workspaceId/${routes.archive.path}`,
+        path: '/:workspaceId/archive',
         element: <Archive />,
       },
       {

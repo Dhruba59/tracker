@@ -63,13 +63,13 @@ const Tracker = () => {
       title: <a href={`${routes.workspace.path}/${workspaceId}`}>{workspace?.title}</a>,
     },
     {
-      title: <a style={{color: '#000000D9'}} href={`${routes.workspace.path}/${workspaceId}/${routes.tracker.path}/${tracker?.id}`}>{tracker?.title}</a>,
+      title: <a style={{color: '#000000D9'}} href={`${routes.workspace.path}/${workspaceId}/tracker/${tracker?.id}`}>{tracker?.title}</a>,
     },
   ];
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     const { source, destination, draggableId } = result;
-
+    console.log(source, destination, draggableId);
     if (!destination || (source?.droppableId === destination?.droppableId)) {
       // The item was dropped outside of valid drop targets
       return;
@@ -81,12 +81,13 @@ const Tracker = () => {
     };
 
 
-    if (source?.droppableId === 'task-drop') {
+    if (destination?.droppableId !== 'task-drop') {
       payload = {
         ...payload,
         milestone_id: destination?.droppableId
       };
     }
+    console.log(payload);
 
     dragAndDropPatch(draggableId, payload).then(() => {
       fetchTrackerData();
@@ -106,7 +107,17 @@ const Tracker = () => {
           workspaceId={workspaceId!}
           onUpdateTracker={onUpdateTracker}
         />}
-      <Row className='tracker-details-row-2' gutter={16}>
+      <div style={{display:'flex', gap: '10px', overflow: 'scroll'}} className='hide-scrollbar'>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <TaskBar tracker={tracker} refetchTracker={fetchTrackerData} />
+          <MilestoneBar 
+            tracker={tracker} 
+            milestones={tracker?.milestones} 
+            refetchTracker={fetchTrackerData} />
+        </DragDropContext>
+        <ActivityBar activities={activities} />
+      </div>
+      {/* <Row className='tracker-details-row-2' gutter={16}>
         <DragDropContext onDragEnd={onDragEnd}>
           <Col span={8}>
             <TaskBar tracker={tracker} refetchTracker={fetchTrackerData} />
@@ -118,7 +129,7 @@ const Tracker = () => {
         <Col span={8}>
           <ActivityBar activities={activities} />
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 };

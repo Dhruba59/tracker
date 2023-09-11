@@ -141,10 +141,12 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   };
 
   const handleLabelChange = (value: string) => {
-    const payload: any = {
-      title: value
-    };
-    updateMilestone(milestone?.id, payload);
+    if(value && value !== '' && milestone?.id) {
+      const payload: any = {
+        title: value.trim()
+      };
+      updateMilestone(milestone?.id, payload);
+    }
   };
 
   const editableLabel = (
@@ -232,7 +234,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
               <TaskItem key={task.id} form={taskItemForm} task={task} onTaskDelete={onTaskDelete} onTaskUpdate={onTaskUpdate} />
             ))} */}
         {tracker?.type === TRACKER_TYPE.TASK &&
-          <Droppable droppableId={milestone?.id}>
+          <Droppable droppableId={milestone?.id} >
             {(provided) => (
               <div className='milestone-row-2' {...provided.droppableProps} ref={provided.innerRef}>
 

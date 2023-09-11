@@ -34,7 +34,7 @@ const Archive = () => {
   useEffect(() => {
     fetchTrackers();
     fetchWorkspace();
-  }, []);
+  }, [workspaceId]);
 
   const renderTrackers = (
     trackers?.length === 0 ? (
