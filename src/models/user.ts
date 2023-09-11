@@ -5,6 +5,7 @@ export interface ChangePasswordPayload {
 }
 
 export interface UpdateUserProfilePayload {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
+  profile_image?: any;
 }

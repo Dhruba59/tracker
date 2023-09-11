@@ -9,16 +9,20 @@ import PageHeader from '@components/common/page-header';
 import { Avatar } from 'antd';
 import { getWorkspaceById } from '@services/workspace-services';
 import EmptyPageCard from '@components/common/empty-page-card';
+import { FullPageLoading } from '@components/full-page-loading';
 
 const Archive = () => {
   const [trackers, setTrackers] = useState<any>();
   const [workspace, setWorkspace] = useState<any>();
+  const [isLoadingArchive, setIsLoadingArchive] = useState<boolean>(false);
   const { workspaceId } = useParams();
 
   const fetchWorkspace = () => {
+    setIsLoadingArchive(true);
     getWorkspaceById(workspaceId!)
     .then((res: ResponseType) => setWorkspace(res.payload))
-    .catch((error) => console.log('unable to fetch workspace'));
+    .catch((error) => console.log('unable to fetch workspace'))
+    .finally(() => setIsLoadingArchive(false));
   };
 
   const fetchTrackers = () => {
@@ -30,7 +34,7 @@ const Archive = () => {
   useEffect(() => {
     fetchTrackers();
     fetchWorkspace();
-  }, []);
+  }, [workspaceId]);
 
   const renderTrackers = (
     trackers?.length === 0 ? (
@@ -45,6 +49,10 @@ const Archive = () => {
       ))
     )
   );
+
+  if(isLoadingArchive) {
+    return <FullPageLoading /> ;
+  }
 
   return (
     <div className='workspace-details-container'>

@@ -114,9 +114,8 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
       <div className='tracker-row'>
         <Paragraph editable={{
           onChange: handleOnTitleChange,
-          icon: <EditIcon />,
+          icon: <EditIcon height={25} width={25} />,
           enterIcon: null,
-          // editing: true
         }} className='tracker-title'>{tracker?.title}</Paragraph>
         <AppPopover className='tracker-popover' content={threeDotContent} placement='leftTop'>
           <ThreeDotIcon style={{cursor: 'pointer'}}/>
@@ -125,7 +124,7 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
       <div className='tracker-row'>
         <div className='tracker-target'>
           <CorrectSignIcon width={12} height={12} />
-          <AppPopover content={<TaskBar tracker={tracker} refetchTracker={onUpdateTracker}/>}>
+          <AppPopover content={<TaskBar tracker={tracker} refetchTracker={onUpdateTracker} isDragDrop={false}/>}>
           {/* <AppPopover content={null}> */}
             {tracker?.type === TRACKER_TYPE.TASK && <Text>Task: {tracker?.done_task ?? 0}/{tracker?.total_task ?? 0}</Text>}
             {tracker?.type === TRACKER_TYPE.NUMERIC && <Text>Target: {tracker?.achieved_target ?? 0}/{tracker?.target_end ?? 0}</Text>}

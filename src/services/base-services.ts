@@ -115,8 +115,11 @@ class HttpClientInstance {
     let response: Response = await this.httpClient.get(url, config);
 
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
+      console.log(response.status );
       // await getRetoken();
       localStorage.clear();
+      window.location.href = routes.login.path;
+
       response = await this.httpClient.get(url, config);
     }
 
@@ -129,6 +132,7 @@ class HttpClientInstance {
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
       // await getRetoken();
       localStorage.clear();
+      window.location.href = routes.login.path;
       response = await this.httpClient.post(url, config);
     }
 
@@ -156,6 +160,7 @@ class HttpClientInstance {
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
       // await getRetoken();
       localStorage.clear();
+      window.location.href = routes.login.path;
       response = await this.httpClient.put(url, config);
     }
 
@@ -168,6 +173,7 @@ class HttpClientInstance {
     if (response.status === STATUS_CODES.TOKEN_EXPIRED) {
       // await getRetoken();
       localStorage.clear();
+      window.location.href = routes.login.path;
       response = await this.httpClient.patch(url, config);
     }
 

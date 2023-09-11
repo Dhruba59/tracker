@@ -51,7 +51,10 @@ const Login: FC = () => {
           label="Email" 
           rootClassName="label" 
           labelCol={{ span: 24 }}
-          rules={[{ required: true, message: 'Email is required!' }]}
+          rules={[
+            { required: true, message: 'Please enter your email.' }, 
+            { type: 'email', message: 'Please enter valid email.', }]}
+          // rules={[{ required: true, message: 'Email is required!' }]}
         >
           <TextInput placeholder="Email" />
         </Form.Item>

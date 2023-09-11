@@ -19,8 +19,8 @@
 .tracker-title {
   font-size: 20px;
   font-weight: 600;
-  line-height: 23px;
   margin-bottom: 0px;
+  gap: 8px;
 }
 
 .tracker-target {
@@ -34,6 +34,7 @@
   font-weight: 400;
   line-height: 16px;
   color: #494C57;
+  cursor: pointer;
 }
 
 .tracker-date-card {

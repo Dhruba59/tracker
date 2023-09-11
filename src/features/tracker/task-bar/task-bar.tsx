@@ -11,14 +11,17 @@ import { TASK_TYPE, TaskBarProps, TaskStatusEnum, UpdateTaskPayload } from '@mod
 import { TRACKER_TYPE } from '@models/tracker';
 import { addTarget } from '@services/target-service';
 import { TARGET_TYPE_ENUM } from '@models/target';
+import { REGEX } from '@constants/global-constants';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 const { Text } = Typography;
 
-const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
+const TaskBar = ({ tracker, refetchTracker, isDragDrop=true }: TaskBarProps) => {
   const [isTextInputOpen, setIsTextInputOpen] = useState<boolean>(false);
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [tasks, setTasks] = useState<any>();
   const [taskItemForm] = Form.useForm();
   const [numericForm] = Form.useForm();
+  const [taskAddForm] = Form.useForm();
 
   const fetchTasks = async () => {
     try {
@@ -58,17 +61,21 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
     if(tracker?.type === TRACKER_TYPE.NUMERIC) {
       return;
     };
+    if (taskAddForm.getFieldError('task-input') && taskAddForm.getFieldError('task-input').length > 0) {
+      return;
+    }
     try {
       setIsloading(true);
       const payload = {
-        title: e.target.value,
+        title: e.target.value.trim(),
         task_type: TASK_TYPE.TRACKER,
         tracker_id: tracker?.id!,
         is_done: TaskStatusEnum.PENDING,
       };
       const res = await createTask(payload);
       message.success(res?.message ?? 'Successfully added task!');
-      e.target.value = '';
+      // e.target.value = '';
+      taskAddForm.resetFields();
       setIsTextInputOpen(false);
       setIsloading(false);
       fetchTasks();
@@ -96,11 +103,35 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
     setIsTextInputOpen(true);
   };
 
+  const DropAbleTaskContents = (
+    <Droppable droppableId="task-drop">
+      {(provided) => (
+        <div className='task-bar-task-items task-drop' {...provided.droppableProps} ref={provided.innerRef}>
+          {tasks?.map((task: any, index: number) => (
+            <Draggable key={task.id} draggableId={task.id} index={index}>
+              {
+                (f) => (
+                  <div ref={f.innerRef} {...f.draggableProps} {...f.dragHandleProps}>
+                    <TaskItem key={index} form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} />
+                  </div>
+                )
+              }
+            </Draggable>
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  );
+
+  const NotDraggableTaskContent = (
+    tasks?.map((task: any, index: number) => (
+      <TaskItem key={index} form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} /> ))
+  );
+
   const renderTaskContent = (
     <div className='task-bar-task-items'>
-      {tasks?.map((task: any, index: number) => (
-        <TaskItem key={index} form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} />
-      ))}
+      {isDragDrop ? DropAbleTaskContents : NotDraggableTaskContent}
     </div>
   );
 
@@ -129,21 +160,39 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
       <Fragment>
         <Row gutter={16} justify='center' align='middle'>
           <Col span={24}>
-            <TextInput
-              className='taskbar-input'
-              placeholder={'Add Task'}
-              onPressEnter={handleTaskCreate}
-              disabled={isLoading}
-            />
+            <Form form={taskAddForm}>
+              <Form.Item 
+                name='task-input'  
+                rules={[
+                  { required: true, message: 'Please enter name' },
+                  { pattern: REGEX.LETTERS_NUMBERS, message: 'Invalid name.' },
+                ]}
+                >
+                <TextInput
+                  className='taskbar-input'
+                  placeholder={'Add Task'}
+                  onPressEnter={handleTaskCreate}
+                  disabled={isLoading}
+                />
+              </Form.Item>
+            </Form>
+            
           </Col>
         </Row>
         <Text className='tracker-input-info'>press <span>Enter</span> to update</Text>
       </Fragment>}
       {tracker?.type === TRACKER_TYPE.NUMERIC &&
       <Form form={numericForm}>
-        <Row gutter={16} justify='center' align='middle'>
+        <Row gutter={16} justify='center' align='top'>
           <Col span={14}>
-            <Form.Item name='target'>
+            <Form.Item 
+              name='target'
+              rules={[
+                { required: true, message: 'Please enter value' },
+                // Use a regular expression to allow only letters and spaces
+                { pattern: REGEX.NUMBERS, message: 'Invalid number.' },
+              ]}
+            >
               <TextInput
                 className='taskbar-input'
                 placeholder={'Input value'}

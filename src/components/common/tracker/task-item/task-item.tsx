@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Form, Typography, message } from 'antd';
+import { Form, Popconfirm, Tooltip, Typography, message } from 'antd';
 import { DeleteIcon, DotIcon, EditIcon } from '@icons';
 import CheckboxInput from '@components/common/input-fields/checkbox';
 import TextInput from '@components/common/input-fields/text-input';
 import { TASK_TYPE, TaskItemProps, TaskStatusEnum, UpdateTaskPayload } from '@models/task';
 import './task-item.css';
+import { REGEX } from '@constants/global-constants';
 
 const { Text } = Typography;
 
 const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete }) => {
   const [isInputOpen, setIsInputOpen] = useState<boolean>(false);
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+
   const taskItemRef = useRef<HTMLDivElement | null>(null);
   // const [isChecked, setIsChecked] = useState<boolean>(false);
 
@@ -18,7 +21,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
 
   const handleTaskUpdate = (e: any) => {
     const payload = {
-      title: e.target.value,
+      title: e.target.value.trim(),
     };
     onTaskUpdate(task.id, payload);
     setIsInputOpen(false);
@@ -26,6 +29,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
 
   const handleTaskDelete = () => {
     onTaskDelete(task.id);
+    setIsDeleteModalOpen(false);
   };
 
   const handleEditClick = (event: React.MouseEvent) => {
@@ -72,29 +76,53 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
       onMouseEnter={() => setIsMouseOver(true)}
       onMouseLeave={handleOnMouseLeave}
     >
-      <DotIcon />
-      <CheckboxInput checked={task?.is_done} onChange={handleCheckbox} />
+      <div className='task-item-drag-drop-icon'>
+        <DotIcon />
+      </div> 
+      <CheckboxInput className='task-item-checkbox-input' checked={task?.is_done} onChange={handleCheckbox} />
       {!isInputOpen && (
         <Text style={{
           textDecoration: task?.is_done ? 'line-through' : '',
-          opacity: task?.is_done ? '.6' : '1'
+          opacity: task?.is_done ? '.6' : '1',
+          textAlign: 'center',
+          marginTop: '1px'
         }}
         >{task?.title}</Text>
       )}
       
       {isInputOpen && 
         <Form form={form}>
-          <Form.Item name='task-name'>
-            <TextInput className='task-item-input' onPressEnter={handleTaskUpdate}/>
+          <Form.Item name='task-name' 
+            rules={[
+            { required: true, message: 'Name is required.' },
+            // Use a regular expression to allow only letters and spaces
+            { pattern: REGEX.LETTERS_NUMBERS, message: 'Please enter a valid name.' },
+        ]}>
+            <TextInput autoFocus className='task-item-input' onPressEnter={handleTaskUpdate}/>
           </Form.Item>
         </Form>
       }
       {isMouseOver && !isInputOpen && (
         <>
-          <EditIcon onClick={handleEditClick} style={{cursor: 'pointer'}}/>
-          <DeleteIcon onClick={handleTaskDelete} style={{cursor: 'pointer'}}/>
+          <Tooltip title='edit'>
+            <EditIcon onClick={handleEditClick} style={{cursor: 'pointer'}}/>
+          </Tooltip>
+          <Tooltip title='delete' placement='bottom'>  
+            <DeleteIcon style={{cursor: 'pointer'}} onClick={() => setIsDeleteModalOpen(true)}/>
+          </Tooltip>    
         </>
       )}
+
+            <Popconfirm
+              open={isDeleteModalOpen}
+              title="Delete the task"
+              description="Are you sure to delete this task?"
+              onConfirm={handleTaskDelete}
+              onCancel={() => setIsDeleteModalOpen(false)}
+              okText="Yes"
+              cancelText="No"
+            >
+            </Popconfirm>
       
       {
       // TODO

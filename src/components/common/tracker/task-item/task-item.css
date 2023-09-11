@@ -1,29 +1,66 @@
 .task-item-container {
   display: flex;
-  align-items: center;
-  height: 24px;
+  padding: 4px;
+  align-items: flex-start;
+  height: auto;
+  min-height: 24px;
   justify-items: center;
   column-gap: 6px;
   /* margin-bottom: 10px; */
   min-width: 200px;
 }
+
+.task-item-container:hover {
+  background-color: #F4F6FF;
+}
  
-.task-item-input-form {
+/* .task-item-input-form {
   background-color: antiquewhite;
   width: fit-content;
-}
+} */
 .task-item-input {
-  height: 24px;
+  height: 20px;
   padding: 1px 8px 1px 8px;
   border: 1px solid #D9D9D9;
   margin: 0px;
   max-width: 160px;
+  border: none;
 }
 
-.task-item-container .checkbox {
+/* .task-item-container .checkbox {
   margin-bottom: 0px;
-}
+} */
 
 .task-item-container .ant-form-item {
   margin: 0px !important;
+  /* min-height: 0px; */
+  padding-left: 0px !important;
+}
+
+.task-item-container .ant-form-item .ant-form-item-control-input {
+  min-height: 0px;
+}
+
+.task-item-container .ant-input {
+  box-shadow: none !important;
+  border-color: none !important;
+  border: none !important;
+  padding: 0px;
+  background-color: transparent;
+}
+
+.task-item-container .ant-input:focus {
+  box-shadow: none !important;
+  border-color: none !important;
+  border: none !important;
+  padding: 0px;
+}
+.task-item-checkbox-input {
+  /* background-color: #da5050; */
+  /* margin-bottom: auto; */
+  /* margin-top: 0px; */
+}
+
+.task-item-drag-drop-icon {
+  padding-top: 3px;
 }

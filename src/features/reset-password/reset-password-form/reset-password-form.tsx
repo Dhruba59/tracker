@@ -11,7 +11,7 @@ import './reset-password-form.css';
 
 const { Text } = Typography;
 
-const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
+const ResetPasswordForm: FC<ResetPasswordProps> = ({ setValues }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   
   const handleResetPass = async ({ email }: any) => {
@@ -45,7 +45,10 @@ const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
           rootClassName="label" 
           labelCol={{ span: 24 }}
           required
-          rules={[{ required: true, message: 'Email is required!' }]}
+          // rules={[{ required: true, message: 'Email is required!' }]}
+          rules={[
+            { required: true, message: 'Please enter your email.' }, 
+            { type: 'email', message: 'Please enter valid email.', }]}
         >
           <TextInput placeholder="Enter Email" />
         </Form.Item>
@@ -61,4 +64,4 @@ const ResetPassword: FC<ResetPasswordProps> = ({ setValues }) => {
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordForm;

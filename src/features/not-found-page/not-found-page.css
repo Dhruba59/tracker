@@ -1,19 +1,7 @@
-.not-found {
-  height: calc(100vh - 4rem);
-  overflow: hidden;
-  text-align: center;
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+.not-found-page-container {
+  min-height: 100vh;
   margin: auto;
-}
-
-.not-found h1 {
-  font-size: 3rem;
-  color: #ff0000;
-}
-
-.not-found p {
-  font-size: 1.5rem;
-  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

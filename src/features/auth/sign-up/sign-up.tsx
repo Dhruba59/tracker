@@ -12,6 +12,7 @@ import AuthFormWrapper from '@components/common/wrapper/auth-form-wrapper';
 import Button from '@components/common/button';
 import { ResponseType } from '@models/global-models';
 import './sign-up.css';
+import { REGEX } from '@constants/global-constants';
 
 const { Text } = Typography;
 
@@ -19,10 +20,15 @@ const SignUp: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [form] = Form.useForm();
 
-  const handleLogin = async (values: Credentials) => {
+  const handleSignup = async ({name, email, password}: any) => {
+    const payload = {
+      name: name.trim(),
+      email: email.trim(),
+      password
+    };
     setIsLoading(true);
     try {
-      const res: ResponseType = await userSignUp(values);
+      const res: ResponseType = await userSignUp(payload);
       form.resetFields();
       message.success('An verification mail has sent to your email! Please verfiy!');     
     } catch(error: any) {
@@ -39,13 +45,16 @@ const SignUp: FC = () => {
         <Text className="signup-subtitle">Micro management for progressive teams</Text>
       </div>
 
-      <Form form={form} className="signup-form" onFinish={handleLogin} requiredMark='optional'>
+      <Form form={form} className="signup-form" onFinish={handleSignup} requiredMark='optional'>
         <Form.Item 
           name='name' 
           className="signup-form-item" 
           label="Name" 
           labelCol={{ span: 24 }}
-          rules={[{ required: true, message: 'Name is required!' }]}
+          // rules={[{ required: true, message: 'Name is required!' }]}
+          rules={[
+            { required: true, message: 'Name is required' }, 
+            { pattern: REGEX.LETTERS_NUMBERS, message: 'Please enter valid name.', }]}
         >
           <TextInput placeholder="Name" />
         </Form.Item>
@@ -54,7 +63,10 @@ const SignUp: FC = () => {
           className="signup-form-item" 
           label="Email"
           labelCol={{ span: 24 }}
-          rules={[{ required: true, message: 'Email is required!' }]}
+          // rules={[{ required: true, message: 'Email is required!' }]}
+          rules={[
+            { required: true, message: 'Please enter your email.' }, 
+            { type: 'email', message: 'Please enter valid email.', }]}
         >
           <TextInput placeholder="Email" />
         </Form.Item>

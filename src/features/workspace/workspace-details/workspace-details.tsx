@@ -15,11 +15,13 @@ import AppModal from '@components/common/modal';
 import CreateTrackerModal from '../../../components/modal/create-tracker-modal';
 import PageHeader from '@components/common/page-header';
 import EmptyPageCard from '@components/common/empty-page-card';
+import { FullPageLoading } from '@components/full-page-loading';
 
 const { Text } = Typography;
 
 const WorkspaceDetails = () => {
   const {id} = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [workspaceData, setWorkspaceData] = useState<any>();
   const [isTrackerCreateLoading, setIsTrackerCreateLoading] = useState<boolean>(false);
   const [trackers, setTrackers] = useState<any>();
@@ -37,10 +39,13 @@ const WorkspaceDetails = () => {
 
   const fetchTrackers = async () => {
     try {
+      setIsLoading(true);
       const res: ResponseType = await getTrackersByWorkspaceId({ workspaceId: id! });
       setTrackers(res.payload);
     } catch (error: any) {
       console.log('errors');
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -56,8 +61,8 @@ const WorkspaceDetails = () => {
     const { title, description, date, members, type, target_start, target_end } = values;
     setIsTrackerCreateLoading(true);
     let payload: CreateUpdateTrackerPayload = {
-      title,
-      description,
+      title: title.trim(),
+      description: description.trim(),
       type,
       start_date: date[0].$d,
       end_date: date[1].$d,
@@ -88,11 +93,11 @@ const WorkspaceDetails = () => {
       <EmptyPageCard title='You have no trackers here.' buttonText='Create Tracker' onButtonClick={handleClick} />
     </div>    
     ) : (
-      trackers?.map((tracker: any) => (
-        <div className='workspace-trackers-container'>
-          <TrackerCard key={tracker?.id} trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers}/>
-        </div>
-     ))
+      <div className='workspace-trackers-container'>
+        {trackers?.map((tracker: any) => (
+          <TrackerCard key={tracker?.id} trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers} />
+        ))
+        }</div>
     )
   );
 
@@ -100,6 +105,10 @@ const WorkspaceDetails = () => {
     fetchWorkspace();
     fetchTrackers();
   }, [id]);
+
+  if(isLoading) {
+    return <FullPageLoading /> ;
+  };
 
   return (
     <div className='workspace-details-container'>

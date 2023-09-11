@@ -15,8 +15,8 @@ export const addWorkspaceMember = (data: AddMemberPayload) => {
   return httpClient.post(url, { data });
 };
 
-export const deleteWorkspaceMember = ({memberId, workspaceId}: WorkspaceMemberDeletePayload) => {
-  const url = `${API_END_POINTS.WORKSPACE_MEMBERS}/${memberId}/${workspaceId}`;
-  return httpClient.delete(url);
+export const deleteWorkspaceMember = ({memberIds, workspaceId}: WorkspaceMemberDeletePayload) => {
+  const url = `${API_END_POINTS.WORKSPACE_MEMBERS}/${workspaceId}`;
+  return httpClient.delete(url, { data: memberIds});
 };
 

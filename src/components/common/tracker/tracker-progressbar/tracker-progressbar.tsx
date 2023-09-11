@@ -44,13 +44,7 @@ const TrackerProgressbar = ({ tracker, progressPercent, milestones, onUpdateTrac
         return PROGRESS_COLOR.NOT_STARTED;
     }
   };
-
-  // const renderMilestoneIcon = () => {
-  //   if(
-
-  //   )
-  // }
-
+  
   const renderMilestoneIcon = (progressStatus: MilestoneStatusEnum) => {
     switch(progressStatus){
       case MilestoneStatusEnum.COMPLETED:
@@ -88,7 +82,7 @@ const TrackerProgressbar = ({ tracker, progressPercent, milestones, onUpdateTrac
               >
                 <div style={{
                   marginLeft: milestonesPosition[index] < 5 ? '4px': '', 
-                  marginRight: milestonesPosition[index] > 95 ? '14px': ''}}
+                  marginRight: milestonesPosition[index] > 95 ? '4px': ''}}
                   >
                   {renderMilestoneIcon(milestone?.progress_status)}
                 </div>

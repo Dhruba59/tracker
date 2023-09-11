@@ -207,6 +207,7 @@ import UserAvatar from '@components/common/user-avatar';
 import TextInput from '@components/common/input-fields/text-input';
 import useDebounce from '@hooks/debounce-hooks';
 import AppButton from '@components/common/button';
+import { FullPageLoading } from '@components/full-page-loading';
 
 const { Text } = Typography;
 
@@ -222,6 +223,7 @@ const roleItems: MenuProps['items'] = [
 ];
 
 const Members = () => {
+  const [isLoadingMembersData, setIsLoadingMembersData] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [members, setMembers] = useState<any>();
   const [title, setTitle] = useState<string>('');
@@ -244,12 +246,13 @@ const Members = () => {
   };
 
   const rowSelection = {
-    // selectedRowKeys,
-    onChange: (selectedRowKeys: React.Key[]) => {
+    selectedRowKeys,
+    onChange: (selectedRowKeys: React.Key[], selectedRows: any) => {
+      console.log('selectedRowKeys', selectedRowKeys);
       setSelectedRowKeys(selectedRowKeys);
     },
     getCheckboxProps: (record: TableDataType) => ({
-      disabled: record.name === 'Disabled User',
+      disabled: record.role === MEMBER_ROLE_TYPE.OWNER,
       name: record.name,
     }),
     // hideSelectAll: true, // Disable the "Select All" checkbox
@@ -272,7 +275,7 @@ const Members = () => {
     }
   
     deleteWorkspaceMember({
-      memberId: memberIdsToDelete,
+      memberIds: memberIdsToDelete,
       workspaceId: workspaceId!,
     })
       .then((res: ResponseType) => {
@@ -313,9 +316,13 @@ const Members = () => {
       title: <Text className='members-table-title'>Action</Text>,
       dataIndex: 'action',
       render: (_, record) => (
-        <DeleteIcon2 
-          onClick={() => handleDelete(record.id)} 
-          style={{cursor: 'pointer'}} />
+        <DeleteIcon2
+          onClick={() => {
+            if( record.role !== MEMBER_ROLE_TYPE.OWNER ) {
+              handleDelete(record.id);
+            }
+          }}
+          style={{cursor: record.role === MEMBER_ROLE_TYPE.OWNER ? 'not-allowed' : 'pointer'}} />
         ),
     }
   ];
@@ -338,10 +345,12 @@ const Members = () => {
   );
 
   const fetchMembers = () => {
+    setIsLoadingMembersData(true);
     const membersQueryParams = { userName: searchText };
     getMembersByWorkspaceId(workspaceId!, membersQueryParams)
       .then((res: ResponseType) => setMembers(res.payload))
-      .catch(() => console.log('error'));
+      .catch(() => console.log('error'))
+      .finally(() => setIsLoadingMembersData(false));
   };
 
   const handleSearch = debounce((e: any) => {
@@ -362,6 +371,10 @@ const Members = () => {
       .catch(() => console.log('error'));
   }, [workspaceId]);
 
+  if(isLoadingMembersData) {
+    return <FullPageLoading />;
+  };
+
   return (
     <div className='members-container'>
       <PageHeader
@@ -379,8 +392,8 @@ const Members = () => {
         <AppButton 
           className='delete-button' 
           onClick={() => handleDelete()} 
-          type='dashed'
-          style={{ display: selectedRowKeys.length > 0 ? 'block' : 'none' }}
+          type='default'
+          style={{ display: selectedRowKeys.length > 0 ? 'block' : 'none', background: '#e36464', color: 'white'}}
           >
             Delete Selected
           </AppButton>
