@@ -207,6 +207,7 @@ import UserAvatar from '@components/common/user-avatar';
 import TextInput from '@components/common/input-fields/text-input';
 import useDebounce from '@hooks/debounce-hooks';
 import AppButton from '@components/common/button';
+import { FullPageLoading } from '@components/full-page-loading';
 
 const { Text } = Typography;
 
@@ -222,6 +223,7 @@ const roleItems: MenuProps['items'] = [
 ];
 
 const Members = () => {
+  const [isLoadingMembersData, setIsLoadingMembersData] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [members, setMembers] = useState<any>();
   const [title, setTitle] = useState<string>('');
@@ -246,10 +248,11 @@ const Members = () => {
   const rowSelection = {
     selectedRowKeys,
     onChange: (selectedRowKeys: React.Key[], selectedRows: any) => {
+      console.log('selectedRowKeys', selectedRowKeys);
       setSelectedRowKeys(selectedRowKeys);
     },
     getCheckboxProps: (record: TableDataType) => ({
-      disabled: record.name === 'Disabled User',
+      disabled: record.role === MEMBER_ROLE_TYPE.OWNER,
       name: record.name,
     }),
     // hideSelectAll: true, // Disable the "Select All" checkbox
@@ -264,8 +267,6 @@ const Members = () => {
     } else {
       // Batch delete: use the selectedRowKeys
       memberIdsToDelete = selectedRowKeys.map((key) => key.toString());
-      console.log('multi', memberIdsToDelete);
-      // debugger;
     }
   
     if (memberIdsToDelete.length === 0) {
@@ -274,7 +275,7 @@ const Members = () => {
     }
   
     deleteWorkspaceMember({
-      memberId: memberIdsToDelete,
+      memberIds: memberIdsToDelete,
       workspaceId: workspaceId!,
     })
       .then((res: ResponseType) => {
@@ -328,7 +329,7 @@ const Members = () => {
 
   const getTableData: any = () => (
     members?.map((member: any) => ({
-      key: member.id,
+      key: member.user.id,
       id: member.user.id,
       name: member.user.name,
       email: member.user.email,
@@ -344,10 +345,12 @@ const Members = () => {
   );
 
   const fetchMembers = () => {
+    setIsLoadingMembersData(true);
     const membersQueryParams = { userName: searchText };
     getMembersByWorkspaceId(workspaceId!, membersQueryParams)
       .then((res: ResponseType) => setMembers(res.payload))
-      .catch(() => console.log('error'));
+      .catch(() => console.log('error'))
+      .finally(() => setIsLoadingMembersData(false));
   };
 
   const handleSearch = debounce((e: any) => {
@@ -367,6 +370,10 @@ const Members = () => {
       .then((res: ResponseType) => setTitle(res.payload.title))
       .catch(() => console.log('error'));
   }, [workspaceId]);
+
+  if(isLoadingMembersData) {
+    return <FullPageLoading />;
+  };
 
   return (
     <div className='members-container'>

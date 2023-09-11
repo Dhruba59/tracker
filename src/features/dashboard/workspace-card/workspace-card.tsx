@@ -7,15 +7,18 @@ import './workspace-card.css';
 import UserAvatar from '@components/common/user-avatar';
 import { getTrackersByWorkspaceId } from '@services/tracker-service';
 
-const WorkspaceCard = ({ workspace }: any) => {
+const WorkspaceCard = ({ workspace, setIsLoading }: any) => {
   const [trackers, setTrackers] = useState<any>();
 
   const fetchTrackers = async () => {
+    setIsLoading(true);
     try {
       const res: ResponseType = await getTrackersByWorkspaceId({ workspaceId: workspace?.id });
       setTrackers(res.payload);
     } catch (error: any) {
       console.log('errors');
+    } finally {
+      setIsLoading(false);
     }
   };
 

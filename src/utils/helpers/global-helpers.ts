@@ -93,10 +93,11 @@ export const greetByTime = (userName: string) => {
 
 export function formatNumberWithTwoDecimals(number: number) {
   if (Number.isInteger(number)) {
-    return number.toString(); // It's an integer, return as is
+    return number?.toString(); // It's an integer, return as is
   } else {
-    return number.toFixed(2); // It's not an integer, format with two decimals
-  }
+    return number;
+    // return number?.toFixed(2); // It's not an integer, format with two decimals
+  } 
 }
 
 

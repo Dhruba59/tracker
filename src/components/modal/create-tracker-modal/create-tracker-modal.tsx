@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import TextInput from '@components/common/input-fields/text-input';
 import AppModal from '@components/common/modal';
-import { DatePicker, Form, FormInstance, Input, Radio, Select, message } from 'antd';
+import { Col, DatePicker, Form, FormInstance, Input, Radio, Row, Select, message } from 'antd';
 import './create-tracker-modal.css';
 import AppButton from '@components/common/button';
 import { CreateTrackerModalProps, TRACKER_TYPE } from '@models/tracker';
@@ -10,10 +10,12 @@ import { ResponseType } from '@models/global-models';
 import { getAllUser } from '@services/user-services';
 import NumberRangeInput from '@components/common/input-fields/number-range-input';
 import { REGEX } from '@constants/global-constants';
+import NumberRange from '@components/common/input-fields/number-range';
 
 const { TextArea } = Input;
 
 const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLoading, form }: CreateTrackerModalProps) => {
+  const [selectedRange, setSelectedRange] = useState<any>([0, 100]);
   const [type, setType] = useState<TRACKER_TYPE>(TRACKER_TYPE.TASK);
   const [memberOptions, setMemberOptions] = useState<any>();
 
@@ -31,6 +33,10 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
 
   if(!form) {
     [form] = Form.useForm();
+  };
+
+  const handleRangeChange = (newRange: [number, number]) => {
+    setSelectedRange(newRange);
   };
   
   const onRadioChange = (e: any) => {
@@ -81,13 +87,27 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
         </Form.Item>
         {type === TRACKER_TYPE.NUMERIC && (
           <div className='create-tracker-target'>
-            <Form.Item name='target_start' label='Target'>
-              <TextInput className='create-tracker-target-input'/>
-            </Form.Item> To
-            <Form.Item name='target_end'>
-              <TextInput className='create-tracker-target-input'/>
+            <Form.Item 
+              name='target_start' 
+              label='Target'
+              rules={[
+                { required: true, message: 'Start value is required' },
+                { pattern: REGEX.NUMBERS, message: 'Please enter valid number.', }]}
+              >
+              <TextInput className='create-tracker-target-input-start' placeholder='Start value'/>
+            </Form.Item>
+            <Form.Item
+              name='target_end'
+              rules={[
+                { required: true, message: 'End value is required' },
+                { pattern: REGEX.NUMBERS, message: 'Please enter valid number.', }]}>
+              <TextInput className='create-tracker-target-input-end' placeholder='End value' />
             </Form.Item>
           </div>
+          // <Form.Item label='Target'>
+          //   <NumberRange value={selectedRange} onChange={handleRangeChange} />
+          // </Form.Item>
+          
           )}
         <AppButton 
           htmlType='submit' 

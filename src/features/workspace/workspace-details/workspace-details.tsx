@@ -15,11 +15,13 @@ import AppModal from '@components/common/modal';
 import CreateTrackerModal from '../../../components/modal/create-tracker-modal';
 import PageHeader from '@components/common/page-header';
 import EmptyPageCard from '@components/common/empty-page-card';
+import { FullPageLoading } from '@components/full-page-loading';
 
 const { Text } = Typography;
 
 const WorkspaceDetails = () => {
   const {id} = useParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [workspaceData, setWorkspaceData] = useState<any>();
   const [isTrackerCreateLoading, setIsTrackerCreateLoading] = useState<boolean>(false);
   const [trackers, setTrackers] = useState<any>();
@@ -37,10 +39,13 @@ const WorkspaceDetails = () => {
 
   const fetchTrackers = async () => {
     try {
+      setIsLoading(true);
       const res: ResponseType = await getTrackersByWorkspaceId({ workspaceId: id! });
       setTrackers(res.payload);
     } catch (error: any) {
       console.log('errors');
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -100,6 +105,10 @@ const WorkspaceDetails = () => {
     fetchWorkspace();
     fetchTrackers();
   }, [id]);
+
+  if(isLoading) {
+    return <FullPageLoading /> ;
+  };
 
   return (
     <div className='workspace-details-container'>

@@ -12,9 +12,10 @@ import { TRACKER_TYPE } from '@models/tracker';
 import { addTarget } from '@services/target-service';
 import { TARGET_TYPE_ENUM } from '@models/target';
 import { REGEX } from '@constants/global-constants';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 const { Text } = Typography;
 
-const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
+const TaskBar = ({ tracker, refetchTracker, isDragDrop=true }: TaskBarProps) => {
   const [isTextInputOpen, setIsTextInputOpen] = useState<boolean>(false);
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [tasks, setTasks] = useState<any>();
@@ -101,11 +102,35 @@ const TaskBar = ({ tracker, refetchTracker }: TaskBarProps) => {
     setIsTextInputOpen(true);
   };
 
+  const DropAbleTaskContents = (
+    <Droppable droppableId="task-drop">
+      {(provided) => (
+        <div className='task-bar-task-items task-drop' {...provided.droppableProps} ref={provided.innerRef}>
+          {tasks?.map((task: any, index: number) => (
+            <Draggable key={task.id} draggableId={task.id} index={index}>
+              {
+                (f) => (
+                  <div ref={f.innerRef} {...f.draggableProps} {...f.dragHandleProps}>
+                    <TaskItem key={index} form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} />
+                  </div>
+                )
+              }
+            </Draggable>
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  );
+
+  const NotDraggableTaskContent = (
+    tasks?.map((task: any, index: number) => (
+      <TaskItem key={index} form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} /> ))
+  );
+
   const renderTaskContent = (
     <div className='task-bar-task-items'>
-      {tasks?.map((task: any, index: number) => (
-        <TaskItem key={index} form={taskItemForm} task={task} onTaskUpdate={onTaskUpdate} onTaskDelete={onTaskDelete} />
-      ))}
+      {isDragDrop ? DropAbleTaskContents : NotDraggableTaskContent}
     </div>
   );
 

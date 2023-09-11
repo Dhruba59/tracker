@@ -15,6 +15,7 @@ import { ArrowDown, ArrowUp, DotIcon, EditIcon } from '@icons';
 import { TRACKER_TYPE } from '@models/tracker';
 import { REGEX } from '@constants/global-constants';
 import CheckboxInput from '@components/common/input-fields/checkbox';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -226,28 +227,48 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
                   }
                 }} className='progress-popover-input' placeholder='Input value' /> */}
             
-        
-        {tracker?.type === TRACKER_TYPE.TASK &&
-          <div className='milestone-row-2'>
-            {tasks?.map((task: any) => (
+            {/* <div className='milestone-row-2'> */}
+            {/* {tasks?.map((task: any) => (
               <TaskItem key={task.id} form={taskItemForm} task={task} onTaskDelete={onTaskDelete} onTaskUpdate={onTaskUpdate} />
-            ))}
-            {isTaskInputOpen &&
-              <Form form={taskAddForm} className='milestone-new-task-row'>
-                  <div>
-                    <DotIcon style={{marginTop: '6px'}}/>
-                  </div>
-                  <div>
-                  <CheckboxInput disabled={true} />
-                  </div>
-                  
-                <Form.Item className='task-name'>
-                  <Input placeholder='Task name here' size='small' className='milestone-task-add-input' onPressEnter={handleTaskAdd}/>
-                </Form.Item>
-              </Form>
-            }
-            <AppButton className='milestone-task-add-btn' type='link' onClick={() => setIsTaskInputOpen(true)} >+ Add New</AppButton> 
-          </div>
+            ))} */}
+        {tracker?.type === TRACKER_TYPE.TASK &&
+          <Droppable droppableId={milestone?.id}>
+            {(provided) => (
+              <div className='milestone-row-2' {...provided.droppableProps} ref={provided.innerRef}>
+
+                {tasks?.map((task: any, index: number) => (
+                  <Draggable key={task.id} draggableId={task.id} index={index}>
+                    {
+                      (f) => (
+                        <div ref={f.innerRef} {...f.draggableProps} {...f.dragHandleProps}>
+                          <TaskItem key={task.id} form={taskItemForm} task={task} onTaskDelete={onTaskDelete} onTaskUpdate={onTaskUpdate} />
+                        </div>
+                      )
+                    }
+                  </Draggable>
+                ))}
+
+                {isTaskInputOpen &&
+                  <Form form={taskAddForm} className='milestone-new-task-row'>
+                    <div>
+                      <DotIcon style={{ marginTop: '6px' }} />
+                    </div>
+                    <div>
+                      <CheckboxInput disabled={true} />
+                    </div>
+
+                    <Form.Item className='task-name'>
+                      <Input placeholder='Task name here' size='small' className='milestone-task-add-input' onPressEnter={handleTaskAdd} />
+                    </Form.Item>
+                  </Form>
+                }
+                <AppButton className='milestone-task-add-btn' type='link' onClick={() => setIsTaskInputOpen(true)} >+ Add New</AppButton>
+                {provided.placeholder}
+              </div>
+
+            )}
+          </Droppable>
+
         }
       </div>
     </AppCollapse>

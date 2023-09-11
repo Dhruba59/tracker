@@ -45,7 +45,10 @@ const ResetPasswordForm: FC<ResetPasswordProps> = ({ setValues }) => {
           rootClassName="label" 
           labelCol={{ span: 24 }}
           required
-          rules={[{ required: true, message: 'Email is required!' }]}
+          // rules={[{ required: true, message: 'Email is required!' }]}
+          rules={[
+            { required: true, message: 'Please enter your email.' }, 
+            { type: 'email', message: 'Please enter valid email.', }]}
         >
           <TextInput placeholder="Enter Email" />
         </Form.Item>

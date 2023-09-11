@@ -15,14 +15,27 @@
   margin-top: 0px;
 }
 
-.create-tracker-target-input {
+.create-tracker-target-input-start {
     height: 32px;
-    width: 150px;
+    width: 210px;
     border-radius: 2px;
     border: 1px solid #D9D9D9;
     gap: 4px;
     margin-top: 0px;
+    border-right: none;
 }
+
+.create-tracker-target-input-end {
+  height: 32px;
+  width: 210px;
+  border-radius: 2px;
+  border: 1px solid #D9D9D9;
+  gap: 4px;
+  border-left: none;
+  margin-top: 0px;
+}
+
+
 
 .create-tracker-modal-container .ant-picker.ant-picker-range {
   border-radius: 0px;
@@ -35,9 +48,11 @@
 }
 
 .create-tracker-target {
-  margin-left: 85px;
+  /* background-color: aqua; */
+  margin-left: 70px;
+  /* width: 100%; */
   display: flex;
-  justify-content: space-between;
+  /* justify-content: start; */
 }
 
 .create-tracker-modal-input .ant-select-selector {

@@ -8,27 +8,38 @@ import { Fragment, useEffect, useState } from 'react';
 import { ResponseType } from '@models/global-models';
 import WorkspaceCard from './workspace-card';
 import WelcomeCard from '@components/common/welcome-card';
+import { FullPageLoading } from '@components/full-page-loading';
 
 const Dashboard = () => {
   const [workspaces, setWorkspaces] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>();
 
   const fetchWorkspaces = async () => {
+    setIsLoading(true);
     try {
       const res: ResponseType = await getWorkspaceList();
       setWorkspaces(res.payload);
-    } catch (error: any) { }
+    } catch (error: any) 
+    { } finally {
+      setIsLoading(false);
+    }
+
   };
 
   useEffect(() => {
     fetchWorkspaces();
   }, []);
 
+  if(isLoading){
+    return <FullPageLoading />;
+  }
+
   return (
     <div className='dashboard-main-container'>
       <WelcomeCard />
       <div className='dashboard-body'>
         {workspaces?.map((workspace: any) => (
-        <WorkspaceCard key={workspace.id} workspace={workspace}/>
+        <WorkspaceCard key={workspace.id} workspace={workspace} setIsLoading={setIsLoading}/>
         ))}
       </div>
     </div>

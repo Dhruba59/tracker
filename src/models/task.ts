@@ -30,6 +30,7 @@ export enum TASK_TYPE {
 export interface TaskBarProps {
   tracker: any;
   refetchTracker: () => void;
+  isDragDrop?: boolean;
 }
 
 export interface TaskItemProps {
@@ -42,4 +43,12 @@ export interface TaskItemProps {
 export enum TaskStatusEnum {
   DONE = 1,
   PENDING = 0,
+}
+
+export interface DragDropPayload {
+  title: string;
+  is_done: number;
+  task_type: string;
+  tracker_id: string;
+  milestone_id: string;
 }
