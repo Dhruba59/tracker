@@ -21,10 +21,10 @@ const AppTable: React.FC<AppTableProps> = ({ className, columns, data, rowSelect
     <div>
       <Table
         className={className}
-        rowSelection={{
-          type: selectionType,
-          ...rowSelection,
-        }}
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
         columns={columns}
         dataSource={data}
       />

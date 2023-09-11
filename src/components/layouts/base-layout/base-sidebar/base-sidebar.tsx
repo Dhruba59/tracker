@@ -30,7 +30,7 @@ const BaseSidebar: React.FC = () => {
   };
 
   const createNewWorkspace = async () => {
-    const title = form.getFieldValue('title');
+    const title = form.getFieldValue('title').trim();
     try{
       const res: ResponseType = await createWorkspace({ title });
       message.success(res?.message ?? 'Successfully created workspace!');
@@ -46,6 +46,7 @@ const BaseSidebar: React.FC = () => {
   const handleWorkspaceClick = (id: string) => {
     setWorkspaceId(id);
     navigate(`${routes.workspace.path}/${id}`);
+    setIsWorkspaceInputOpen(false);
   };
 
   const getMenuItems = (data: any) => {
@@ -65,8 +66,8 @@ const BaseSidebar: React.FC = () => {
       {
         key: '3',
         label: (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', background: 'white', justifyContent: 'space-between', width: '100%', paddingInline: '24px' }}>
               <WorkspaceIcon />
               <span style={{ marginLeft: '4px' }}>Workspace</span>
               <span
@@ -79,7 +80,7 @@ const BaseSidebar: React.FC = () => {
             {isWorkspaceInputOpen && (
               <Form form={form} className='sidebar-workspace-form'>
                 <Form.Item name='title'>
-                  <Input size='small' onPressEnter={createNewWorkspace} placeholder='Workspace name'/>
+                  <Input size='small' className='sidebar-workspace-input' onPressEnter={createNewWorkspace} placeholder='Workspace name'/>
                 </Form.Item>
               </Form>
             )}
@@ -100,7 +101,8 @@ const BaseSidebar: React.FC = () => {
           </span>
         ),
         
-        expandIcon: <ArrowDown />,
+        expandIcon: <ArrowDown onClick={() => setIsWorkspaceInputOpen(false)}/>,
+        
         children: [
           {
             key: `${workspace.id}members`,
@@ -110,12 +112,19 @@ const BaseSidebar: React.FC = () => {
           {
             key: `${workspace.id}archive`,
             label: 'Archive',
-            onClick: () => navigate(`/${workspace.id}/${routes.archive.path}`)
+            onClick: () => navigate(`/${workspace.id}/archive`)
           }
         ]
       });
     });
     return items;
+  };
+
+  const handleMenuClick = (e: any) => {
+    if(e.key !== '3'){
+      setIsWorkspaceInputOpen(false);
+    }
+
   };
   
   useEffect(() => {
@@ -131,6 +140,7 @@ const BaseSidebar: React.FC = () => {
         defaultOpenKeys={['sub1']}
         style={{ height: '100%', borderRight: 0 }}
         items={getMenuItems(workspaces)}
+        onClick={handleMenuClick}
       />
     </Sider>
   );

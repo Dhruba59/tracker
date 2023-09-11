@@ -86,3 +86,20 @@
   row-gap: 16px;
   font-family: 'Inter', sans-serif;
 }
+
+
+
+/* -- */
+
+
+.signup-form-item .ant-input {
+  padding-left: 10px !important;
+}
+
+.signup-form-item .ant-input-affix-wrapper {
+  padding: 0px !important;
+}
+
+.signup-form-item .ant-input-affix-wrapper.password-input  {
+  background: rgb(228, 242, 254) !important;
+}

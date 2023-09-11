@@ -1,6 +1,6 @@
 import { API_END_POINTS } from '@constants/global-constants';
 import HttpClientInstance from './base-services';
-import { CreateTaskPayload, GetTasksPayload, UpdateTaskPayload } from '@models/task';
+import { CreateTaskPayload, DragDropPayload, GetTasksPayload, UpdateTaskPayload } from '@models/task';
 
 const httpClient = new HttpClientInstance();
 
@@ -22,4 +22,9 @@ export const updateTask= (id: string, data: UpdateTaskPayload) => {
 export const deleteTask= (id: string) => {
   const url = `${API_END_POINTS.TASK}/${id}`;
   return httpClient.delete(url);
+};
+
+export const dragAndDropPatch= (id: string, payload: Partial<DragDropPayload>) => {
+  const url = `${API_END_POINTS.TASK}/drag-and-drop/${id}`;
+  return httpClient.patch(url, { data: payload });
 };

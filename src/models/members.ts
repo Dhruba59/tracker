@@ -21,7 +21,7 @@ export enum MEMBER_ROLE_TYPE {
 }
 
 export interface WorkspaceMemberDeletePayload {
-  memberId: string[];
+  memberIds: string[];
   workspaceId: string;
 }
 
