@@ -92,7 +92,7 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
               label='Target'
               rules={[
                 { required: true, message: 'Start value is required' },
-                { pattern: REGEX.NUMBERS, message: 'Please enter valid number.', }]}
+                { pattern: REGEX.NUMBERS, message: 'Invalid number.', }]}
               >
               <TextInput className='create-tracker-target-input-start' placeholder='Start value'/>
             </Form.Item>
@@ -100,7 +100,7 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
               name='target_end'
               rules={[
                 { required: true, message: 'End value is required' },
-                { pattern: REGEX.NUMBERS, message: 'Please enter valid number.', }]}>
+                { pattern: REGEX.NUMBERS, message: 'Invalid number.', }]}>
               <TextInput className='create-tracker-target-input-end' placeholder='End value' />
             </Form.Item>
           </div>
