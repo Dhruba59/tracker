@@ -20,11 +20,13 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
   const [form] = Form.useForm();
 
   const handleTaskUpdate = (e: any) => {
-    const payload = {
-      title: e.target.value.trim(),
-    };
-    onTaskUpdate(task.id, payload);
-    setIsInputOpen(false);
+    if(e.target.value && e.target.value.trim() !== '') {
+      const payload = {
+        title: e.target.value.trim(),
+      };
+      onTaskUpdate(task.id, payload);
+      setIsInputOpen(false);
+    }
   };
 
   const handleTaskDelete = () => {

@@ -22,8 +22,8 @@ const SignUp: FC = () => {
 
   const handleSignup = async ({name, email, password}: any) => {
     const payload = {
-      name: name.trim(),
-      email: email.trim(),
+      name: name?.trim(),
+      email: email?.trim(),
       password
     };
     setIsLoading(true);

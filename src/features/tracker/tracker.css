@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   row-gap: 16px;
+  height: calc(100vh - 64px);
   max-height: calc(100vh - 64px);
-  /* background-color: antiquewhite; */
 }
 
 .tracker-details-row-2 {

@@ -69,9 +69,9 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   }, [milestone]);
 
   const handleTaskAdd = (e: any) => {
-    if (taskAddForm.getFieldError('task-name') && taskAddForm.getFieldError('task-name').length === 0) {
+    if (taskAddForm.getFieldError('task-name') && taskAddForm.getFieldError('task-name').length === 0 && e.target.value.trim() !== '') {
       const payload: CreateTaskPayload = {
-        title: e.target.value,
+        title: e.target.value?.trim(),
         tracker_id: tracker?.id,
         milestone_id: milestone?.id,
         is_done: TaskStatusEnum.PENDING,
@@ -82,7 +82,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
           message.success('Successfully added');
           fetchTasks();
           setIsTaskInputOpen(false);
-          e.target.value = '';
+          taskAddForm.resetFields();
           refetchTracker();
         })
         .catch(error => message.error('Unable to create1'));
@@ -143,7 +143,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   const handleLabelChange = (value: string) => {
     if(value && value !== '' && milestone?.id) {
       const payload: any = {
-        title: value.trim()
+        title: value?.trim()
       };
       updateMilestone(milestone?.id, payload);
     }
@@ -259,7 +259,10 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
                       <CheckboxInput disabled={true} />
                     </div>
 
-                    <Form.Item className='task-name'>
+                    <Form.Item className='task-name' name='task-name' rules={[
+                      { required: true, message: 'Name is required.' },
+                      { pattern: REGEX.LETTERS_NUMBERS, message: 'Please enter a valid name.' },
+                    ]}>
                       <Input placeholder='Task name here' size='small' className='milestone-task-add-input' onPressEnter={handleTaskAdd} />
                     </Form.Item>
                   </Form>

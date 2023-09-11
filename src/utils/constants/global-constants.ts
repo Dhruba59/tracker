@@ -86,63 +86,7 @@ export const API_END_POINTS = {
 };
 
 export const REGEX = {
-  LETTERS_NUMBERS: /^[a-zA-Z]*[a-zA-Z0-9\s]+$/,
+  // LETTERS_NUMBERS: /^[a-zA-Z]*[a-zA-Z0-9\s]+$/,
+  LETTERS_NUMBERS: /^(?![\s]+$)[a-zA-Z0-9\s]*[a-zA-Z][a-zA-Z0-9\s]*$/,
   NUMBERS: /^[0-9]+$/,
 };
-
-// export const CAMPAIGN_MODES = {
-//   CREATE: 'create',
-//   EDIT: 'edit',
-// };
-
-// export const THEME_COLORS: { [key: string]: string } = {
-//   DISABLED: '#B1B9C5',
-//   ACTIVE: '#03F0A9',
-//   DRAFT: '#9ea7ad',
-//   PAUSE_INACTIVE: '#ffb302',
-//   FINISHED: '#2dccff',
-//   MISSING: '#FEC400',
-//   COMPLETED: '#03F0A9',
-// };
-
-// export const THEME_FONT_SIZE = {
-//   DEFAULT: '16px',
-// };
-
-// export const PAGE_TITLE = {
-//   MY_CAMPAIGN: 'My Campaigns',
-//   WATCHED_CAMPAIGN: 'Watched Campaigns',
-//   ACTION_LIST: 'Action List',
-// };
-
-// export const LOGOS: any = {
-//   // MARKETPLACE: marketplaceLogo,
-//   // XANDR: xandrLogo,
-//   // DV360: dv360Logo,
-// };
-
-// export const ACTION_ITEMS = [
-//   { key: '1', label: 'Action 1' },
-//   { key: '2', label: 'Action 2' },
-// ];
-
-// // export const DOMAINS = {
-// //   BUTELKA_DOMAINS: [
-// //     process.env.REACT_APP_BUTELKA_DOMAIN,
-// //     removeLastCharacter(process.env.REACT_APP_BUTELKA_DOMAIN || ''),
-// //   ],
-
-// //   MARKETPLACE_DOMAINS: [
-// //     process.env.REACT_APP_MARKETPLACE_DOMAIN,
-// //     removeLastCharacter(process.env.REACT_APP_MARKETPLACE_DOMAIN || ''),
-// //   ],
-// // };
-
-// export const POST_MESSAGE_IFRAME = {
-//   TYPE: 'retoken',
-//   CLEAR_SESSION: 'clear-session',
-//   RETOKEN: 'retoken',
-//   TARGET_ORIGIN: process.env.REACT_APP_MARKETPLACE_DOMAIN
-// };
-
-

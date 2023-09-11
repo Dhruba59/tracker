@@ -35,8 +35,8 @@ const GeneralForm = () => {
   const onSubmit = ({name, email}: any) => {
     setIsUserDataLoading(true);
     const payload = {
-      name: name.trim(),
-      email: email.trim()
+      name: name?.trim(),
+      email: email?.trim()
     };
     updateUserProfile(payload)
       .then((res: ResponseType) => message.success(res?.message ?? 'Successfully updated user.'))
