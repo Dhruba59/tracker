@@ -15,20 +15,26 @@ const CreateFirstWorkspace = () => {
   const navigate = useNavigate();
 
   const onFinish = async ({ title }: any) => {
-    try {
-      const res: ResponseType = await createWorkspace({ title });
-      message.success(res?.message ?? 'Successfully created workspace!');
-      form.resetFields();
-      navigate(routes.dashboard.path);
-    } catch(error: any) {
-      message.error(error?.message ?? 'Something went wrong!');
-    };
+    if(title && title !== '') {
+      try {
+        const res: ResponseType = await createWorkspace({ title: title.trim() });
+        message.success(res?.message ?? 'Successfully created workspace!');
+        form.resetFields();
+        navigate(routes.dashboard.path);
+      } catch(error: any) {
+        message.error(error?.message ?? 'Something went wrong!');
+      };
+    }
   };
+  
 
   return (
     <Form form={form} onFinish={onFinish} className='create-first-workspace-container'>
       <Text className='create-first-workspace-title'>Create Your Own Workspace</Text>
-      <Form.Item name='title'>
+      <Form.Item 
+        name='title' 
+        rules={[{ required: true, message: 'Workspace name is required.' }
+      ]}>
         <TextInput className='create-first-workspace-input' placeholder='Workspace name' bordered={false} />
       </Form.Item>
       <AppButton htmlType='submit' className='create-first-workspace-btn'>Done</AppButton>
