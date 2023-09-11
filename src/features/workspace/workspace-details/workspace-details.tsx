@@ -55,17 +55,18 @@ const WorkspaceDetails = () => {
 
   const closeModal = () => {
     setIsTrackerModalOpen(false);
+    form.resetFields();
   };
 
   const onSubmit = async (values: any) => {
     const { title, description, date, members, type, target_start, target_end } = values;
     setIsTrackerCreateLoading(true);
     let payload: CreateUpdateTrackerPayload = {
-      title: title.trim(),
-      description: description.trim(),
+      title: title?.trim(),
+      description: description?.trim(),
       type,
-      start_date: date[0].$d,
-      end_date: date[1].$d,
+      start_date: date[0]?.$d,
+      end_date: date[1]?.$d,
       workspace_id: id!,
       user_ids: members
     };

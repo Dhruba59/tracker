@@ -107,7 +107,7 @@ const Tracker = () => {
           workspaceId={workspaceId!}
           onUpdateTracker={onUpdateTracker}
         />}
-      <div style={{display:'flex', gap: '10px', overflow: 'scroll'}} className='hide-scrollbar'>
+      <div style={{display:'flex', gap: '10px', overflow: 'scroll', height: '100%'}} className='hide-scrollbar'>
         <DragDropContext onDragEnd={onDragEnd}>
           <TaskBar tracker={tracker} refetchTracker={fetchTrackerData} />
           <MilestoneBar 

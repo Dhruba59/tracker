@@ -30,17 +30,20 @@ const BaseSidebar: React.FC = () => {
   };
 
   const createNewWorkspace = async () => {
-    const title = form.getFieldValue('title').trim();
-    try{
-      const res: ResponseType = await createWorkspace({ title });
-      message.success(res?.message ?? 'Successfully created workspace!');
-      form.resetFields();
-      setIsWorkspaceInputOpen(false);
-    } catch(error: any) {
-      message.error(error?.message ?? 'Unable to create workspace!');
-    } finally {
-      await fetchWorkspacesData();
+    if (form.getFieldError('title') && form.getFieldError('title').length === 0 && form.getFieldValue('title') && form.getFieldValue('title').trim() !== '') {
+      const title = form.getFieldValue('title')?.trim();
+      try {
+        const res: ResponseType = await createWorkspace({ title });
+        message.success(res?.message ?? 'Successfully created workspace!');
+        form.resetFields();
+        setIsWorkspaceInputOpen(false);
+      } catch (error: any) {
+        message.error(error?.message ?? 'Unable to create workspace!');
+      } finally {
+        await fetchWorkspacesData();
+      }
     }
+
   };
 
   const handleWorkspaceClick = (id: string) => {
@@ -79,7 +82,7 @@ const BaseSidebar: React.FC = () => {
             </div>
             {isWorkspaceInputOpen && (
               <Form form={form} className='sidebar-workspace-form'>
-                <Form.Item name='title'>
+                <Form.Item name='title' rules={[{required: true, message: 'Title required!'}]}>
                   <Input size='small' className='sidebar-workspace-input' onPressEnter={createNewWorkspace} placeholder='Workspace name'/>
                 </Form.Item>
               </Form>
