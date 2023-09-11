@@ -12,18 +12,16 @@ import { FullPageLoading } from '@components/full-page-loading';
 
 const Dashboard = () => {
   const [workspaces, setWorkspaces] = useState<any>();
-  const [isLoading, setIsLoading] = useState<boolean>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const fetchWorkspaces = async () => {
+  const fetchWorkspaces = () => {
     setIsLoading(true);
-    try {
-      const res: ResponseType = await getWorkspaceList();
-      setWorkspaces(res.payload);
-    } catch (error: any) 
-    { } finally {
+    getWorkspaceList().then((workSpaceList: ResponseType) => {
+      setWorkspaces(workSpaceList.payload);
       setIsLoading(false);
-    }
-
+    }).catch(error => {
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -39,7 +37,7 @@ const Dashboard = () => {
       <WelcomeCard />
       <div className='dashboard-body'>
         {workspaces?.map((workspace: any) => (
-        <WorkspaceCard key={workspace.id} workspace={workspace} setIsLoading={setIsLoading}/>
+        <WorkspaceCard key={workspace.id} workspace={workspace}/>
         ))}
       </div>
     </div>

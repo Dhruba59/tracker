@@ -141,6 +141,8 @@ const BaseSidebar: React.FC = () => {
         style={{ height: '100%', borderRight: 0 }}
         items={getMenuItems(workspaces)}
         onClick={handleMenuClick}
+        // activeKey={'ef6c6fe7-0aa7-4be1-aaf6-d6c7f7780986'}
+        // openKeys={[workspaceId!]}
       />
     </Sider>
   );
