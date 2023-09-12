@@ -1,6 +1,6 @@
 name: Deploy to Production AWS
 
-on:
+on: 
   push:
     branches:
       - master
