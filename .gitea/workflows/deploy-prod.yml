@@ -2,10 +2,10 @@ name: Deploy to Production AWS
 on:
   push:
     branches:
-      - devops
+      - master
   pull_request:
     branches:
-      - devops
+      - master
 
 jobs:
   deploy:
