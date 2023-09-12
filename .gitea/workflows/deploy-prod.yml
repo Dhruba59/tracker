@@ -26,11 +26,10 @@ jobs:
           instance-ids: ${{ secrets.INSTANCE_ID }}
           
         working-directory: /home/ec2-user/Progress_tracker_frontend_new
+        command: git pull origin master
         command: npm install
         command: docker compose down 
-        command: docker rmi progresstracker-backend:latest
-        command: cp .env.production .env
-        command: docker build -t progresstracker-backend:latest .
+        command: docker system prune -a
         command: docker compose up -d
 
 #check 
