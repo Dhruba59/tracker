@@ -7,15 +7,13 @@ import { CreateUpdateTrackerPayload, TRACKER_TYPE, TrackerCardInfo } from '@mode
 import { createTracker, getTrackersByWorkspaceId } from '@services/tracker-service';
 import { getWorkspaceById } from '@services/workspace-services';
 import './workspace-details.css';
-import { Avatar, Form, Typography, message } from 'antd';
-import AppButton from '@components/common/button';
+import { Form, Typography, message } from 'antd';
 import { PlusIcon } from '@icons';
-import { tracker } from '@helpers/global-helpers';
-import AppModal from '@components/common/modal';
 import CreateTrackerModal from '../../../components/modal/create-tracker-modal';
 import PageHeader from '@components/common/page-header';
 import EmptyPageCard from '@components/common/empty-page-card';
 import { FullPageLoading } from '@components/full-page-loading';
+import UserAvatar from '@components/common/user-avatar';
 
 const { Text } = Typography;
 
@@ -79,7 +77,6 @@ const WorkspaceDetails = () => {
       message.success(res?.message ?? 'Tracker created!');
       closeModal();
       form.resetFields();
-      // fetchWorkspace();
       fetchTrackers();
     } catch (error: any) {
       message.error(error?.message ?? 'Something went wrong!');
@@ -90,15 +87,15 @@ const WorkspaceDetails = () => {
 
   const renderTrackers = (
     trackers?.length === 0 ? (
-    <div className='workspace-empty-page'>
-      <EmptyPageCard title='You have no trackers here.' buttonText='Create Tracker' onButtonClick={handleClick} />
-    </div>    
+      <div className='workspace-empty-page'>
+        <EmptyPageCard title='You have no trackers here.' buttonText='Create Tracker' onButtonClick={handleClick} />
+      </div>
     ) : (
       <div className='workspace-trackers-container'>
         {trackers?.map((tracker: any) => (
           <TrackerCard key={tracker?.id} trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers} />
-        ))
-        }</div>
+        ))}
+      </div>
     )
   );
 
@@ -114,7 +111,7 @@ const WorkspaceDetails = () => {
   return (
     <div className='workspace-details-container'>
       <PageHeader 
-        icon={<Avatar />} 
+        icon={<UserAvatar title={workspaceData?.title}/>} 
         title={workspaceData?.title}
         buttonName='Create Tracker'
         buttonIcon={<PlusIcon />}
