@@ -10,7 +10,7 @@ export const getUserProfile = () => {
   return httpClient.get(url);
 };
 
-export const updateUserProfile = (data: UpdateUserProfilePayload) => {
+export const updateUserProfile = (data: UpdateUserProfilePayload | FormData) => {
   const url = `${API_END_POINTS.USER}`;
   return httpClient.put(url, { data });
 };

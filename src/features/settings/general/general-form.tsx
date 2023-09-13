@@ -1,36 +1,41 @@
+import { Form, Image, message } from 'antd';
+import { useEffect, useState } from 'react';
+
 import AppButton from '@components/common/button';
 import TextInput from '@components/common/input-fields/text-input';
-import { Button, Form, Image, Radio, Upload, UploadProps, message } from 'antd';
-import './general-form.css';
-import { useEffect, useState } from 'react';
-import { getUserProfile, updateUserProfile } from '@services/user-services';
+import { updateUserProfile } from '@services/user-services';
 import { ResponseType } from '@models/global-models';
-
-export interface UserProfileData {
-  id: string
-  status: number,
-  name: string,
-  email: string,
-  is_verified: 1 | 0
-};
+import FileInput from '@components/common/input-fields/file-input';
+import { useUserContext } from '@contexts/user-context';
+import './general-form.css';
 
 const GeneralForm = () => {
+  const [isImageUploading, setIsImageUploading] = useState<boolean>(false);
   const [isUserDataLoading, setIsUserDataLoading] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserProfileData>();
+  const {user, setUser} = useUserContext();
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    getUserProfile()
-      .then((res: ResponseType) => setUserData(res.payload))
-      .catch((error: any) => message.error(error?.message ?? 'unable to fetch user information'));
-  }, []);
-
-  useEffect(() => {
-    form.setFieldsValue({
-      name: userData?.name,
-      email: userData?.email,
-    });
-  }, [userData]);
+  const onFileUpload = async (file: File | null) => {
+    if (!file) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append('profile_image', file);
+    try {
+      setIsImageUploading(true);
+      const response: ResponseType = await updateUserProfile(formData);
+      setUser(response?.payload);
+      setUser({
+        ...user,
+        profile_image: response?.payload.profile_image_url,
+      });
+      message.success(response?.message ?? 'Failed to upload image!');
+    } catch(error: any) {
+      message.error(error?.message ?? 'Failed to upload image!');
+    } finally {
+      setIsImageUploading(false);
+    }
+  };
 
   const onSubmit = ({name, email}: any) => {
     setIsUserDataLoading(true);
@@ -39,59 +44,38 @@ const GeneralForm = () => {
       email: email?.trim()
     };
     updateUserProfile(payload)
-      .then((res: ResponseType) => message.success(res?.message ?? 'Successfully updated user.'))
+      .then((res: ResponseType) => {
+        message.success(res?.message ?? 'Successfully updated user.');
+        setUser({
+          ...user,
+          name: res?.payload.name,
+          email: res?.payload.email
+        });
+      })
       .catch((error: any) => message.error(error?.message ?? 'unable to update!'))
       .finally(() => setIsUserDataLoading(false));
   };
 
-  // const props: UploadProps = {
-  //   name: 'file',
-  //   action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  //   headers: {
-  //     authorization: 'authorization-text',
-  //   },
-  //   onChange(info: any) {
-  //     console.log('file',info.file);
-  //     if (info.file.status !== 'uploading') {
-  //       console.log(info.file, info.fileList);
-  //     }
-  //     if (info.file.status === 'done') {
-  //       const fileReader = new FileReader();
-  //       // updateUserProfile({profile_image: info.file}).then((res: ResponseType) => {
-  //       //   message.success(res?.message ?? 'Successfully updated image!'); 
-  //       // }).catch((err) => console.log(err));
-  //       fileReader.onload = (event: any) => {
-  //         console.log('filereader', event.target);
-  //         const imageDataString = event.target.result; // This is the image data as a string.
-  //         console.log('image', imageDataString);
-  //         console.log('image1', event.target);
-  //         // Now you can send 'imageDataString' to your backend API using a separate API call.
-  //       };
-    
-  //       // Read the file as a data URL (string).
-  //       fileReader.readAsDataURL(info.file.originFileObj);
-  //     } else if (info.file.status === 'error') {
-  //       message.error(`${info.file.name} file upload failed.`);
-  //     }
-  //   },
-  // };
+  useEffect(() => {
+    form.setFieldsValue({
+      name: user?.name,
+      email: user?.email,
+    });
+  }, [user]);
 
   return (
     <Form className='general-form-container' form={form} onFinish={onSubmit} labelCol={{ span: 24 }}>
-      {/* <Image
+      {user?.profile_image && <Image
         className='general-form-image'
         width={100}
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      /> */}
-      {/* <Upload {...props}>
-        <Button>Click to Upload</Button>
-      </Upload> */}
+        src={user?.profile_image}
+      />}
+      <FileInput onChange={onFileUpload} loading={isImageUploading} className='general-form-file-input'/>
       <Form.Item 
         name='name' 
         label='Name' 
         rules={[
           { required: true, message: 'Please enter your name.' },
-          // Use a regular expression to allow only letters and spaces
           { pattern: /^[a-zA-Z][a-zA-Z0-9\s]*$/, message: 'Please enter a valid name.' },
         ]}>
         <TextInput className='general-form-input' />

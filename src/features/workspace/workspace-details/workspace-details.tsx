@@ -7,15 +7,13 @@ import { CreateUpdateTrackerPayload, TRACKER_TYPE, TrackerCardInfo } from '@mode
 import { createTracker, getTrackersByWorkspaceId } from '@services/tracker-service';
 import { getWorkspaceById } from '@services/workspace-services';
 import './workspace-details.css';
-import { Avatar, Form, Typography, message } from 'antd';
-import AppButton from '@components/common/button';
+import { Form, Typography, message } from 'antd';
 import { PlusIcon } from '@icons';
-import { tracker } from '@helpers/global-helpers';
-import AppModal from '@components/common/modal';
 import CreateTrackerModal from '../../../components/modal/create-tracker-modal';
 import PageHeader from '@components/common/page-header';
 import EmptyPageCard from '@components/common/empty-page-card';
 import { FullPageLoading } from '@components/full-page-loading';
+import UserAvatar from '@components/common/user-avatar';
 
 const { Text } = Typography;
 
@@ -114,7 +112,7 @@ const WorkspaceDetails = () => {
   return (
     <div className='workspace-details-container'>
       <PageHeader 
-        icon={<Avatar />} 
+        icon={<UserAvatar title={workspaceData?.title}/>} 
         title={workspaceData?.title}
         buttonName='Create Tracker'
         buttonIcon={<PlusIcon />}
