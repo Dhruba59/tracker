@@ -1,7 +1,7 @@
 import { User, UserContextDataType, UserContextProps } from '@models/user';
 import {createContext, useContext, useState } from 'react';
 
-const initialValue = {
+const initialValue: User = {
   id: '',
   name: '',
   profile_image: '',

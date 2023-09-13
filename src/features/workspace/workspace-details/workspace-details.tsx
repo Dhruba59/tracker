@@ -77,7 +77,6 @@ const WorkspaceDetails = () => {
       message.success(res?.message ?? 'Tracker created!');
       closeModal();
       form.resetFields();
-      // fetchWorkspace();
       fetchTrackers();
     } catch (error: any) {
       message.error(error?.message ?? 'Something went wrong!');
@@ -88,15 +87,15 @@ const WorkspaceDetails = () => {
 
   const renderTrackers = (
     trackers?.length === 0 ? (
-    <div className='workspace-empty-page'>
-      <EmptyPageCard title='You have no trackers here.' buttonText='Create Tracker' onButtonClick={handleClick} />
-    </div>    
+      <div className='workspace-empty-page'>
+        <EmptyPageCard title='You have no trackers here.' buttonText='Create Tracker' onButtonClick={handleClick} />
+      </div>
     ) : (
       <div className='workspace-trackers-container'>
         {trackers?.map((tracker: any) => (
           <TrackerCard key={tracker?.id} trackerData={tracker} workspaceId={workspaceData?.id} onUpdateTracker={fetchTrackers} />
-        ))
-        }</div>
+        ))}
+      </div>
     )
   );
 

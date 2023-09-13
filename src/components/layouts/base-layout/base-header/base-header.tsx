@@ -15,7 +15,6 @@ const { Header } = Layout;
 const { Text } = Typography;
 
 const BaseHeader = () => {
-  // const [user, setUser] = useState<any>();
   const {user, setUser} = useUserContext();
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -44,7 +43,6 @@ const BaseHeader = () => {
       label: (
         <div className='header-popover-item'>
           <span className='header-popover-item-icon' >
-            {/* <img src={user?.profile_image}/> */}
             <UserAvatar size='small' src={<img src={user?.profile_image}/>}/>
           </span>
           <Text>{user?.name}</Text>
@@ -86,7 +84,6 @@ const BaseHeader = () => {
     },
     {
       key: 'avatar',
-      // icon: <Avatar />,
       label: (
           <Dropdown menu={{ items: dropdownItems }} placement="bottomLeft" arrow>
             <div>
@@ -95,7 +92,6 @@ const BaseHeader = () => {
             </div>
           </Dropdown>
         ),
-      // className: 'header-menu-item',
       onClick: handleClick
     },
   ];

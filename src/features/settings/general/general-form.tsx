@@ -88,7 +88,9 @@ const GeneralForm = () => {
           { type: 'email', message: 'Please enter valid email.', }]}>
         <TextInput className='general-form-input' />
       </Form.Item>
-      {/* <Form.Item name='name' label='Time Zone' rules={[{ required: true }]}>
+      {/*
+      // TODO 
+      <Form.Item name='name' label='Time Zone' rules={[{ required: true }]}>
         <Radio.Group>
           <Radio value={1}>12 hours</Radio>
           <Radio value={2}>24 hours</Radio>

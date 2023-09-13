@@ -1,8 +1,6 @@
 import { Avatar, AvatarProps, Tooltip } from 'antd';
 import './user-avatar.css';
-export interface UserAvatarProps extends AvatarProps {
-  title?: string;
-};
+import { UserAvatarProps } from '@models/avatar';
 
 const UserAvatar = ({ title, src, ...rest }: UserAvatarProps) => {
   return (
