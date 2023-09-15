@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, MenuProps, Menu, Form, message, Input } from 'antd';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { DashboardIcon, ArrowDown, PlusIcon, SettingsIcon, WorkspaceIcon } from '@icons';
 import { createWorkspace, getWorkspaceList } from '@services/workspace-services';
 import { ResponseType } from '@models/global-models';
-import TextInput from '@components/common/input-fields/text-input';
-import './base-sidebar.css';
 import { routes } from '@constants/route-constants';
-import { useNavigate } from 'react-router-dom';
-import { useWorkspaceContext } from '@contexts/workspace-context';
+import './base-sidebar.css';
 
 const { Sider } = Layout;
 
@@ -16,9 +14,10 @@ const BaseSidebar: React.FC = () => {
   const [workspaces, setWorkspaces] = useState(); 
   const [isWorkspaceInputOpen, setIsWorkspaceInputOpen] = useState<boolean>(false); 
   const [ form ] = Form.useForm();
+  const { workspaceId } = useParams();
+  const { pathname } = useLocation();
+  const [sidebarActiveKey, setSidebarActiveKey] = useState<string[]>(workspaceId ? [workspaceId] : []);
   const navigate = useNavigate();
-  const {workspaceId, setWorkspaceId} = useWorkspaceContext();
-
 
   const fetchWorkspacesData = async () => {
     try{
@@ -43,31 +42,45 @@ const BaseSidebar: React.FC = () => {
         await fetchWorkspacesData();
       }
     }
-
   };
 
   const handleWorkspaceClick = (id: string) => {
-    setWorkspaceId(id);
+    setSidebarActiveKey([id]);
     navigate(`${routes.workspace.path}/${id}`);
     setIsWorkspaceInputOpen(false);
   };
 
+  const manageWorkspaceActiveKeyList = (workspaceId: string) => {
+    if (!sidebarActiveKey.includes(workspaceId)) {
+      const updatedKeys = [...sidebarActiveKey, workspaceId];
+      setSidebarActiveKey(updatedKeys);
+    } else {
+      const updatedKeys = sidebarActiveKey.filter((key) => key !== workspaceId);
+      setSidebarActiveKey(updatedKeys);
+    }
+  };
+
+  const handleWorkspaceArrowClick = (id: string) => {
+    setIsWorkspaceInputOpen(false);
+    manageWorkspaceActiveKeyList(id);
+  };  
+
   const getMenuItems = (data: any) => {
     const items: MenuProps['items'] = [
       {
-        key: '1',
+        key: 'dashboard',
         icon: <DashboardIcon />,
         label: 'Dashboard',
         onClick: () => navigate(routes.dashboard.path)
       },
       {
-        key: '2',
+        key: 'settings',
         icon: <SettingsIcon />,
         label: 'Settings',
         onClick: () => navigate(routes.settings.path)
       },
       {
-        key: '3',
+        key: 'workspace-add',
         label: (
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center', background: 'white', justifyContent: 'space-between', width: '100%', paddingInline: '24px' }}>
@@ -104,7 +117,14 @@ const BaseSidebar: React.FC = () => {
           </span>
         ),
         
-        expandIcon: <ArrowDown onClick={() => setIsWorkspaceInputOpen(false)}/>,
+        expandIcon: <ArrowDown style={{
+          height: '100%',
+          transform: sidebarActiveKey.includes(workspace.id)
+              ? 'rotate(180deg)'
+              : 'rotate(0deg)', 
+            transition: 'transform 0.3s ease',
+          }} 
+          onClick={() => handleWorkspaceArrowClick(workspace.id)} />,
         
         children: [
           {
@@ -124,11 +144,25 @@ const BaseSidebar: React.FC = () => {
   };
 
   const handleMenuClick = (e: any) => {
-    if(e.key !== '3'){
+    if(e.key !== 'workspace-add'){
       setIsWorkspaceInputOpen(false);
     }
-
   };
+
+  useEffect(() => {
+    if(pathname.includes(routes.settings.path)){
+      setSidebarActiveKey(['settings']);
+    }
+    else if(pathname.includes(routes.dashboard.path)){
+      setSidebarActiveKey(['dashboard']);
+    }
+    else if(pathname.includes(routes.members.path)){
+      setSidebarActiveKey([workspaceId!, `${workspaceId}members`]);
+    }
+    else if(pathname.includes(routes.archive.path)){
+      setSidebarActiveKey([workspaceId!, `${workspaceId}archive`]);
+    }
+  }, [pathname]);
   
   useEffect(() => {
     fetchWorkspacesData();
@@ -144,8 +178,8 @@ const BaseSidebar: React.FC = () => {
         style={{ height: '100%', borderRight: 0 }}
         items={getMenuItems(workspaces)}
         onClick={handleMenuClick}
-        // activeKey={'ef6c6fe7-0aa7-4be1-aaf6-d6c7f7780986'}
-        // openKeys={[workspaceId!]}
+        selectedKeys={sidebarActiveKey}
+        openKeys={sidebarActiveKey}
       />
     </Sider>
   );

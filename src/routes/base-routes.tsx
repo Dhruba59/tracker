@@ -83,7 +83,7 @@ const MainRoutes = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: `${routes.workspace.path}/:id`,
+        path: `${routes.workspace.path}/:workspaceId`,
         element: <WorkspaceDetails />,
       },
       {
