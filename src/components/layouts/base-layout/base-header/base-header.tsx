@@ -8,12 +8,14 @@ import { useNavigate } from 'react-router-dom';
 import { routes } from '@constants/route-constants';
 import { getUserProfile } from '@services/user-services';
 import { ResponseType } from '@models/global-models';
+import { useUserContext } from '@contexts/user-context';
+import UserAvatar from '@components/common/user-avatar';
 
 const { Header } = Layout;
 const { Text } = Typography;
 
 const BaseHeader = () => {
-  const [user, setUser] = useState<any>();
+  const {user, setUser} = useUserContext();
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -41,7 +43,7 @@ const BaseHeader = () => {
       label: (
         <div className='header-popover-item'>
           <span className='header-popover-item-icon' >
-            <Avatar size='small'/>
+            <UserAvatar size='small' src={<img src={user?.profile_image}/>}/>
           </span>
           <Text>{user?.name}</Text>
         </div>
@@ -82,16 +84,14 @@ const BaseHeader = () => {
     },
     {
       key: 'avatar',
-      // icon: <Avatar />,
       label: (
           <Dropdown menu={{ items: dropdownItems }} placement="bottomLeft" arrow>
             <div>
-              <Avatar />
+              <UserAvatar size='large' src={<img src={user?.profile_image}/>}/>
               <span style={{marginLeft: '8px'}}>{user?.name}</span>
             </div>
           </Dropdown>
         ),
-      // className: 'header-menu-item',
       onClick: handleClick
     },
   ];
