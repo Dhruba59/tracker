@@ -78,33 +78,3 @@ export function userLogout() {
   localStorage.clear();
   window.location.pathname = routes.login.path;
 }
-
-export function getRetoken(): Promise<LoginResponse> {
-  return new Promise((resolve, reject) => {
-    axios
-      .create({
-        // withCredentials: true,
-        baseURL: ensureTrailingSlash(process.env.REACT_APP_API_BASE_URL ?? ''),
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${getAccessToken()}`,
-        },
-      })
-      .post(API_END_POINTS.RE_TOKEN, { data: {refreshToken: getRefreshToken()}})
-      .then((resp) => {
-        //? Replace auth_token with
-        localStorage.setItem(
-          LOCAL_STORAGE_KEYS.AUTH_TOKEN,
-          JSON.stringify({ access_token: resp.data?.token ?? '' })
-        );
-
-        resolve(resp.data);
-      })
-      .catch((err) => {
-        localStorage.clear();
-        sessionStorage.clear();
-        location.href = routes.login.path;
-        reject(err);
-      });
-  });
-}

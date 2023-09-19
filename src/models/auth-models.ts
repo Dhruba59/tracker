@@ -24,3 +24,17 @@ export interface ResetPasswordCredentials {
 export interface EmailVerificationPayload {
   token: string;
 }
+
+export interface RequestConfig {
+  headers?: any;
+  params?: any;
+  data?: any;
+  timeout?: number;
+  responseType?: ResponseType;
+  onUploadProgress?: (progressEvent: any) => void;
+}
+
+export interface Response {
+  status: number;
+  data: any;
+}

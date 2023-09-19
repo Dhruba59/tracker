@@ -1,7 +1,7 @@
 import { API_END_POINTS } from '@constants/global-constants';
-import HttpClientInstance from './base-services';
 import { CreateWorkspacePayload } from '@models/workspace';
 import { ChangePasswordPayload, UpdateUserProfilePayload } from '@models/user';
+import HttpClientInstance from './base-services';
 
 const httpClient = new HttpClientInstance();
 
