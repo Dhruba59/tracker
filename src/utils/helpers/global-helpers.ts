@@ -100,6 +100,10 @@ export function formatNumberWithTwoDecimals(number: number) {
   } 
 }
 
+export function clearStorage () {
+  localStorage.clear();
+  sessionStorage.clear();
+}
 
 const currentDate = new Date();
 const formattedTimeString = formatTime(currentDate);

@@ -3,6 +3,9 @@
 // import marketplaceLogo from '@images/marketplace.png';
 // import { removeLastCharacter } from '@helpers/marketplace-action-list-helper';
 
+export const TIMEOUT_DURATION = 120000;
+export const NOT_FOUND_STATUS = 400;
+
 export const INIT_PAGE_ITEMS_LIMIT: number = 10;
 export const CAMPAIGN_TYPE = {
   DEAL_ID: 'DEAL_ID',
@@ -44,8 +47,8 @@ export const CURRENT_STEP_NAME = {
 };
 
 export const STATUS_CODES = {
-  TOKEN_EXPIRED: 401,
-  UNAUTHORIZED: 403,
+  UNAUTHORIZED: 401,
+  REFRESH_TOKEN_EXPIRED: 403,
   NOT_FOUND: 400,
 };
 
