@@ -14,11 +14,11 @@ import { SelectDropdownValueType } from '@components/common/select-dropdown/sele
 const items: MenuProps['items'] = [
   {
     key: MEMBER_ROLE_TYPE.OWNER,
-    label: MEMBER_ROLE_TYPE.OWNER
+    label: 'Owner'
   },
   {
     key: MEMBER_ROLE_TYPE.NOT_OWNER,
-    label: MEMBER_ROLE_TYPE.NOT_OWNER,
+    label: 'Not Owner',
   }
 ];
 

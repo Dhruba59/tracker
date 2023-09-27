@@ -24,6 +24,7 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
   const [members, setMembers] = useState<any>();
   const [tracker, setTracker] = useState<any>(trackerData);
   const [milestone, setMilestone] = useState<any>();
+  const [isTaskPopupOpen, setIsTaskPopupOpen] = useState<boolean>(false);
 
   const fetchMembers = () => {
     getMembersByTrackerId(tracker.id)
@@ -45,7 +46,6 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
       })
       .catch((error: any) => console.log('Unable to archieve!'));
   };
-  console.log('path', pathname.includes('tracker') && pathname.includes('workspace'));
   // const fetchTracker = () => {
   //   getTrackerById(tracker.id)
   //   .then((res: ResponseType) => setTracker(res.payload))
@@ -66,13 +66,13 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
       onClick: () =>  handleArchiveToogle(ARCHIVE_TYPE_ENUM.ARCHIVE),
       className: 'tracker-popover-item'
     },
-    {
-      key: '2',
-      label: 'View',
-      onClick: () => navigate(`${routes.workspace.path}/${workspaceId}/tracker/${tracker?.id}`),
-      className: 'tracker-popover-item',
-      disabled:  (pathname.includes('tracker') && pathname.includes('workspace')) || pathname.includes('archive')
-    }
+    (pathname.includes('tracker') && pathname.includes('workspace')) || pathname.includes('archive') ?
+      null : {
+        key: '2',
+        label: 'View',
+        onClick: () => navigate(`${routes.workspace.path}/${workspaceId}/tracker/${tracker?.id}`),
+        className: 'tracker-popover-item',
+      }
   ];
 
   const renderMembersAvatar = () => (
@@ -98,6 +98,10 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
     }
   };
 
+  const toggleTaskPopup = () => {
+    setIsTaskPopupOpen(!isTaskPopupOpen);
+    console.log(isTaskPopupOpen);
+  };
   
   useEffect(() => {
     fetchMembers();
@@ -122,16 +126,14 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
         </AppPopover>
       </div>
       <div className='tracker-row'>
-        <div className='tracker-target'>
+      <AppPopover open={isTaskPopupOpen} placement='bottom' content={<TaskBar tracker={tracker} refetchTracker={onUpdateTracker} isDragDrop={false} isPopUp={true} onCloseIconClick={toggleTaskPopup}/>}>
+        <div className='tracker-target' onClick={toggleTaskPopup}>
           <CorrectSignIcon width={12} height={12} />
-          <AppPopover content={<TaskBar tracker={tracker} refetchTracker={onUpdateTracker} isDragDrop={false}/>}>
-          {/* <AppPopover content={null}> */}
-            {tracker?.type === TRACKER_TYPE.TASK && <Text>Task: {tracker?.done_task ?? 0}/{tracker?.total_task ?? 0}</Text>}
-            {tracker?.type === TRACKER_TYPE.NUMERIC && <Text>Target: {tracker?.achieved_target ?? 0}/{tracker?.target_end ?? 0}</Text>}
-          </AppPopover>
-          {/* {tracker?.type === TRACKER_TYPE.TASK && <Text>Task: {tracker?.done_task ?? 0}/{tracker?.total_task ?? 0}</Text>}
-          {tracker?.type === TRACKER_TYPE.NUMERIC && <Text>Target: {tracker?.target_start ?? 0}/{tracker?.target_end ?? 0}</Text>} */}
+          {tracker?.type === TRACKER_TYPE.TASK && <Text>Task: {tracker?.done_task ?? 0}/{tracker?.total_task ?? 0}</Text>}
+          {tracker?.type === TRACKER_TYPE.NUMERIC && <Text>Target: {tracker?.achieved_target ?? 0}/{tracker?.target_end ?? 0}</Text>}
         </div>
+      </AppPopover>
+      
         <Avatar.Group>
           {renderMembersAvatar()}
         </Avatar.Group>

@@ -263,7 +263,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
                       { required: true, message: 'Name is required.' },
                       { pattern: REGEX.LETTERS_NUMBERS, message: 'Please enter a valid name.' },
                     ]}>
-                      <Input placeholder='Task name here' size='small' className='milestone-task-add-input' onPressEnter={handleTaskAdd} />
+                      <Input placeholder='Task name here' size='small' className='milestone-task-add-input' onPressEnter={handleTaskAdd} autoFocus />
                     </Form.Item>
                   </Form>
                 }

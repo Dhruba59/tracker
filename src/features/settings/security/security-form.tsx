@@ -29,7 +29,7 @@ const SecurityForm = () => {
       message: 'Please enter your password.',
     },
     {
-      min: 8, // Minimum password length is 8 characters
+      min: 8,
       message: 'Password must be at least 8 characters long.',
     },
   ];
@@ -40,7 +40,7 @@ const SecurityForm = () => {
       message: 'Please retype your new password.',
     },
     {
-      validator(_: any, value: any) { // Specify the types of 'value' and '_'
+      validator(_: any, value: any) {
         if (!value || form.getFieldValue('newPassword') === value) {
           return Promise.resolve();
         }
@@ -62,9 +62,9 @@ const SecurityForm = () => {
         <PasswordInput className='security-form-input'/>
       </Form.Item>
       <Row gutter={10}>
-        <Col>
+        {/* <Col>
           <AppButton type='default' htmlType='button'>Cancel</AppButton>
-        </Col>
+        </Col> */}
         <Col>
           <Popconfirm
             title="Change Password!"
