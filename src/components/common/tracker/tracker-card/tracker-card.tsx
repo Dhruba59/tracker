@@ -77,7 +77,7 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
 
   const renderMembersAvatar = () => (
     members?.map((member: any, index: number) => (
-      <UserAvatar key={index} title={member?.user.name} />
+      <UserAvatar key={index} title={member?.user.name} src={member?.user?.profile_image_url}/>
     ))
   );
 
@@ -134,7 +134,7 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
         </div>
       </AppPopover>
       
-        <Avatar.Group>
+        <Avatar.Group maxCount={5}>
           {renderMembersAvatar()}
         </Avatar.Group>
       </div>
