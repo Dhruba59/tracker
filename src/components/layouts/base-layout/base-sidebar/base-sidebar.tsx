@@ -19,6 +19,8 @@ const BaseSidebar: React.FC = () => {
   const [sidebarActiveKey, setSidebarActiveKey] = useState<string[]>(workspaceId ? [workspaceId] : []);
   const navigate = useNavigate();
 
+
+
   const fetchWorkspacesData = async () => {
     try{
       const workspaceData: ResponseType = await getWorkspaceList();

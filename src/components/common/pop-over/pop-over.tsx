@@ -30,6 +30,7 @@ const AppPopover: FC<PopOverProps> = ({ title, content, open, closeIcon, childre
 
   return (
     <Popover
+      open={open}
       rootClassName='app-popover' 
       title={title && titleContent}
       content={content}

@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-.activity-card-container .ant-card-body{
+.activity-card-container .ant-card-body {
   display: flex;
   flex-direction: column;
   row-gap: 24px;

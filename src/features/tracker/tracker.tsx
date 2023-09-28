@@ -117,19 +117,6 @@ const Tracker = () => {
         </DragDropContext>
         <ActivityBar activities={activities} />
       </div>
-      {/* <Row className='tracker-details-row-2' gutter={16}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Col span={8}>
-            <TaskBar tracker={tracker} refetchTracker={fetchTrackerData} />
-          </Col>
-          <Col span={8}>
-            <MilestoneBar tracker={tracker} milestones={tracker?.milestones} refetchTracker={fetchTrackerData} />
-          </Col>
-        </DragDropContext>
-        <Col span={8}>
-          <ActivityBar activities={activities} />
-        </Col>
-      </Row> */}
     </div>
   );
 };

@@ -12,3 +12,10 @@
   /* height: 100%; */
   height: inherit;
 }
+
+.tracker-details-container .ant-card-head {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 4;
+}

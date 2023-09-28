@@ -31,6 +31,8 @@ export interface TaskBarProps {
   tracker: any;
   refetchTracker: () => void;
   isDragDrop?: boolean;
+  isPopUp?: boolean;
+  onCloseIconClick?: () => void;
 }
 
 export interface TaskItemProps {

@@ -20,7 +20,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onTaskUpdate, onTaskDelete })
   const [form] = Form.useForm();
 
   const handleTaskUpdate = (e: any) => {
-    if(e.target.value && e.target.value.trim() !== '') {
+    if(e.target.value && e.target.value.trim() !== '' &&
+    form.getFieldError('task-name').length === 0) {
       const payload = {
         title: e.target.value.trim(),
       };
