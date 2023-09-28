@@ -7,6 +7,9 @@
 .activity-dp {
   width: 40px;
   height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .activity-col-2 {
@@ -31,7 +34,8 @@
 
 .activity-time-user {
   font-size: 10px;
-  color: #00156A;
+  color: #7E87A5;
+
 }
 
 .activity-time-user span{
