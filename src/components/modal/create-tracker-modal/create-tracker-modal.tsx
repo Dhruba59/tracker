@@ -69,7 +69,7 @@ const CreateTrackerModal = ({ isOpen, onClose, workspaceId, onSubmit, isCreateLo
         </Form.Item>
         <Form.Item name='members' label='Assign Members'>
           <Select
-            className='create-tracker-modal-input'
+            className='create-tracker-modal-date-input'
             mode="multiple"
             allowClear
             style={{ width: '100%' }}

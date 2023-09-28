@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { DotIcon, EditIcon, PlusCircleRoundedIcon } from '@icons';
+import { CloseIcon, CloseIcon2, DotIcon, EditIcon, PlusCircleRoundedIcon } from '@icons';
 import { Button, Card, Col, DatePicker, Form, Input, Row, Typography, message } from 'antd';
 import './task-bar.css';
 import TextInput from '@components/common/input-fields/text-input';
@@ -15,7 +15,7 @@ import { REGEX } from '@constants/global-constants';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 const { Text } = Typography;
 
-const TaskBar = ({ tracker, refetchTracker, isDragDrop=true }: TaskBarProps) => {
+const TaskBar = ({ tracker, refetchTracker, isDragDrop=true, isPopUp=false, onCloseIconClick }: TaskBarProps) => {
   const [isTextInputOpen, setIsTextInputOpen] = useState<boolean>(false);
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [tasks, setTasks] = useState<any>();
@@ -58,10 +58,12 @@ const TaskBar = ({ tracker, refetchTracker, isDragDrop=true }: TaskBarProps) => 
   };
 
   const handleTaskCreate = async (e: any) => {
-    if(tracker?.type === TRACKER_TYPE.NUMERIC) {
-      return;
-    };
-    if (taskAddForm.getFieldError('task-input') && taskAddForm.getFieldError('task-input').length > 0) {
+    if (
+        (taskAddForm.getFieldError('task-input') &&
+        taskAddForm.getFieldError('task-input').length > 0) ||
+        e.target.value === '' || 
+        tracker?.type === TRACKER_TYPE.NUMERIC
+      ) {
       return;
     }
     try {
@@ -81,6 +83,7 @@ const TaskBar = ({ tracker, refetchTracker, isDragDrop=true }: TaskBarProps) => 
       fetchTasks();
       refetchTracker();
     } catch (error: any) {
+      setIsloading(false);
       message.error(error?.message ?? 'Something went wrong!');
     };
   };
@@ -141,10 +144,17 @@ const TaskBar = ({ tracker, refetchTracker, isDragDrop=true }: TaskBarProps) => 
     }
   }, [tracker]);
 
+  const cardHeader = (
+    <div className='task-bar-card-header'>
+      {tracker?.type === TRACKER_TYPE.TASK ? 'Task' : 'Target'}
+      {isPopUp && <CloseIcon2 onClick={onCloseIconClick} style={{cursor: 'pointer'}}/>}
+    </div>
+  );
+
   return (
     <Card 
       className='task-bar-container hide-scrollbar' 
-      title={tracker?.type === TRACKER_TYPE.TASK ? 'Task' : 'Target'} 
+      title={cardHeader} 
       bordered={false}
       >
       {tracker?.type === TRACKER_TYPE.TASK && 

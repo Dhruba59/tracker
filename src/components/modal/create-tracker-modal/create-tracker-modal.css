@@ -5,13 +5,10 @@
 }
 
 .create-tracker-modal-input {
-  /* width: 100% !important; */
   height: 32px;
-  /* padding: 5px 12px 5px 12px; */
   border-radius: 2px;
   border: 1px solid #D9D9D9;
   gap: 4px;
-  /* color: #D9D9D9; */
   margin-top: 0px;
 }
 
@@ -53,13 +50,20 @@
 }
 
 .create-tracker-target {
-  /* background-color: aqua; */
   margin-left: 70px;
-  /* width: 100%; */
   display: flex;
-  /* justify-content: start; */
 }
 
 .create-tracker-modal-input .ant-select-selector {
-  border: 0px !important;
+  border-radius: 2px;
+}
+
+.create-tracker-modal-date-input {
+  border-radius: 2px;
+  gap: 4px;
+  margin-top: 0px;
+}
+
+.create-tracker-modal-date-input .ant-select-selector {
+  border-radius: 2px !important;
 }

@@ -6,6 +6,12 @@
   min-width: 200px;
 }
 
+.task-bar-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .task-bar-task-items {
   display: flex;
   flex-direction: column;
