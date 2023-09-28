@@ -100,6 +100,25 @@ export function formatNumberWithTwoDecimals(number: number) {
   } 
 }
 
+export function stringToHslColor(str: string, s: number = 60, l: number = 65) {
+  // let hash = 0;
+  // for (let i = 0; i < str.length; i++) {
+  //   hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  // }
+  // const h = hash % 360;
+  // // return 'hsl('+h+', '+s+'%, '+l+'%)';
+  // return `hsl(${h}, ${s}%, ${l}%)`;
+
+
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  hash = Math.abs(hash);
+  const h = hash % 360;
+  return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
 export function clearStorage () {
   localStorage.clear();
   sessionStorage.clear();
