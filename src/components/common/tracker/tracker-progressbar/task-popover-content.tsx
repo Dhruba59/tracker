@@ -1,16 +1,15 @@
-import { GetTasksPayload, TASK_TYPE, UpdateTaskPayload } from '@models/task';
-import { deleteTask, getTasks, updateTask } from '@services/task-service';
 import { Divider, Form, message } from 'antd';
 import { useState, useEffect, Fragment } from 'react';
+
+import { GetTasksPayload, TASK_TYPE, UpdateTaskPayload } from '@models/task';
+import { deleteTask, getTasks, updateTask } from '@services/task-service';
 import TaskItem from '../task-item';
 import { ResponseType } from '@models/global-models';
-import './task-popover-content.css';
 import TextInput from '@components/common/input-fields/text-input';
 import { TRACKER_TYPE } from '@models/tracker';
-import Milestone from '@features/tracker/milestone-bar/milestone';
 import { updateMilestone } from '@services/milestone-service';
 import { REGEX } from '@constants/global-constants';
-
+import './task-popover-content.css';
 export interface MilestonePopoverContentProps {
   milestone: any;
   tracker: any;
@@ -30,7 +29,9 @@ const TaskPopoverContent = ({ milestone, tracker, onUpdateTracker }: MilestonePo
     };
     getTasks(payload)
       .then((res: ResponseType) => setTasks(res.payload))
-      .catch((error) => console.log('unable to fetch milestone tasks'));
+      .catch((error) => { 
+        message.error('unable to fetch milestone tasks');
+      });
   };
 
   const onTaskUpdate = (id: string, payload: Omit<UpdateTaskPayload, 'tracker_id'>) => {
@@ -44,8 +45,6 @@ const TaskPopoverContent = ({ milestone, tracker, onUpdateTracker }: MilestonePo
         message.success(res?.message ?? 'Successfully updated');
         fetchTasks();
         onUpdateTracker();
-        // taskItemForm.setFieldValue('task-name', payload.title);
-        // fetchData();
       })
       .catch((error: any) => message.error(error?.message ?? 'Unable to update'));
   };
@@ -55,22 +54,9 @@ const TaskPopoverContent = ({ milestone, tracker, onUpdateTracker }: MilestonePo
       .then((res: ResponseType) => {
         message.success(res?.message ?? 'Successfully Deleted');
         fetchTasks();
-        // taskItemForm.setFieldValue('task-name', payload.title);
-        // fetchData();
       })
       .catch((error: any) => message.error(error?.message ?? 'Unable to update'));
   };
-
-  // const renderNumericContent = (milestoneId: string) => (
-  //   <Form>
-  //     <Form.Item name='target' rules={[{ required: true, message: 'Value required!' }]}>
-  //       <TextInput className='progress-tracker-input' />
-  //     </Form.Item>
-  //     <Form.Item name='date' rules={[{ required: true, message: 'Date is required!' }]}>
-  //       <TextInput className='progress-tracker-input' type="date" onPressEnter={handleMilestoneUpdate} />
-  //     </Form.Item>
-  //   </Form>
-  // );
 
   const handleTargetAchieve = (e: any) => {
     updateMilestone(milestone?.id, { achieved_target: e.target.value, tracker_type: tracker?.type })
@@ -117,9 +103,6 @@ const TaskPopoverContent = ({ milestone, tracker, onUpdateTracker }: MilestonePo
                   }
                 }} className='progress-popover-input' placeholder='Input value' />
               </Form.Item>
-              {/* <Form.Item name='date' rules={[{ required: true, message: 'Date is required!' }]}>
-              <TextInput className='progress-popover-input' type="date" placeholder='Select Date'/>
-            </Form.Item> */}
             </Form>
         )}
       </div>

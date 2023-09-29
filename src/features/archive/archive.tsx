@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
+import { Avatar, message } from 'antd';
+import { useParams } from 'react-router-dom';
 
 import './archive.css';
 import { getTrackersByWorkspaceId } from '@services/tracker-service';
-import { useParams } from 'react-router-dom';
 import { ResponseType } from '@models/global-models';
 import TrackerCard from '@components/common/tracker/tracker-card';
 import PageHeader from '@components/common/page-header';
-import { Avatar } from 'antd';
 import { getWorkspaceById } from '@services/workspace-services';
 import EmptyPageCard from '@components/common/empty-page-card';
 import { FullPageLoading } from '@components/full-page-loading';
@@ -21,14 +21,14 @@ const Archive = () => {
     setIsLoadingArchive(true);
     getWorkspaceById(workspaceId!)
     .then((res: ResponseType) => setWorkspace(res.payload))
-    .catch((error) => console.log('unable to fetch workspace'))
+    .catch((error) => message.error('unable to fetch workspace'))
     .finally(() => setIsLoadingArchive(false));
   };
 
   const fetchTrackers = () => {
     getTrackersByWorkspaceId({ workspaceId: workspaceId!, isArchived: true })
     .then((res: ResponseType) => setTrackers(res.payload))
-    .catch((error) => console.log('unable to fetch archived tracker'));
+    .catch((error) => message.error('unable to fetch archived tracker'));
   };
   
   useEffect(() => {
@@ -59,12 +59,8 @@ const Archive = () => {
       <PageHeader 
         icon={<Avatar />} 
         title={workspace?.title}
-        // buttonName='Create Tracker'
-        // buttonIcon={<PlusIcon />}
-        // onButtonClick={handleClick}
       />
-      {renderTrackers} 
-      {/* <CreateTrackerModal form={form} onSubmit={onSubmit} isOpen={isTrackerModalOpen} onClose={closeModal} workspaceId={id!}/> */}
+      {renderTrackers}
     </div>
   );
 };

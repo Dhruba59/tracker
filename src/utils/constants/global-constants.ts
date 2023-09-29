@@ -93,3 +93,10 @@ export const REGEX = {
   LETTERS_NUMBERS: /^(?![\s]+$)[a-zA-Z0-9\s]*[a-zA-Z][a-zA-Z0-9\s]*$/,
   NUMBERS: /^[0-9]+$/,
 };
+
+export const PROGRESS_COLOR = {
+  COMPLETED:  '#82E57B',
+  OVERDUE: '#FF6231',
+  IN_PROGRESS: '#FFA800',
+  NOT_STARTED: '#E6E7EC'
+};

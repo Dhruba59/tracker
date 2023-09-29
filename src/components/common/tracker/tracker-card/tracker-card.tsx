@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 import { CorrectSignIcon, EditIcon, ThreeDotIcon } from '@icons';
-import { Avatar, Form, Menu, MenuProps, Modal, Progress, Typography, message } from 'antd';
-import { AntDesignOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Menu, MenuProps, Typography, message } from 'antd';
 
 import TrackerProgressbar from '../tracker-progressbar';
-import './tracker-card.css';
-import { ARCHIVE_TYPE_ENUM, TRACKER_TYPE, TrackerCardInfo, TrackerCardProps } from '@models/tracker';
+import { ARCHIVE_TYPE_ENUM, TRACKER_TYPE, TrackerCardProps } from '@models/tracker';
 import { formatNumberWithTwoDecimals, stringToDateOnly, tracker } from '@helpers/global-helpers';
 import AppPopover from '@components/common/pop-over';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { routes } from '@constants/route-constants';
-import { getTrackerById, updateTracker } from '@services/tracker-service';
-import { PaginationResponseType, ResponseType } from '@models/global-models';
+import { updateTracker } from '@services/tracker-service';
+import { ResponseType } from '@models/global-models';
 import { getMembersByTrackerId } from '@services/tracker-member-service';
 import UserAvatar from '@components/common/user-avatar';
 import TaskBar from '@features/tracker/task-bar';
+import './tracker-card.css';
 
 const { Text, Paragraph } = Typography;
 
@@ -23,13 +22,12 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
   const {pathname} = useLocation();
   const [members, setMembers] = useState<any>();
   const [tracker, setTracker] = useState<any>(trackerData);
-  const [milestone, setMilestone] = useState<any>();
   const [isTaskPopupOpen, setIsTaskPopupOpen] = useState<boolean>(false);
 
   const fetchMembers = () => {
     getMembersByTrackerId(tracker.id)
       .then((res: ResponseType) => setMembers(res.payload))
-      .catch((error: any) => console.log('Unable to fetch members'));
+      .catch((error: any) => message.error('Unable to fetch members'));
   };
 
   const handleArchiveToogle = (isArchive: ARCHIVE_TYPE_ENUM) => {
@@ -41,16 +39,10 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
           navigate(`${routes.workspace.path}/${workspaceId}/tracker/${tracker?.id}`);
         } else {
           navigate(routes.dashboard.path);
-        } 
-    
+        }
       })
-      .catch((error: any) => console.log('Unable to archieve!'));
+      .catch((error: any) => message.error('Unable to archieve!'));
   };
-  // const fetchTracker = () => {
-  //   getTrackerById(tracker.id)
-  //   .then((res: ResponseType) => setTracker(res.payload))
-  //   .catch((error: any) => console.log('Unable to fetch tracker'));
-  // };
 
   const threeDotItems: MenuProps['items'] = [
     
@@ -91,7 +83,6 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
       updateTracker(tracker.id, payload)
       .then((res: ResponseType) => {
         message.success(res.message);
-        // fetchTracker();
         onUpdateTracker?.();
       })
       .catch(error => message.error('unable to update!'));
@@ -100,13 +91,10 @@ const TrackerCard = ({ trackerData, workspaceId, onUpdateTracker }: TrackerCardP
 
   const toggleTaskPopup = () => {
     setIsTaskPopupOpen(!isTaskPopupOpen);
-    console.log(isTaskPopupOpen);
   };
   
   useEffect(() => {
     fetchMembers();
-    // fetchTracker();
-    // onUpdateTracker?.();
   }, []);
 
   useEffect(() => {

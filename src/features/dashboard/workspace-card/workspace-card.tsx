@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Avatar } from 'antd';
+import { message } from 'antd';
 import TrackerCard from '@components/common/tracker/tracker-card';
 import { ResponseType } from '@models/global-models';
-import { getWorkspaceById } from '@services/workspace-services';
 import './workspace-card.css';
 import UserAvatar from '@components/common/user-avatar';
 import { getTrackersByWorkspaceId } from '@services/tracker-service';
@@ -15,7 +14,7 @@ const WorkspaceCard = ({ workspace }: any) => {
       const res: ResponseType = await getTrackersByWorkspaceId({ workspaceId: workspace?.id });
       setTrackers(res.payload);
     } catch (error: any) {
-      console.log('errors');
+      message.error('unable to fetch trackers!');
     }
   };
 

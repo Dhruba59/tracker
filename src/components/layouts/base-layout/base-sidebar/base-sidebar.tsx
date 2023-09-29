@@ -19,15 +19,11 @@ const BaseSidebar: React.FC = () => {
   const [sidebarActiveKey, setSidebarActiveKey] = useState<string[]>(workspaceId ? [workspaceId] : []);
   const navigate = useNavigate();
 
-
-
   const fetchWorkspacesData = async () => {
     try{
       const workspaceData: ResponseType = await getWorkspaceList();
       setWorkspaces(workspaceData?.payload);
-    } catch(error: any) {
-      console.log('error');
-    }
+    } catch(error: any) {}
   };
 
   const createNewWorkspace = async () => {
@@ -111,6 +107,7 @@ const BaseSidebar: React.FC = () => {
     data?.forEach((workspace: any) => {
       items.push({
         key: workspace.id,
+        className: 'sidebar-workspace-item',
         label: (
           <span 
             className='sidebar-workspace-item-label' 

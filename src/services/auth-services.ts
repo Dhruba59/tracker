@@ -28,7 +28,6 @@ export function userLogin(
     .then((resp) => {
       //? Storing token into Loacal Storage
       localStorage.clear();
-      console.log(resp);
       localStorage.setItem(
         LOCAL_STORAGE_KEYS.AUTH_TOKEN,
         JSON.stringify({ 
@@ -39,15 +38,9 @@ export function userLogin(
       return resp;
     })
     .catch((err) => {
-      console.log(err);
       return Promise.reject(err);
     });
 }
-
-// export const userLogin = async (credentials: Credentials) => {
-//   const url = API_END_POINTS.LOGIN;
-//   return await httpClient.post(url, { data: { ...credentials }});
-// } 
 
 export const userSignUp = (credentials : any) => {
   const url = API_END_POINTS.SIGN_UP;
