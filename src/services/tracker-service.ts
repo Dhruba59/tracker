@@ -4,17 +4,6 @@ import { CreateUpdateTrackerPayload, GetTrackerByWorkspaceIdPayload } from '@mod
 
 const httpClient = new HttpClientInstance();
 
-// export const createWorkspace = (data : CreateWorkspacePayload) => {
-//   const url = API_END_POINTS.WORKSPACE;
-//   return httpClient.post(url, { data });
-// };
-
-// export const getWorkspaceList = () => {
-//   const url = API_END_POINTS.WORKSPACE;
-//   return httpClient.get(url);
-// };
-
-
 export const getTrackersByWorkspaceId= (data: GetTrackerByWorkspaceIdPayload) => {
   const url = API_END_POINTS.TRACKER;
   return httpClient.get(url, { params: data });
@@ -32,5 +21,5 @@ export const createTracker= (data: CreateUpdateTrackerPayload) => {
 
 export const updateTracker= (id: string, data: CreateUpdateTrackerPayload) => {
   const url = `${API_END_POINTS.TRACKER}/${id}`;
-  return httpClient.put(url, { data });
+  return httpClient.patch(url, { data });
 };

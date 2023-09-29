@@ -16,7 +16,7 @@ export const getTasks= (data: GetTasksPayload) => {
 
 export const updateTask= (id: string, data: UpdateTaskPayload) => {
   const url = `${API_END_POINTS.TASK}/${id}`;
-  return httpClient.put(url, { data });
+  return httpClient.patch(url, { data });
 };
 
 export const deleteTask= (id: string) => {

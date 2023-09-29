@@ -1,15 +1,15 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import { useState, Fragment } from 'react';
 import MemberCard from './member-card';
-import { Divider, Dropdown, Form, MenuProps, Select, Space, message } from 'antd';
+import { Divider, Form, MenuProps, message } from 'antd';
 import AppModal from '@components/common/modal';
 import { AddMemberModalProps, MEMBER_ROLE_TYPE } from '@models/members';
-import './add-member-modal.css';
 import AppButton from '@components/common/button';
 import { addWorkspaceMember, getMembersByWorkspaceId } from '@services/workspace-members-service';
 import { ResponseType } from '@models/global-models';
-import { ArrowDown, EditIcon, SearchIcon } from '@icons';
+import { SearchIcon } from '@icons';
 import SelectDropdown from '@components/common/select-dropdown';
 import { SelectDropdownValueType } from '@components/common/select-dropdown/select-dropdown';
+import './add-member-modal.css';
 
 const items: MenuProps['items'] = [
   {
@@ -40,7 +40,6 @@ const AddMemberModal = ({ isOpen, onClose, members, memberOptions, workspaceId, 
   };
 
   const onSubmit = ({ members }: MembersFormValues) => {
-    console.log(members);
     const payload = {
       is_owner: members?.role === MEMBER_ROLE_TYPE.OWNER ? 1 : 0,
       workspace_id: workspaceId,

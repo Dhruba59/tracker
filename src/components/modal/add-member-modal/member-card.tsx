@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Avatar, Dropdown, MenuProps, Space } from 'antd';
-import AppButton from '@components/common/button';
 
 import './member-card.css';
 import { ArrowDown } from '@icons';
@@ -27,8 +26,7 @@ const MemberCard = ({ member }: MemberCardProps) => {
   const handleDropdownChange = (e: any) => {
     setRole(e.key);
   };
-  console.log(member);
-  console.log(role);
+  
   return (
     <div className='member-card-container'>
       <div className='member-card-col-1'>

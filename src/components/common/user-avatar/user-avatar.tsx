@@ -1,6 +1,8 @@
 import { Avatar, Tooltip } from 'antd';
 import './user-avatar.css';
 import { UserAvatarProps } from '@models/avatar';
+import { useEffect, useState } from 'react';
+import { stringToHslColor } from '@helpers/global-helpers';
 
 const UserAvatar = ({ title, src, ...rest }: UserAvatarProps) => {
   const avatarContent = src ? (
@@ -8,14 +10,16 @@ const UserAvatar = ({ title, src, ...rest }: UserAvatarProps) => {
       <img src={src}/>
     </Avatar>
   ) : (
-    <Avatar className='user-avatar' {...rest}>
+    <Avatar style={{backgroundColor: stringToHslColor(title ?? '')}} className='user-avatar' {...rest}>
       {title && title[0]?.toUpperCase()}
     </Avatar>
   );
 
   return (
     <>
-      {avatarContent}
+      <Tooltip title={title}>
+        {avatarContent}
+      </Tooltip>
     </>
   );
 };

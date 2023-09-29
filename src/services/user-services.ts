@@ -12,7 +12,7 @@ export const getUserProfile = () => {
 
 export const updateUserProfile = (data: UpdateUserProfilePayload | FormData) => {
   const url = `${API_END_POINTS.USER}`;
-  return httpClient.put(url, { data });
+  return httpClient.patch(url, { data });
 };
 
 export const getAllUser = () => {

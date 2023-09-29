@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { Breadcrumb, Col, Row, message } from 'antd';
 
-import { Breadcrumb, Col, Row } from 'antd';
 import TrackerCard from '@components/common/tracker/tracker-card';
-import { tracker } from '@helpers/global-helpers';
 import TaskBar from './task-bar';
 import MilestoneBar from './milestone-bar';
 import ActivityBar from './activity-bar';
 import { routes } from '@constants/route-constants';
-import './tracker.css';
 import { ResponseType } from '@models/global-models';
 import { getEventLogByTrackerId } from '@services/event-service';
 import { getTrackerById } from '@services/tracker-service';
@@ -17,7 +15,7 @@ import { dragAndDropPatch } from '@services/task-service';
 import { DragDropPayload, TASK_TYPE } from '@models/task';
 import { DragDropContext, DropResult, ResponderProvided } from 'react-beautiful-dnd';
 import { FullPageLoading } from '@components/full-page-loading';
-
+import './tracker.css';
 
 const Tracker = () => {
   const { workspaceId, trackerId } = useParams();
@@ -31,21 +29,18 @@ const Tracker = () => {
       const res: ResponseType = await getWorkspaceById(workspaceId!);
       setWorkspace(res.payload);
     } catch (error: any) {
-      console.log('error');
+      message.error('unable to fetch informations!');
     };
   };
 
   const fetchTrackerData = async () => {
     try {
-      // setIsLoading(true);
       const res: ResponseType = await getTrackerById(trackerId!);
       setTracker(res.payload);
       const activities: ResponseType = await getEventLogByTrackerId(trackerId!);
       setActivities(activities.payload);
     } catch (error: any) {
-      console.log('error');
-    } finally {
-      // setIsLoading(false);
+      message.error('unable to fetch tracker informations!');
     };
   };
 
@@ -69,7 +64,6 @@ const Tracker = () => {
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     const { source, destination, draggableId } = result;
-    console.log(source, destination, draggableId);
     if (!destination || (source?.droppableId === destination?.droppableId)) {
       // The item was dropped outside of valid drop targets
       return;
@@ -87,11 +81,10 @@ const Tracker = () => {
         milestone_id: destination?.droppableId
       };
     }
-    console.log(payload);
 
     dragAndDropPatch(draggableId, payload).then(() => {
       fetchTrackerData();
-    }).catch(err => console.log(err));
+    }).catch(err => message.error('unable to fetch trackers informations!'));
   };
 
   if(isLoading) {
