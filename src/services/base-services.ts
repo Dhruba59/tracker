@@ -28,7 +28,6 @@ export default class HttpClientInstance {
       async (error) => {
         const originalRequest = error.config;
         if (error.response && error.response?.status === STATUS_CODES.UNAUTHORIZED && !originalRequest._retry && !error.response?.config?.url.includes('login')) {
-          console.log(error);
           try {
             await getRetoken();
             originalRequest._retry = true;

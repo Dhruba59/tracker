@@ -48,15 +48,8 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
       .catch((error: any) => message.error('unable to load tasks'));
   };
 
-  // useEffect(() => {
-  //   console.log('changed milestone');
-  //   fetchTasks();
-  // }, [tracker]);
-
   useEffect(() => {
-    console.log('changed milestone');
     setMilestone(milestoneData);
-    // fetchTasks();
   }, [milestoneData]);
 
   useEffect(() => {
@@ -124,14 +117,12 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
         // tracker_id: tracker?.id
       };
       if(tracker?.type === TRACKER_TYPE.NUMERIC) {
-        console.log(milestoneForm.getFieldValue('target') );
         if(milestoneForm.getFieldValue('target') === undefined || milestoneForm.getFieldValue('target') === '' ) {
           return;
         }
         payload = { ...payload, target_value: milestoneForm.getFieldValue('target')};
       };
       if(milestone?.id) {
-        console.log('mile', milestone);
         updateMilestone(milestone?.id, payload);
       } else {
         const res = await createMilestone(payload);

@@ -1,30 +1,15 @@
-import { useState } from 'react';
-import { Form, Modal, Popover, Progress } from 'antd';
+import { Progress } from 'antd';
 
 import { DefaultMilestoneBarIcon, GreenMilestoneBarIcon, RedMilestoneBarIcon, YellowMilestoneBarIcon } from '@icons';
-import { TRACKER_TYPE, TrackerProgressbarProps, TrackerStatusEnum } from '@models/tracker';
-import './tracker-progressbar.css';
-import TextInput from '../../input-fields/text-input';
+import { TrackerProgressbarProps, TrackerStatusEnum } from '@models/tracker';
 import AppPopover from '@components/common/pop-over';
-import TaskItem from '@components/common/tracker/task-item/task-item';
 import { CalculateMilestonePercent } from '@helpers/global-helpers';
-import { getTasks } from '@services/task-service';
-import { GetTasksPayload, TASK_TYPE } from '@models/task';
-import { ResponseType } from '@models/global-models';
 import TaskPopoverContent from './task-popover-content';
 import { MilestoneStatusEnum } from '@models/milestone';
-
-export const PROGRESS_COLOR = {
-  COMPLETED:  '#82E57B',
-  OVERDUE: '#FF6231',
-  IN_PROGRESS: '#FFA800',
-  NOT_STARTED: '#E6E7EC'
-};
+import './tracker-progressbar.css';
+import { PROGRESS_COLOR } from '@constants/global-constants';
 
 const TrackerProgressbar = ({ tracker, progressPercent, milestones, onUpdateTracker }: TrackerProgressbarProps) => {
-  const handleMilestoneUpdate = () => {
-    console.log('update milestone!');
-  };
 
   const milestonesPosition: number[] = milestones?.map((milestone: any) => {
     return (CalculateMilestonePercent(tracker?.start_date, tracker?.end_date, milestone.end_date));
@@ -59,7 +44,6 @@ const TrackerProgressbar = ({ tracker, progressPercent, milestones, onUpdateTrac
         return <DefaultMilestoneBarIcon /> ;
     };
   };
-  console.log(milestonesPosition);
 
   return (
     <div className="progress-container">

@@ -12,25 +12,10 @@ export const createMilestone= (data: CreateOrUpdateMilestonePayload) => {
 
 export const updateMilestone= (id: string, data: CreateOrUpdateMilestonePayload) => {
   const url = `${API_END_POINTS.MILESTONE}/${id}`;
-  return httpClient.put(url, { data });
+  return httpClient.patch(url, { data });
 };
 
 export const getMilestoneById= (id: string) => {
   const url = `${API_END_POINTS.MILESTONE}/${id}`;
   return httpClient.get(url);
 };
-
-// export const getTasks= (data: GetTasksPayload) => {
-//   const url = API_END_POINTS.MILESTONE;
-//   return httpClient.get(url, { params: data });
-// };
-
-// export const updateTask= (id: string, data: UpdateTaskPayload) => {
-//   const url = `${API_END_POINTS.MILESTONE}/${id}`;
-//   return httpClient.put(url, { data });
-// };
-
-// export const deleteTask= (id: string) => {
-//   const url = `${API_END_POINTS.MILESTONE}/${id}`;
-//   return httpClient.delete(url);
-// };

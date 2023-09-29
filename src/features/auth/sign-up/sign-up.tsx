@@ -41,7 +41,7 @@ const SignUp: FC = () => {
   return (
     <AuthFormWrapper>
        <div className="signup-title-group">
-        <Text className="signup-title">Welcome back</Text>
+        <Text className="signup-title">Welcome to Progress Tracker</Text>
         <Text className="signup-subtitle">Micro management for progressive teams</Text>
       </div>
 

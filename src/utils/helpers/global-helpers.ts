@@ -2,6 +2,7 @@ import { routes } from '@constants/route-constants';
 import { ResponseType } from '@models/global-models';
 import { TRACKER_TYPE, TrackerCardInfo } from '@models/tracker';
 import { getWorkspaceList } from '@services/workspace-services';
+import { message } from 'antd';
 
 export const stringToDateOnly = (date: string) => {
   const newDate = new Date(date);
@@ -61,7 +62,7 @@ export const manageRouteAfterLogin = () => {
     else {
       window.location.pathname = routes.dashboard.path;
     }
-  }).catch((error: any) => console.log('Something went wrong!'));
+  }).catch((error: any) => message.error('Unable to fetch workspace informations!'));
 };
 
 export function CalculateMilestonePercent (startDateString: string | Date, endDateString: string | Date, thirdDateString: string | Date): number {
@@ -100,6 +101,16 @@ export function formatNumberWithTwoDecimals(number: number) {
   } 
 }
 
+export function stringToHslColor(str: string, s: number = 60, l: number = 65) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  hash = Math.abs(hash);
+  const h = hash % 360;
+  return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
 export function clearStorage () {
   localStorage.clear();
   sessionStorage.clear();
@@ -107,4 +118,3 @@ export function clearStorage () {
 
 const currentDate = new Date();
 const formattedTimeString = formatTime(currentDate);
-// console.log(formattedTimeString); // Output: '8.20 pm'

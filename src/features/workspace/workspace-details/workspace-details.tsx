@@ -32,7 +32,7 @@ const WorkspaceDetails = () => {
       const res: ResponseType = await getWorkspaceById(workspaceId ?? '');
       setWorkspaceData(res.payload);
     } catch {
-      console.log('error');
+      message.error('unable to fetch workspace informations!');
     };
   };
 
@@ -42,7 +42,7 @@ const WorkspaceDetails = () => {
       const res: ResponseType = await getTrackersByWorkspaceId({ workspaceId: workspaceId! });
       setTrackers(res.payload);
     } catch (error: any) {
-      console.log('errors');
+      message.error('unable to fetch trackers!');
     } finally {
       setIsLoading(false);
     }

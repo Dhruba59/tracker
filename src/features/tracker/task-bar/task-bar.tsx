@@ -32,7 +32,7 @@ const TaskBar = ({ tracker, refetchTracker, isDragDrop=true, isPopUp=false, onCl
       const res: ResponseType = await getTasks(payload);
       setTasks(res?.payload);
     } catch (error: any) {
-      console.log('task error');
+      message.error('unable to fetch tasks informations!');
     };
   };
 

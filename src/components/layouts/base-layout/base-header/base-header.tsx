@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Avatar, Badge, Dropdown, Layout, Menu, MenuProps, Popover, Tooltip, Typography } from 'antd';
+import { Avatar, Badge, Dropdown, Layout, Menu, MenuProps, Popover, Tooltip, Typography, message } from 'antd';
 
 import { LogOutIcon, LogoIcon, NotificationIcon, QuestionCircle, SettingsIcon, WorkspaceIcon } from '@icons';
 import { userLogout } from '@services/auth-services';
@@ -30,7 +30,13 @@ const BaseHeader = () => {
   };
 
   const handleLogout = () => {
-    userLogout();
+    userLogout().then((res: any) => {
+      localStorage.clear();
+      window.location.pathname = routes.login.path;
+      message.success('Successfully logged out!');
+    }).catch((error: any) => {
+      message.error('Unable to log out!');
+    });
   };
 
   useEffect(() => {

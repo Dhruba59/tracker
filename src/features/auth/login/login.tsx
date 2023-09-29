@@ -40,7 +40,7 @@ const Login: FC = () => {
   return (
     <AuthFormWrapper>
       <div className="login-title-group">
-        <Text className="login-title">Welcome back</Text>
+        <Text className="login-title">Welcome to Progress Tracker</Text>
         <Text className="login-subtitle">Micro management for progressive teams</Text>
       </div>
 
