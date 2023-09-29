@@ -62,12 +62,7 @@ export const verifyEmail = (data : EmailVerificationPayload) => {
   return httpClient.get(url, { params: data });
 };
 
-// Logout Service
-// export function userLogout(): Promise<LogoutResponse> {
-//   const url = API_END_POINTS.LOGOUT;
-//   return httpClient.delete(url);
-// }
-export function userLogout() {
-  localStorage.clear();
-  window.location.pathname = routes.login.path;
+export function userLogout(): Promise<LogoutResponse> {
+  const url = API_END_POINTS.LOGOUT;
+  return httpClient.get(url);
 }
