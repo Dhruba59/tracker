@@ -114,7 +114,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
         start_date: new Date(date[0].$d),
         end_date: new Date(date[1].$d),
         // tracker_type: tracker?.type,
-        // tracker_id: tracker?.id
+        tracker_id: tracker?.id
       };
       if(tracker?.type === TRACKER_TYPE.NUMERIC) {
         if(milestoneForm.getFieldValue('target') === undefined || milestoneForm.getFieldValue('target') === '' ) {
@@ -134,7 +134,8 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
   const handleLabelChange = (value: string) => {
     if(value && value !== '' && milestone?.id) {
       const payload: any = {
-        title: value?.trim()
+        title: value?.trim(),
+        tracker_id: tracker?.id,
       };
       updateMilestone(milestone?.id, payload);
     }
@@ -158,6 +159,7 @@ const Milestone = ({ milestoneData, createMilestone, updateMilestone, tracker, r
     const payload = {
       achieved_target: e.target.value,
       tracker_type: TRACKER_TYPE.NUMERIC,
+      tracker_id: tracker?.id
     };
     updateMilestone(milestone?.id, payload);
     numericInputForm.resetFields();

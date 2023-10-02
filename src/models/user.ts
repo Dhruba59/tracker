@@ -14,7 +14,7 @@ export interface UpdateUserProfilePayload {
 export interface User {
   id?: string;
   name?: string;
-  profile_image: string;
+  profile_image_url: string;
   email: string;
   is_verified: number;
   status: number;

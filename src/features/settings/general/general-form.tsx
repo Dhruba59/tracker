@@ -27,7 +27,7 @@ const GeneralForm = () => {
       setUser(response?.payload);
       setUser({
         ...user,
-        profile_image: response?.payload.profile_image_url,
+        profile_image_url: response?.payload.profile_image_url,
       });
       message.success(response?.message ?? 'Failed to upload image!');
     } catch(error: any) {
@@ -65,10 +65,10 @@ const GeneralForm = () => {
 
   return (
     <Form className='general-form-container' form={form} onFinish={onSubmit} labelCol={{ span: 24 }}>
-      {user?.profile_image && <Image
+      {user?.profile_image_url && <Image
         className='general-form-image'
         width={100}
-        src={user?.profile_image}
+        src={user?.profile_image_url}
       />}
       <FileInput onChange={onFileUpload} loading={isImageUploading} className='general-form-file-input'/>
       <Form.Item 

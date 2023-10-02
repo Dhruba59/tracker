@@ -59,7 +59,7 @@ const TaskPopoverContent = ({ milestone, tracker, onUpdateTracker }: MilestonePo
   };
 
   const handleTargetAchieve = (e: any) => {
-    updateMilestone(milestone?.id, { achieved_target: e.target.value, tracker_type: tracker?.type })
+    updateMilestone(milestone?.id, { tracker_id: tracker?.id, achieved_target: e.target.value, tracker_type: tracker?.type })
     .then((res: ResponseType) => {
       message.success(res?.message ?? 'Updated Milestone!');
       onUpdateTracker();
