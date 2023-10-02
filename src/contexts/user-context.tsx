@@ -4,7 +4,7 @@ import {createContext, useContext, useState } from 'react';
 const initialValue: User = {
   id: '',
   name: '',
-  profile_image: '',
+  profile_image_url: '',
   email: '',
   is_verified: 0,
   status: 1
