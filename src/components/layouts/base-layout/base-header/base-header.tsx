@@ -49,7 +49,7 @@ const BaseHeader = () => {
       label: (
         <div className='header-popover-item'>
           <span className='header-popover-item-icon' >
-            <UserAvatar size='small' src={user?.profile_image} title={user?.name}/>
+            <UserAvatar size='small' src={user?.profile_image_url} title={user?.name}/>
           </span>
           <Text>{user?.name}</Text>
         </div>
@@ -93,7 +93,7 @@ const BaseHeader = () => {
       label: (
           <Dropdown menu={{ items: dropdownItems }} placement="bottomLeft" arrow>
             <div>
-              <UserAvatar size='default' src={user?.profile_image} title={user?.name}/>
+              <UserAvatar size='default' src={user?.profile_image_url} title={user?.name}/>
               <span style={{marginLeft: '8px'}}>{user?.name}</span>
             </div>
           </Dropdown>
